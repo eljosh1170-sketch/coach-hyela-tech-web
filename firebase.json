@@ -3,6 +3,8 @@
     "public": ".",
     "cleanUrls": true,
     "ignore": [
+      ".git/**",
+      ".firebase/**",
       "firebase.json",
       "scripts/**",
       "**/.*",
