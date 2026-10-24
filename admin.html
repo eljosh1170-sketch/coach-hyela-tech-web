@@ -1,0 +1,884 @@
+﻿<!DoCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Management Portal | Coach Hyela Tech Industries</title>
+  <meta name="robots" content="noindex, nofollow">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cht-style.css">
+
+  <style>
+    .admin-tab-btn {
+      padding: 12px 20px;
+      font-weight: 600;
+      font-size: 0.92rem;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--cht-text-muted);
+      cursor: pointer;
+      transition: var(--cht-transition);
+      white-space: nowrap;
+    }
+    .admin-tab-btn.active {
+      color: var(--cht-gold-light);
+      border-bottom-color: var(--cht-gold-500);
+    }
+    .cht-table-responsive {
+      overflow-x: auto;
+      border: 1px solid var(--cht-border-subtle);
+      border-radius: var(--cht-radius-md);
+      background: #081B11;
+      margin-bottom: 30px;
+    }
+    .cht-admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+      text-align: left;
+    }
+    .cht-admin-table th {
+      background: #0F3822;
+      color: var(--cht-gold-light);
+      padding: 12px 16px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border-bottom: 1px solid var(--cht-border);
+    }
+    .cht-admin-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      color: var(--cht-text-secondary);
+      vertical-align: middle;
+    }
+    .cht-admin-table tr:hover td {
+      background: rgba(212, 175, 55, 0.05);
+    }
+
+    .status-pill {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-pill.approved { background: rgba(34, 197, 94, 0.2); color: #86EFAC; border: 1px solid rgba(34, 197, 94, 0.5); }
+    .status-pill.pending { background: rgba(245, 158, 11, 0.2); color: #FCD34D; border: 1px solid rgba(245, 158, 11, 0.5); }
+    .status-pill.rejected { background: rgba(239, 68, 68, 0.2); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.5); }
+    .status-pill.more_info{ background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.5); }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="cht-top-bar">
+    <div class="cht-container">
+      <div class="cht-top-bar-inner">
+        <div><span>Protected Administrative Workspace • Coach Hyela operations</span></div>
+        <div><a href="index.html">← Back toPublic Website</a></div>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content" style="padding: 40px 0; min-height: 85vh;">
+    <div class="cht-container">
+
+      <!-- LoGIN BoX (When not authenticated) -->
+      <div id="adminLoginBox" style="max-width: 440px; margin: 40px auto; background: var(--cht-bg-surface); border: 1px solid var(--cht-border); border-radius: var(--cht-radius-lg); padding: 36px; box-shadow: var(--cht-shadow-lg);">
+        <div style="text-align: center; margin-bottom: 20px;">
+          <img src="assets/icons/logo.svg" alt="Coach Hyela" style="height: 48px; margin: 0 auto14px auto;">
+          <h1 class="heading-serif" style="font-size: 1.5rem; color: #fff;">Authorized Admin Sign-In</h1>
+          <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Enter administrative passkey tomanage student approvals, permissions, and credentials.</p>
+        </div>
+
+        <form onsubmit="handleAdminLogin(event)">
+          <div class="cht-form-group">
+            <label class="cht-label" for="adminKey">Administrative Passkey</label>
+            <input type="password" id="adminKey" class="cht-input" placeholder="••••••••••••" required>
+            <div class="cht-help-text">Default demosecurity passkey: <code>HyelaTech2026!</code></div>
+          </div>
+          <button type="submit" class="cht-btn cht-btn-primary" style="width: 100%; margin-top: 10px;">
+            Unlock Management Console →
+          </button>
+        </form>
+      </div>
+
+      <!-- AUTHENTICATED ADMIN CoNSoLE -->
+      <div id="adminConsole" style="display: none;">
+        
+        <!-- Header Bar -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 24px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 16px;">
+          <div>
+            <span class="status-pill approved" style="margin-bottom: 6px;">Secure Administrator Mode</span>
+            <h1 class="heading-serif" style="color: #fff; font-size: 2rem;">Coach Hyela operations Hub</h1>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <a href="certificates.html" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm">Test Student Portal ↗</a>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="logoutAdminSession()">
+              Sign out
+            </button>
+          </div>
+        </div>
+
+        <!-- Admin Navigation Tabs -->
+        <div style="display: flex; overflow-x: auto; gap: 10px; border-bottom: 1px solid var(--cht-border); margin-bottom: 24px;">
+          <button type="button" class="admin-tab-btn active" id="tabBtnEligibility" onclick="switchAdminTab('eligibility')">
+            Student Eligibility Requests <span id="badgePendingCount" style="background:#F59E0B; color:#000; padding:1px 6px; border-radius:99px; font-size:0.75rem; margin-left:4px;">0</span>
+          </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnStudents" onclick="switchAdminTab('students')">
+            Registered Student Directory &amp; Drive Access
+          </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnCerts" onclick="switchAdminTab('certs')">
+            Issued Certificates &amp; Revocation
+          </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnCAC" onclick="switchAdminTab('cac')">
+            CAC Inquiries Inbox
+          </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnNotifs" onclick="switchAdminTab('notifs')">
+            Simulated Email Dispatch Log
+          </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnLiveContent" onclick="switchAdminTab('liveContent')" style="background: rgba(212, 175, 55, 0.12); border-color: var(--cht-gold-500); color: var(--cht-gold-light);">
+            <span style="color: var(--cht-gold-light);">&#9998;</span> Live Website Content Editor
+          </button>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 1: STUDENT ELIGIBILITY REQUESTS (CoRE) -->
+        <!-- ========================================== -->
+        <div id="tabContentEligibility">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Certificate Eligibility Review</h2>
+              <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Review student submissions. only approved students can claim and generate official certificates.</p>
+            </div>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminEligibility()">
+              Refresh Requests
+            </button>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th>Request ID</th>
+                  <th>Student Name</th>
+                  <th>Verified Email</th>
+                  <th>Selected Course</th>
+                  <th>Date</th>
+                  <th>Status</th>
+                  <th>Evaluation Notes</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbodyid="tableBodyEligibility">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: REGISTERED STUDENTS & PERMISSIoNS   -->
+        <!-- ========================================== -->
+        <div id="tabContentStudents" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Registered Student Directory</h2>
+              <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Manage student names, verified status, and Google Drive vault access.</p>
+            </div>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminStudents()">
+              Refresh Students
+            </button>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th>User ID</th>
+                  <th>Full Name</th>
+                  <th>Email</th>
+                  <th>Email Verified</th>
+                  <th>Assigned Courses</th>
+                  <th>Drive Access</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbodyid="tableBodyStudents">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: ISSUED CERTIFICATES & REVoCATIoN    -->
+        <!-- ========================================== -->
+        <div id="tabContentCerts" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Issued Certificate Registry</h2>
+              <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Monitor issued credentials. Revoke or reinstate certificates with instant QR reflection.</p>
+            </div>
+            <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" onclick="openNewCertModal()">
+              + Manually Issue Certificate
+            </button>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th>Code</th>
+                  <th>Student Name</th>
+                  <th>Email</th>
+                  <th>Course Track</th>
+                  <th>Issue Date</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbodyid="adminCertsTableBody">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 4: CAC SUBMISSIONS INBoX               -->
+        <!-- ========================================== -->
+        <div id="tabContentCAC" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Client CAC Intake Dossiers</h2>
+            <span style="font-size: 0.85rem; color: var(--cht-text-muted);" id="cacCountLabel">0 Submissions</span>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th>Ref #</th>
+                  <th>Date</th>
+                  <th>Category</th>
+                  <th>Preferred Names</th>
+                  <th>Applicant</th>
+                  <th>Contact</th>
+                  <th>ID Info</th>
+                </tr>
+              </thead>
+              <tbodyid="adminCACTableBody">
+                <!-- Dynamically loaded -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 5: EMAIL NoTIFICATIoN AUDIT LoG        -->
+        <!-- ========================================== -->
+        <div id="tabContentNotifs" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Simulated Email Dispatch Log</h2>
+              <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Audit all outgoing transactional emails: verification codes, reset links, approval updates, and claims.</p>
+            </div>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminNotifs()">
+              Refresh Log
+            </button>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th>Time</th>
+                  <th>Recipient</th>
+                  <th>Type</th>
+                  <th>Subject</th>
+                  <th>Message Preview</th>
+                </tr>
+              </thead>
+              <tbodyid="tableBodyNotifs">
+                <!-- Populated via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- MoDAL: REVIEW ELIGIBILITY REQUEST -->
+  <div class="cht-modal-overlay" id="modalReviewEligibility">
+    <div class="cht-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 10px;">
+        <h3 class="heading-serif" style="color: #fff; font-size: 1.3rem;">Evaluate Certificate Eligibility</h3>
+        <button type="button" onclick="closeReviewModal()" style="background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;">✕</button>
+      </div>
+
+      <input type="hidden" id="reviewReqId">
+
+      <div style="background: rgba(0,0,0,0.25); border-radius: 8px; padding: 14px; margin-bottom: 20px; font-size: 0.9rem;">
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span style="color:var(--cht-text-muted);">Student Name:</span>
+          <strong style="color:#fff;" id="reviewStudentName">Name</strong>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:6px;">
+          <span style="color:var(--cht-text-muted);">Verified Email:</span>
+          <span style="color:var(--cht-gold-light);" id="reviewStudentEmail">email@example.com</span>
+        </div>
+        <div style="display:flex; justify-content:space-between;">
+          <span style="color:var(--cht-text-muted);">Course Claimed:</span>
+          <strong style="color:#fff;" id="reviewCourseTitle">Course</strong>
+        </div>
+      </div>
+
+      <form onsubmit="handleReviewSubmit(event)">
+        <div class="cht-form-group">
+          <label class="cht-label" for="reviewStatusSelect">Decision Status <span class="req">*</span></label>
+          <select id="reviewStatusSelect" class="cht-select" required>
+            <option value="APPROVED">APPROVED (Grant Eligibility &amp; Certificate Claiming)</option>
+            <option value="REJECTED">REJECTED (Coursework requirements not met)</option>
+            <option value="MORE_INFO">MORE INFORMATION REQUIRED (Request additional project files)</option>
+            <option value="PENDING">PENDING (Keep under evaluation)</option>
+          </select>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="reviewAdminNotes">Instructor / Evaluation Notes</label>
+          <textarea id="reviewAdminNotes" class="cht-textarea" style="min-height: 80px;" placeholder="Feedback or reason sent tostudent in email notification..."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+          <button type="button" class="cht-btn cht-btn-outline" onclick="closeReviewModal()">Cancel</button>
+          <button type="submit" class="cht-btn cht-btn-primary">Save Decision &amp; Dispatch Notification →</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MoDAL: EDIT STUDENT DETAILS -->
+  <div class="cht-modal-overlay" id="modalEditStudent">
+    <div class="cht-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 10px;">
+        <h3 class="heading-serif" style="color: #fff; font-size: 1.3rem;">Edit Student Profile &amp; Permissions</h3>
+        <button type="button" onclick="closeEditStudentModal()" style="background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;">✕</button>
+      </div>
+
+      <input type="hidden" id="editStudentUserId">
+
+      <form onsubmit="handleEditStudentSubmit(event)">
+        <div class="cht-form-group">
+          <label class="cht-label" for="editStudentFullName">Full Legal Name (for Certificate) <span class="req">*</span></label>
+          <input type="text" id="editStudentFullName" class="cht-input" required>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="editStudentEmail">Email Address (Read-only)</label>
+          <input type="email" id="editStudentEmail" class="cht-input" readonly style="opacity: 0.7;">
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+            <input type="checkbox" id="editStudentDriveAccess" style="width: 18px; height: 18px;">
+            <span>Grant Access toRestricted Google Drive Student Vault</span>
+          </label>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="cht-btn cht-btn-outline" onclick="closeEditStudentModal()">Cancel</button>
+          <button type="submit" class="cht-btn cht-btn-primary">Save Student Details</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MoDAL: MANUAL CERTIFICATE ISSUANCE -->
+  <div class="cht-modal-overlay" id="newCertModal">
+    <div class="cht-modal-card">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 12px;">
+        <h3 class="heading-serif" style="color: #fff; font-size: 1.3rem;">Manually Issue Certificate</h3>
+        <button type="button" onclick="closeNewCertModal()" style="background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;">✕</button>
+      </div>
+
+      <form onsubmit="handleIssueCertificate(event)">
+        <div class="cht-form-group">
+          <label class="cht-label" for="newCertLearnerName">Learner Full Name <span class="req">*</span></label>
+          <input type="text" id="newCertLearnerName" class="cht-input" placeholder="e.g. Amina Garba" required>
+        </div>
+
+        <div class="cht-grid cht-grid-2">
+          <div class="cht-form-group">
+            <label class="cht-label" for="newCertLearnerEmail">Learner Email <span class="req">*</span></label>
+            <input type="email" id="newCertLearnerEmail" class="cht-input" placeholder="amina@example.com" required>
+          </div>
+          <div class="cht-form-group">
+            <label class="cht-label" for="newCertCourse">Course Programme <span class="req">*</span></label>
+            <select id="newCertCourse" class="cht-select" required>
+              <option value="AI Video Creation & UGC-Style Advertising">AI Video Creation &amp; UGC-Style Advertising</option>
+              <option value="Artificial Intelligence & Creative Workflows for Individuals">AI &amp; Creative Workflows for Individuals</option>
+              <option value="Modern Website Building & Digital Presence">Modern Website Building &amp; Digital Solutions</option>
+              <option value="Business & Creative Automation">Business &amp; Creative Automation</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cht-grid cht-grid-2">
+          <div class="cht-form-group">
+            <label class="cht-label" for="newCertIssueDate">Issue Date <span class="req">*</span></label>
+            <input type="text" id="newCertIssueDate" class="cht-input" value="October 23, 2026" required>
+          </div>
+          <div class="cht-form-group">
+            <label class="cht-label" for="newCertType">Credential Title <span class="req">*</span></label>
+            <input type="text" id="newCertType" class="cht-input" value="Executive Certificate of Practical Completion" required>
+          </div>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="newCertTopics">Key Topics Mastered (comma-separated)</label>
+          <input type="text" id="newCertTopics" class="cht-input" value="Prompt Engineering, Avatar Lip-Sync, CapCut Post-Production, UGC Commercials">
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px;">
+          <button type="button" class="cht-btn cht-btn-outline" onclick="closeNewCertModal()">Cancel</button>
+          <button type="submit" class="cht-btn cht-btn-primary">Generate &amp; Save Certificate</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="cht-footer">
+    <div class="cht-container">
+      <div class="cht-footer-bottom">
+        <div>&copy; 2026 Coach Hyela Tech Industries Limited. Administrator operations.</div>
+        <div><a href="index.html">Return toPublic Portal</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cht-core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (CHT.isAdminLoggedIn()) {
+        showAdminConsole();
+      }
+    });
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('adminKey').value.trim();
+      if (CHT.loginAdmin(pass)) {
+        showAdminConsole();
+      } else {
+        alert('Invalid administrative passkey. Please check and try again.');
+      }
+    }
+
+    function showAdminConsole() {
+      document.getElementById('adminLoginBox').style.display = 'none';
+      document.getElementById('adminConsole').style.display = 'block';
+      renderAdminEligibility();
+      renderAdminStudents();
+      renderAdminCertificates();
+      renderAdminCAC();
+      renderAdminNotifs();
+    }
+
+    function logoutAdminSession() {
+      CHT.logoutAdmin();
+      document.getElementById('adminConsole').style.display = 'none';
+      document.getElementById('adminLoginBox').style.display = 'block';
+    }
+
+    function switchAdminTab(tab) {
+      const tabs = ['eligibility', 'students', 'certs', 'cac', 'notifs', 'liveContent'];
+      tabs.forEach(t => {
+        const btn = document.getElementById('tabBtn' + capitalize(t));
+        const content = document.getElementById('tabContent' + capitalize(t));
+        if (btn) btn.classList.toggle('active', t === tab);
+        if (content) content.style.display = (t === tab) ? 'block' : 'none';
+      });
+
+      if (tab === 'eligibility') renderAdminEligibility();
+      if (tab === 'students') renderAdminStudents();
+      if (tab === 'certs') renderAdminCertificates();
+      if (tab === 'cac') renderAdminCAC();
+      if (tab === 'notifs') renderAdminNotifs();
+
+      if (tab === 'liveContent') renderLiveContentEditor();
+    }
+
+    function renderLiveContentEditor() {
+      const data = CHT.getLiveContent();
+      document.getElementById('liveEditorSlogan').value = data.slogan || 'Tech • Creativity • Impact';
+      document.getElementById('liveEditorPhone').value = data.phone || '0915-963-7287';
+      document.getElementById('liveEditorEmail').value = data.email || 'coachhyelatech@gmail.com';
+      document.getElementById('liveEditorBankName').value = data.bankName || 'PalmPay';
+      document.getElementById('liveEditorAccNum').value = data.accountNumber || '7011706511';
+      document.getElementById('liveEditorAccName').value = data.accountName || 'Eljoshua Hyelakuri Emmanuel';
+      document.getElementById('liveEditorCohortMonth').value = data.cohortMonth || 'November 2026';
+      document.getElementById('liveEditorTickerText').value = data.tickerText || 'Next Intensive Practical Training Cohort Begins This November';
+      document.getElementById('liveEditorPricingNotice').value = data.pricingNotice || 'Rolling Admission • Official Pricing To Be Announced Soon';
+      document.getElementById('liveEditorC3Title').value = data.c3Title || '100% AI Website & Web App Building (Zero Coding)';
+      document.getElementById('liveEditorC3Desc').value = data.c3Desc || '';
+    }
+
+    function handleSaveLiveContent() {
+      const updated = {
+        slogan: document.getElementById('liveEditorSlogan').value.trim(),
+        phone: document.getElementById('liveEditorPhone').value.trim(),
+        email: document.getElementById('liveEditorEmail').value.trim(),
+        bankName: document.getElementById('liveEditorBankName').value.trim(),
+        accountNumber: document.getElementById('liveEditorAccNum').value.trim(),
+        accountName: document.getElementById('liveEditorAccName').value.trim(),
+        cohortMonth: document.getElementById('liveEditorCohortMonth').value.trim(),
+        tickerText: document.getElementById('liveEditorTickerText').value.trim(),
+        pricingNotice: document.getElementById('liveEditorPricingNotice').value.trim(),
+        c3Title: document.getElementById('liveEditorC3Title').value.trim(),
+        c3Desc: document.getElementById('liveEditorC3Desc').value.trim()
+      };
+
+      const res = CHT.saveLiveContent(updated);
+      showLiveAlert(res.message, false);
+    }
+
+    function handleResetLiveContent() {
+      if (!confirm('Are you sure you want to reset all live content to system defaults?')) return;
+      const res = CHT.resetLiveContent();
+      renderLiveContentEditor();
+      showLiveAlert(res.message, false);
+    }
+
+    function showLiveAlert(msg, isError) {
+      const b = document.getElementById('liveAlertBanner');
+      b.style.display = 'block';
+      b.style.background = isError ? 'rgba(239, 68, 68, 0.15)' : 'rgba(16, 185, 129, 0.15)';
+      b.style.border = isError ? '1px solid #EF4444' : '1px solid #10B981';
+      b.style.color = isError ? '#EF4444' : '#10B981';
+      b.textContent = msg;
+      setTimeout(() => { b.style.display = 'none'; }, 4000);
+    }
+
+    function exportContentJSON() {
+      const data = CHT.getLiveContent();
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'content-live.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+
+    function capitalize(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    // 1. RENDER ELIGIBILITY
+    function renderAdminEligibility() {
+      const reqs = CHT.getEligibilityRequests();
+      const tbody= document.getElementById('tableBodyEligibility');
+      
+      const pendingCount = reqs.filter(r => r.status === 'PENDING').length;
+      document.getElementById('badgePendingCount').textContent = pendingCount;
+
+      if (reqs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Noeligibility requests recorded.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = reqs.map(r => {
+        let pillClass = 'pending';
+        if (r.status === 'APPROVED') pillClass = 'approved';
+        else if (r.status === 'REJECTED') pillClass = 'rejected';
+        else if (r.status === 'MORE_INFo') pillClass = 'more_info';
+
+        return `
+          <tr>
+            <td><strong style="font-family:monospace; color:var(--cht-gold-light);">${r.id}</strong></td>
+            <td style="color:#fff; font-weight:600;">${r.fullName}</td>
+            <td><span style="color:var(--cht-text-muted);">${r.email}</span></td>
+            <td>${r.courseTitle}</td>
+            <td style="font-size:0.8rem;">${new Date(r.submissionDate).toLocaleDateString()}</td>
+            <td><span class="status-pill ${pillClass}">${r.status}</span></td>
+            <td style="font-size:0.8rem; max-width:200px;">${r.adminNotes || '—'}</td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="openReviewModal('${r.id}')">
+                  Review / Update
+                </button>
+                ${r.certificateCode ? `
+                  <a href="verify.html?code=${r.certificateCode}" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;">
+                    Cert
+                  </a>
+                ` : ''}
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // 2. REVIEW MoDAL LoGIC
+    function openReviewModal(reqId) {
+      const reqs = CHT.getEligibilityRequests();
+      const req = reqs.find(r => r.id === reqId);
+      if (!req) return;
+
+      document.getElementById('reviewReqId').value = req.id;
+      document.getElementById('reviewStudentName').textContent = req.fullName;
+      document.getElementById('reviewStudentEmail').textContent = req.email;
+      document.getElementById('reviewCourseTitle').textContent = req.courseTitle;
+      document.getElementById('reviewStatusSelect').value = req.status;
+      document.getElementById('reviewAdminNotes').value = req.adminNotes || '';
+
+      document.getElementById('modalReviewEligibility').classList.add('active');
+    }
+
+    function closeReviewModal() {
+      document.getElementById('modalReviewEligibility').classList.remove('active');
+    }
+
+    function handleReviewSubmit(e) {
+      e.preventDefault();
+      const reqId = document.getElementById('reviewReqId').value;
+      const status = document.getElementById('reviewStatusSelect').value;
+      const notes = document.getElementById('reviewAdminNotes').value.trim();
+
+      const res = CHT.updateEligibilityStatus(reqId, status, notes);
+      closeReviewModal();
+      alert(res.message);
+      renderAdminEligibility();
+      renderAdminStudents();
+      renderAdminNotifs();
+    }
+
+    // 3. RENDER STUDENTS DIRECToRY
+    function renderAdminStudents() {
+      const users = CHT.getUsers();
+      const tbody= document.getElementById('tableBodyStudents');
+
+      if (users.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Nostudent accounts found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = users.map(u => `
+        <tr>
+          <td><strong style="font-family:monospace; color:var(--cht-gold-light);">${u.id}</strong></td>
+          <td style="color:#fff; font-weight:600;">${u.fullName}</td>
+          <td>${u.email}</td>
+          <td>
+            <span class="status-pill ${u.emailVerified ? 'approved' : 'rejected'}">
+              ${u.emailVerified ? 'Verified' : 'Unverified'}
+            </span>
+          </td>
+          <td style="font-size:0.8rem;">
+            ${(u.assignedCourses && u.assignedCourses.length > 0) ? u.assignedCourses.join(', ') : 'None'}
+          </td>
+          <td>
+            <button type="button" class="cht-btn cht-btn-sm ${u.driveAccess ? 'cht-btn-primary' : 'cht-btn-outline'}" style="padding:2px 8px; font-size:0.75rem;" onclick="handleToggleDrive('${u.email}', ${!u.driveAccess})">
+              ${u.driveAccess ? '✓ Granted' : 'Locked (Click to Grant)'}
+            </button>
+          </td>
+          <td>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;" onclick="openEditStudentModal('${u.id}')">
+              Edit Details
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function handleToggleDrive(email, newAccess) {
+      const res = CHT.toggleDriveAccess(email, newAccess);
+      alert(res.message);
+      renderAdminStudents();
+      renderAdminNotifs();
+    }
+
+    function openEditStudentModal(userId) {
+      const users = CHT.getUsers();
+      const user = users.find(u => u.id === userId);
+      if (!user) return;
+
+      document.getElementById('editStudentUserId').value = user.id;
+      document.getElementById('editStudentFullName').value = user.fullName;
+      document.getElementById('editStudentEmail').value = user.email;
+      document.getElementById('editStudentDriveAccess').checked = !!user.driveAccess;
+
+      document.getElementById('modalEditStudent').classList.add('active');
+    }
+
+    function closeEditStudentModal() {
+      document.getElementById('modalEditStudent').classList.remove('active');
+    }
+
+    function handleEditStudentSubmit(e) {
+      e.preventDefault();
+      const userId = document.getElementById('editStudentUserId').value;
+      const fullName = document.getElementById('editStudentFullName').value.trim();
+      const driveAccess = document.getElementById('editStudentDriveAccess').checked;
+
+      const res = CHT.updateStudentDetails(userId, { fullName, driveAccess });
+      closeEditStudentModal();
+      alert(res.message);
+      renderAdminStudents();
+      renderAdminEligibility();
+    }
+
+    // 4. RENDER CERTIFICATES & REVoCATIoN
+    function renderAdminCertificates() {
+      const certs = CHT.getCertificates();
+      const tbody= document.getElementById('adminCertsTableBody');
+      tbody.innerHTML = certs.map(c => `
+        <tr>
+          <td><strong style="color:var(--cht-gold-light); font-family:monospace;">${c.verifyCode}</strong></td>
+          <td style="color:#fff; font-weight:600;">${c.learnerName}</td>
+          <td>${c.learnerEmail}</td>
+          <td>${c.courseTitle}</td>
+          <td>${c.issueDate}</td>
+          <td>
+            <span class="status-pill ${c.status === 'VALID' ? 'approved' : 'rejected'}">
+              ${c.status}
+            </span>
+          </td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <a href="verify.html?code=${c.verifyCode}" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;">Verify QR</a>
+              ${c.status === 'VALID' ? `
+                <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem; border-color:#EF4444; color:#FCA5A5;" onclick="toggleStatus('${c.verifyCode}', 'REVOKED')">Revoke</button>
+              ` : `
+                <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem; border-color:#22C55E; color:#86EFAC;" onclick="toggleStatus('${c.verifyCode}', 'VALID')">Reinstate</button>
+              `}
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function toggleStatus(code, newStatus) {
+      const certs = CHT.getCertificates();
+      const target = certs.find(c => c.verifyCode === code);
+      if (target) {
+        target.status = newStatus;
+        target.statusReason = (newStatus === 'REVOKED') ? 'Record administratively marked REVOKED on ' + new Date().toLocaleDateString() :
+          'Validated by Coach Hyela administration.';
+        CHT.saveCertificates(certs);
+        renderAdminCertificates();
+      }
+    }
+
+    // 5. RENDER CAC INBoX
+    function renderAdminCAC() {
+      const submissions = CHT.getCACSubmissions();
+      document.getElementById('cacCountLabel').textContent = `${submissions.length} Total Submissions`;
+      const tbody= document.getElementById('adminCACTableBody');
+
+      if (submissions.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--cht-text-muted);">NoCAC client submissions received yet. Complete the form on cac.html totest intake.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = submissions.map(s => `
+        <tr>
+          <td><strong style="color:var(--cht-gold-light); font-family:monospace;">${s.reference}</strong></td>
+          <td style="font-size:0.8rem;">${new Date(s.timestamp).toLocaleDateString()}</td>
+          <td><span style="text-transform:capitalize; color:#fff;">${s.entityType.replace('-', ' ')}</span></td>
+          <td>
+            <div style="font-weight:600; color:#fff;">1. ${s.nameoption1}</div>
+            <div style="font-size:0.8rem; color:var(--cht-text-muted);">2. ${s.nameoption2}</div>
+          </td>
+          <td>
+            <div style="font-weight:600; color:#fff;">${s.fullName}</div>
+            <div style="font-size:0.8rem; color:var(--cht-text-muted);">DoB: ${s.dob}</div>
+          </td>
+          <td>
+            <div>${s.applicantPhone}</div>
+            <div style="font-size:0.8rem; color:var(--cht-text-muted);">${s.applicantEmail}</div>
+          </td>
+          <td style="font-size:0.82rem;">${s.idType}: ${s.idNumber}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 6. RENDER EMAIL NoTIFICATIoNS DISPATCH LoG
+    function renderAdminNotifs() {
+      const logs = CHT.getNotificationLogs();
+      const tbody= document.getElementById('tableBodyNotifs');
+
+      if (logs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Nooutgoing email notifications recorded yet.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = logs.map(l => `
+        <tr>
+          <td style="font-size:0.75rem; white-space:nowrap;">${new Date(l.timestamp).toLocaleTimeString()}</td>
+          <td><strong style="color:var(--cht-gold-light);">${l.toEmail}</strong></td>
+          <td><span class="status-pill approved" style="font-size:0.7rem;">${l.type}</span></td>
+          <td style="color:#fff; font-weight:600;">${l.subject}</td>
+          <td style="font-size:0.8rem; color:var(--cht-text-muted); max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${l.body}</td>
+        </tr>
+      `).join('');
+    }
+
+    // 7. MANUAL ISSUANCE MoDAL
+    function openNewCertModal() {
+      document.getElementById('newCertModal').classList.add('active');
+    }
+    function closeNewCertModal() {
+      document.getElementById('newCertModal').classList.remove('active');
+    }
+
+    function handleIssueCertificate(e) {
+      e.preventDefault();
+      const name = document.getElementById('newCertLearnerName').value.trim();
+      const email = document.getElementById('newCertLearnerEmail').value.trim();
+      const course = document.getElementById('newCertCourse').value;
+      const issueDate = document.getElementById('newCertIssueDate').value;
+      const credType = document.getElementById('newCertType').value;
+      const topics = document.getElementById('newCertTopics').value.split(',').map(s=>s.trim()).filter(Boolean);
+
+      const code = 'CHT-2026-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+
+      const newCert = {
+        id: code,
+        verifyCode: code,
+        learnerName: name,
+        learnerEmail: email,
+        courseId: 'custom-course',
+        courseTitle: course,
+        issueDate: issueDate,
+        status: 'VALID',
+        statusReason: 'Coursework certified by Coach Hyela administration.',
+        credentialType: credType,
+        instructor: "Coach Hyela",
+        instructorTitle: "Lead Instructor & Director",
+        topicsCompleted: topics
+      };
+
+      const certs = CHT.getCertificates();
+      certs.unshift(newCert);
+      CHT.saveCertificates(certs);
+
+      closeNewCertModal();
+      renderAdminCertificates();
+      alert(`Certificate issued successfully! Code: ${code}`);
+    }
+  </script>
+</body>
+</html>

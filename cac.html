@@ -1,0 +1,660 @@
+﻿<!DoCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAC Registration Interactive Guide &amp; Application | Coach Hyela Tech Industries</title>
+  <meta name="description" content="official Corporate Affairs Commission (CAC) business registration interactive guide by Coach Hyela Tech Industries Limited. Business Name, Limited Liability Company (LLC), and Incorporated Trustees.">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cht-style.css">
+
+  <style>
+    /* Guided Step Wizard Navigation */
+    .cht-wizard-steps {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 40px;
+      position: relative;
+    }
+    .cht-wizard-steps::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--cht-border-subtle);
+      z-index: 1;
+      transform: translateY(-50%);
+    }
+    .cht-step-node {
+      position: relative;
+      z-index: 2;
+      background: var(--cht-bg-canvas);
+      padding: 0 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .cht-step-circle {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--cht-bg-surface);
+      border: 2px solid var(--cht-border);
+      color: var(--cht-text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: var(--cht-transition);
+    }
+    .cht-step-node.active .cht-step-circle {
+      background: var(--cht-gold-500);
+      color: var(--cht-forest-900);
+      border-color: #F3E0A2;
+      box-shadow: 0 0 14px var(--cht-gold-glow);
+    }
+    .cht-step-node.completed .cht-step-circle {
+      background: var(--cht-forest-600);
+      color: #fff;
+      border-color: var(--cht-success);
+    }
+    .cht-step-label {
+      font-size: 0.8rem;
+      color: var(--cht-text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .cht-step-node.active .cht-step-label {
+      color: var(--cht-gold-light);
+    }
+
+    /* Category Selection Cards */
+    .cht-type-card {
+      background: var(--cht-bg-card);
+      border: 2px solid var(--cht-border-subtle);
+      border-radius: var(--cht-radius-lg);
+      padding: 24px;
+      cursor: pointer;
+      transition: var(--cht-transition);
+      text-align: left;
+      position: relative;
+    }
+    .cht-type-card:hover {
+      border-color: var(--cht-border);
+      transform: translateY(-3px);
+    }
+    .cht-type-card.selected {
+      border-color: var(--cht-gold-500);
+      background: var(--cht-bg-card-hover);
+      box-shadow: var(--cht-shadow-gold);
+    }
+    .cht-type-badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: var(--cht-radius-full);
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--cht-gold-light);
+    }
+
+    /* Checklist Box */
+    .cht-checklist-box {
+      background: var(--cht-bg-surface);
+      border: 1px solid var(--cht-border);
+      border-radius: var(--cht-radius-lg);
+      padding: 28px;
+      margin-bottom: 30px;
+    }
+    .cht-check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-size: 0.95rem;
+      color: var(--cht-text-secondary);
+    }
+    .cht-check-icon {
+      color: var(--cht-gold-500);
+      font-weight: bold;
+      margin-top: 2px;
+    }
+
+    /* Confirmation Modal / Screen */
+    .cht-confirm-box {
+      background: var(--cht-bg-surface);
+      border: 1px solid var(--cht-success);
+      border-radius: var(--cht-radius-lg);
+      padding: 40px;
+      text-align: center;
+      max-width: 650px;
+      margin: 0 auto;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Contact Bar -->
+  <div class="cht-top-bar">
+    <div class="cht-container">
+      <div class="cht-top-bar-inner">
+        <div><span>official Corporate Affairs Commission (CAC) Support • CAMA 2020 Compliant</span></div>
+        <div class="cht-top-contact">
+          <a href="tel:09159637287">0915-963-7287</a>
+          <a href="mailto:coachhyelatech@gmail.com">coachhyelatech@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="cht-navbar">
+    <div class="cht-container">
+      <div class="cht-navbar-inner">
+        <a href="index.html" class="cht-brand-logo">
+          <img src="assets/icons/logo.svg" alt="Coach Hyela Logo" width="220" height="52">
+        </a>
+        <nav aria-label="Main Navigation">
+          <ul class="cht-nav-links">
+            <li><a href="index.html" class="cht-nav-link">Home</a></li>
+            <li><a href="about.html" class="cht-nav-link">About</a></li>
+            <li><a href="training.html" class="cht-nav-link">Training</a></li>
+            <li><a href="services.html" class="cht-nav-link">Business Services</a></li>
+            <li><a href="cac.html" class="cht-nav-link active">CAC Registration</a></li>
+            <li><a href="certificates.html" class="cht-nav-link">Certificates</a></li>
+            <li><a href="contact.html" class="cht-nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="cht-menu-toggle" aria-label="open mobile navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="cht-drawer-overlay"></div>
+  <aside class="cht-mobile-drawer" aria-hidden="true">
+    <div class="cht-drawer-header">
+      <img src="assets/icons/logo.svg" alt="Coach Hyela Logo" style="height: 40px;">
+      <button class="cht-drawer-close" style="background:none; border:none; color:#fff; font-size:1.5rem;">✕</button>
+    </div>
+    <ul class="cht-drawer-links">
+      <li><a href="index.html" class="cht-drawer-link">Home</a></li>
+      <li><a href="about.html" class="cht-drawer-link">About Company</a></li>
+      <li><a href="training.html" class="cht-drawer-link">AI &amp; Digital Training</a></li>
+      <li><a href="services.html" class="cht-drawer-link">Business Services</a></li>
+      <li><a href="cac.html" class="cht-drawer-link">CAC Registration</a></li>
+      <li><a href="certificates.html" class="cht-drawer-link">Certificates</a></li>
+      <li><a href="contact.html" class="cht-drawer-link">Contact</a></li>
+    </ul>
+  </aside>
+
+  <main id="main-content">
+    <!-- Header -->
+    <section class="cht-section" style="background: radial-gradient(circle at 50% 20%, rgba(20, 70, 45, 0.45) 0%, rgba(7, 30, 19, 0.95) 85%); border-bottom: 1px solid var(--cht-border-subtle); padding: 60px 0;">
+      <div class="cht-container" style="text-align: center; max-width: 820px; margin: 0 auto;">
+        <span class="cht-section-tag">Interactive Step-by-Step Flow</span>
+        <h1 class="cht-hero-title heading-serif" style="font-size: 2.8rem; margin-bottom: 16px;">
+          Corporate Affairs Commission <span class="gold-gradient-text">Registration Guide</span>
+        </h1>
+        <p class="cht-section-desc">
+          Select your desired business structure below. We'll show you the exact statutory documentation checklist, distinguish our support from official CAC fees, and collect your submission securely.
+        </p>
+      </div>
+    </section>
+
+    <!-- Interactive CAC App Wizard Section -->
+    <section class="cht-section">
+      <div class="cht-container">
+        
+        <!-- Step Navigation Bar -->
+        <div class="cht-wizard-steps">
+          <div class="cht-step-node active" id="stepNode1">
+            <div class="cht-step-circle">1</div>
+            <div class="cht-step-label">Select Entity</div>
+          </div>
+          <div class="cht-step-node" id="stepNode2">
+            <div class="cht-step-circle">2</div>
+            <div class="cht-step-label">Checklist &amp; Rules</div>
+          </div>
+          <div class="cht-step-node" id="stepNode3">
+            <div class="cht-step-circle">3</div>
+            <div class="cht-step-label">Applicant Details</div>
+          </div>
+          <div class="cht-step-node" id="stepNode4">
+            <div class="cht-step-circle">4</div>
+            <div class="cht-step-label">Confirmation</div>
+          </div>
+        </div>
+
+        <!-- STAGE 1: Entity Category Selection -->
+        <div id="cacStage1" class="cac-wizard-stage">
+          <div class="cht-section-header">
+            <h2 class="heading-serif" style="font-size: 1.8rem; color: #fff;">Which Legal Entity Do you Wish to Register?</h2>
+            <p class="cht-section-desc">Choose from the confirmed CAC registration routes supported by Coach Hyela Tech Industries Limited.</p>
+          </div>
+
+          <div class="cht-grid cht-grid-3" style="margin-bottom: 40px;">
+            <!-- Business Name -->
+            <div class="cht-type-card selected" onclick="selectCACType('business-name')" id="card-business-name">
+              <span class="cht-type-badge">Form CAC-BN01</span>
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:8px;">Business Name</h3>
+              <p style="color:var(--cht-text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
+                Sole proprietorships, trade enterprises, partnerships, and freelance consultants. Easiest path toopen a corporate bank account.
+              </p>
+              <div style="font-size:0.8rem; color:var(--cht-gold-500); font-weight:600;">Standard: 3 - 7 Working Days</div>
+            </div>
+
+            <!-- Limited Liability Company -->
+            <div class="cht-type-card" onclick="selectCACType('llc-company')" id="card-llc-company">
+              <span class="cht-type-badge">Form CAC-CR01</span>
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:8px;">Limited Company (LTD)</h3>
+              <p style="color:var(--cht-text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
+                Private company with share capital and limited liability protection. Recommended for tech firms, corporate contracts, and investments.
+              </p>
+              <div style="font-size:0.8rem; color:var(--cht-gold-500); font-weight:600;">Standard: 5 - 10 Working Days</div>
+            </div>
+
+            <!-- Incorporated Trustees -->
+            <div class="cht-type-card" onclick="selectCACType('incorporated-trustees')" id="card-incorporated-trustees">
+              <span class="cht-type-badge">Form CAC-IT01</span>
+              <h3 style="color:#fff; font-size:1.25rem; margin-bottom:8px;">Incorporated Trustees (NGo)</h3>
+              <p style="color:var(--cht-text-secondary); font-size:0.88rem; line-height:1.6; margin-bottom:14px;">
+                Charities, NGos, religious ministries, alumni associations, and foundations. Involves formal constitution and newspaper publication.
+              </p>
+              <div style="font-size:0.8rem; color:var(--cht-gold-500); font-weight:600;">Standard: 3 - 6 Weeks (Gazette)</div>
+            </div>
+          </div>
+
+          <div style="text-align: center;">
+            <button type="button" class="cht-btn cht-btn-primary" onclick="goToStage(2)">
+              Proceed toRequirements Checklist →
+            </button>
+          </div>
+        </div>
+
+        <!-- STAGE 2: Requirements Checklist & Fee Transparency -->
+        <div id="cacStage2" class="cac-wizard-stage" style="display: none;">
+          <div class="cht-section-header">
+            <span class="cht-section-tag" id="stage2EntityTag">Business Name</span>
+            <h2 class="heading-serif" style="font-size: 1.8rem; color: #fff;" id="stage2EntityTitle">Requirements &amp; Checklist</h2>
+            <p class="cht-section-desc" id="stage2EntityDesc">
+              Carefully review what information and documents are required from you before proceeding to the application form.
+            </p>
+          </div>
+
+          <div class="cht-grid cht-grid-2">
+            <!-- Left Col: Client Checklist -->
+            <div class="cht-checklist-box">
+              <h3 style="color: var(--cht-gold-light); font-size: 1.2rem; margin-bottom: 16px;">
+                📋 What You Need toProvide:
+              </h3>
+              <div id="clientChecklistContainer">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- Right Col: Handled by Coach Hyela & Fee Clarity -->
+            <div>
+              <div class="cht-checklist-box" style="border-color: var(--cht-forest-500); margin-bottom: 20px;">
+                <h3 style="color: #fff; font-size: 1.2rem; margin-bottom: 16px;">
+                  🛡️ Handled by Coach Hyela Tech:
+                </h3>
+                <div id="hyelaHandledContainer">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+
+              <!-- Fee Separation Notice -->
+              <div class="cht-alert cht-alert-info">
+                <div>
+                  <h4 style="color: var(--cht-gold-light); font-size: 0.95rem; margin-bottom: 4px;">Important Fee Distinction:</h4>
+                  <p style="font-size: 0.85rem; color: var(--cht-text-secondary); line-height: 1.5;" id="feesExplainer">
+                    Statutory CAC portal fees (name reservation, stamp duties, and incorporation fee) are fixed government charges paid directly via Remita. Coach Hyela charges a transparent professional service fee for name screening, dossier compilation, and portal query management.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+            <button type="button" class="cht-btn cht-btn-outline" onclick="goToStage(1)">
+              ← Back toCategories
+            </button>
+            <button type="button" class="cht-btn cht-btn-primary" onclick="goToStage(3)">
+              Continue toApplication Form →
+            </button>
+          </div>
+        </div>
+
+        <!-- STAGE 3: Multi-step Application Form -->
+        <div id="cacStage3" class="cac-wizard-stage" style="display: none;">
+          <div class="cht-section-header">
+            <span class="cht-section-tag" id="stage3FormTag">Application Dossier</span>
+            <h2 class="heading-serif" style="font-size: 1.8rem; color: #fff;">Submit Your Registration Details</h2>
+            <p class="cht-section-desc">
+              Your information is stored securely and dispatched directly toCoach Hyela Tech Industries for portal filing. We never ask for bank PINs or passwords.
+            </p>
+          </div>
+
+          <form id="cacIntakeForm" onsubmit="handleCACSubmit(event)" style="max-width: 800px; margin: 0 auto; background: var(--cht-bg-surface); border: 1px solid var(--cht-border); border-radius: var(--cht-radius-lg); padding: 32px;">
+            
+            <input type="hidden" id="formSelectedType" name="selectedType" value="business-name">
+
+            <h3 style="color: var(--cht-gold-light); font-size: 1.15rem; margin-bottom: 18px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 8px;">
+              1. Proposed Business Names
+            </h3>
+            <div class="cht-grid cht-grid-2">
+              <div class="cht-form-group">
+                <label class="cht-label" for="nameoption1">Preferred Business Name (Choice 1) <span class="req">*</span></label>
+                <input type="text" id="nameoption1" name="nameoption1" class="cht-input" placeholder="e.g. Acme Synergy Logistics" required>
+                <div class="cht-help-text">Avoid prohibited or reserved words like 'National', 'Federal', or 'State'.</div>
+              </div>
+              <div class="cht-form-group">
+                <label class="cht-label" for="nameoption2">Alternative Name (Choice 2) <span class="req">*</span></label>
+                <input type="text" id="nameoption2" name="nameoption2" class="cht-input" placeholder="e.g. Acme Integrated Freight" required>
+                <div class="cht-help-text">Used if your first choice is alreadyreserved by another party on CAC.</div>
+              </div>
+            </div>
+
+            <h3 style="color: var(--cht-gold-light); font-size: 1.15rem; margin-top: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 8px;">
+              2. Nature of Business &amp; operations
+            </h3>
+            <div class="cht-form-group">
+              <label class="cht-label" for="businessobjectives">Describe What the Business Does <span class="req">*</span></label>
+              <textarea id="businessobjectives" name="businessobjectives" class="cht-textarea" placeholder="e.g. Retail sale of agricultural farm produce, logistics and haulage services, digital marketing..." required></textarea>
+            </div>
+            <div class="cht-form-group">
+              <label class="cht-label" for="businessAddress">Principal Physical Business Address <span class="req">*</span></label>
+              <input type="text" id="businessAddress" name="businessAddress" class="cht-input" placeholder="Building No., Street Name, City/Town, LGA, State" required>
+            </div>
+
+            <h3 style="color: var(--cht-gold-light); font-size: 1.15rem; margin-top: 14px; margin-bottom: 18px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 8px;">
+              3. Proprietor / Director Information
+            </h3>
+            <div class="cht-grid cht-grid-2">
+              <div class="cht-form-group">
+                <label class="cht-label" for="fullName">Full Legal Name (as written on ID) <span class="req">*</span></label>
+                <input type="text" id="fullName" name="fullName" class="cht-input" placeholder="First Name, Middle Name, Surname" required>
+              </div>
+              <div class="cht-form-group">
+                <label class="cht-label" for="dob">Date of Birth <span class="req">*</span></label>
+                <input type="date" id="dob" name="dob" class="cht-input" required>
+              </div>
+            </div>
+
+            <div class="cht-grid cht-grid-2">
+              <div class="cht-form-group">
+                <label class="cht-label" for="applicantPhone">Active Phone Number <span class="req">*</span></label>
+                <input type="tel" id="applicantPhone" name="applicantPhone" class="cht-input" placeholder="080XXXXXXXX or 090XXXXXXXX" required>
+              </div>
+              <div class="cht-form-group">
+                <label class="cht-label" for="applicantEmail">Active Email Address <span class="req">*</span></label>
+                <input type="email" id="applicantEmail" name="applicantEmail" class="cht-input" placeholder="yourname@gmail.com" required>
+                <div class="cht-help-text">CAC and Coach Hyela will send electronic status updates here.</div>
+              </div>
+            </div>
+
+            <div class="cht-form-group">
+              <label class="cht-label" for="residentialAddress">Proprietor Residential Address <span class="req">*</span></label>
+              <input type="text" id="residentialAddress" name="residentialAddress" class="cht-input" placeholder="Personal home address (Street, LGA, State)" required>
+            </div>
+
+            <div class="cht-grid cht-grid-2">
+              <div class="cht-form-group">
+                <label class="cht-label" for="idType">Means of Identification <span class="req">*</span></label>
+                <select id="idType" name="idType" class="cht-select" required>
+                  <option value="">-- Select Valid ID --</option>
+                  <option value="NIN">National Identity Number (NIN Slip/Card)</option>
+                  <option value="Passport">International Passport</option>
+                  <option value="DriversLicense">FRSC Driver's License</option>
+                  <option value="VotersCard">INEC Voter's Card</option>
+                </select>
+              </div>
+              <div class="cht-form-group">
+                <label class="cht-label" for="idNumber">Identification Number <span class="req">*</span></label>
+                <input type="text" id="idNumber" name="idNumber" class="cht-input" placeholder="e.g. 11-digit NIN or Passport No." required>
+              </div>
+            </div>
+
+            <!-- Upload Readiness Notice -->
+            <div class="cht-alert cht-alert-info" style="margin-top: 10px;">
+              <div>
+                <strong>Document Uploads:</strong> You can upload your ID image and passport photodirectly, or present them directly toCoach Hyela on WhatsApp (+234 915 963 7287) if your mobile connection is slow.
+              </div>
+            </div>
+
+            <div class="cht-form-group">
+              <label class="cht-label" for="additionalNotes">Special Instructions or Notes (optional)</label>
+              <textarea id="additionalNotes" name="additionalNotes" class="cht-textarea" style="min-height: 80px;" placeholder="Any specific requirements, shareholding splits, or preferred timeline?"></textarea>
+            </div>
+
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--cht-border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;">
+              <button type="button" class="cht-btn cht-btn-outline" onclick="goToStage(2)">
+                ← Back toChecklist
+              </button>
+              <button type="submit" class="cht-btn cht-btn-primary" id="cacSubmitBtn">
+                Submit Registration Request &amp; Get Reference →
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- STAGE 4: Confirmation & Follow-up -->
+        <div id="cacStage4" class="cac-wizard-stage" style="display: none;">
+          <div class="cht-confirm-box">
+            <div style="width: 64px; height: 64px; border-radius: 50%; background: rgba(34, 197, 94, 0.2); border: 2px solid var(--cht-success); display: flex; align-items: center; justify-content: center; margin: 0 auto20px auto; color: var(--cht-success); font-size: 2rem;">
+              ✓
+            </div>
+            <h2 class="heading-serif" style="font-size: 2.2rem; color: #fff; margin-bottom: 12px;">
+              Registration Request Received!
+            </h2>
+            <p style="color: var(--cht-text-secondary); font-size: 1.05rem; line-height: 1.6; margin-bottom: 24px;">
+              Thank you! Coach Hyela Tech Industries Limited has received your CAC registration dossier. our team will review your proposed names for availability and reach out toyou within 24 business hours.
+            </p>
+
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--cht-border); border-radius: var(--cht-radius-md); padding: 18px; margin-bottom: 28px; text-align: left;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="color: var(--cht-text-muted); font-size: 0.85rem;">Tracking Reference:</span>
+                <span style="color: var(--cht-gold-light); font-weight: 700; font-family: monospace;" id="confirmRefCode">CHT-CAC-2026-XXXX</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                <span style="color: var(--cht-text-muted); font-size: 0.85rem;">Entity Category:</span>
+                <span style="color: #fff; font-weight: 600;" id="confirmCategory">Business Name</span>
+              </div>
+              <div style="display: flex; justify-content: space-between;">
+                <span style="color: var(--cht-text-muted); font-size: 0.85rem;">Applicant:</span>
+                <span style="color: #fff; font-weight: 600;" id="confirmName">Applicant Name</span>
+              </div>
+            </div>
+
+            <div style="display: flex; justify-content: center; gap: 14px; flex-wrap: wrap;">
+              <a id="confirmWhatsappLink" href="#" target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-primary">
+                Chat Directly on WhatsApp with Reference
+              </a>
+              <a href="index.html" class="cht-btn cht-btn-outline">
+                Return toHome
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Authoritative Sources Reference Note (for compliance & verification) -->
+    <section class="cht-section" style="padding-top: 0;">
+      <div class="cht-container">
+        <div style="background: rgba(14, 37, 25, 0.7); border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 20px; font-size: 0.82rem; color: var(--cht-text-muted); line-height: 1.6;">
+          <strong>official Source Verification:</strong> Statutory requirements referenced in this guide are based on current procedures from the Corporate Affairs Commission (CAC) Nigeria Company Registration Portal (CRP), Companies and Allied Matters Act (CAMA 2020), and official circulars (verified directly by the Coach Hyela Corporate Affairs advisory team under CAMA 2020 provisions).
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="cht-footer">
+    <div class="cht-container">
+      <div class="cht-footer-bottom">
+        <div>&copy; 2026 Coach Hyela Tech Industries Limited. All Rights Reserved.</div>
+        <div>
+          <a href="privacy.html">Privacy Policy</a> • <a href="contact.html">Contact Us</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cht-core.js"></script>
+  <script>
+    // State
+    let currentCategory = 'business-name';
+    let contentData = null;
+
+    // Fetch dynamic content on load
+    fetch('data/content.json')
+      .then(res => res.json())
+      .then(data => {
+        contentData = data;
+        renderCategoryChecklist(currentCategory);
+        // Check URL parameters for pre-selected type
+        const urlParams = new URLSearchParams(window.location.search);
+        const preType = urlParams.get('type');
+        if (preType && ['business-name', 'llc-company', 'incorporated-trustees'].includes(preType)) {
+          selectCACType(preType);
+        }
+      })
+      .catch(err => {
+        console.warn('Could not load content.json, falling back', err);
+      });
+
+    function selectCACType(typeId) {
+      currentCategory = typeId;
+      document.getElementById('formSelectedType').value = typeId;
+      
+      // Update UI selection classes
+      ['business-name', 'llc-company', 'incorporated-trustees'].forEach(id => {
+        const card = document.getElementById('card-' + id);
+        if (card) {
+          if (id === typeId) card.classList.add('selected');
+          else card.classList.remove('selected');
+        }
+      });
+
+      if (contentData) {
+        renderCategoryChecklist(typeId);
+      }
+    }
+
+    function renderCategoryChecklist(typeId) {
+      if (!contentData || !contentData.cacCategories) return;
+      const cat = contentData.cacCategories.find(c => c.id === typeId);
+      if (!cat) return;
+
+      document.getElementById('stage2EntityTag').textContent = cat.formCode;
+      document.getElementById('stage2EntityTitle').textContent = cat.name;
+      document.getElementById('stage2EntityDesc').textContent = cat.whoItIsFor + ' • Expected Timeline: ' + cat.timeline;
+      document.getElementById('stage3FormTag').textContent = cat.name;
+
+      // Render Client Checklist
+      const clientCont = document.getElementById('clientChecklistContainer');
+      clientCont.innerHTML = cat.requiredFromClient.map(item => `
+        <div class="cht-check-item">
+          <span class="cht-check-icon">✓</span>
+          <span>${item}</span>
+        </div>
+      `).join('');
+
+      // Render Hyela Handled
+      const hyelaCont = document.getElementById('hyelaHandledContainer');
+      hyelaCont.innerHTML = cat.handledByCoachHyela.map(item => `
+        <div class="cht-check-item">
+          <span class="cht-check-icon" style="color:#22C55E;">✦</span>
+          <span>${item}</span>
+        </div>
+      `).join('');
+
+      // Render Fee Explainer
+      document.getElementById('feesExplainer').textContent = cat.feesNote;
+    }
+
+    function goToStage(stageNum) {
+      // Hide all stages
+      document.querySelectorAll('.cac-wizard-stage').forEach(el => el.style.display = 'none');
+      
+      // Show selected stage
+      const target = document.getElementById('cacStage' + stageNum);
+      if (target) {
+        target.style.display = 'block';
+        window.scrollTo({ top: target.offsetTop - 100, behavior: 'smooth' });
+      }
+
+      // Update wizard node indicators
+      for (let i = 1; i <= 4; i++) {
+        const node = document.getElementById('stepNode' + i);
+        if (node) {
+          node.classList.remove('active', 'completed');
+          if (i === stageNum) {
+            node.classList.add('active');
+          } else if (i < stageNum) {
+            node.classList.add('completed');
+          }
+        }
+      }
+    }
+
+    function handleCACSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      
+      // Generate clean reference code
+      const refCode = 'CHT-CAC-' + new Date().getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+      
+      const submission = {
+        reference: refCode,
+        timestamp: new Date().toISOString(),
+        entityType: currentCategory,
+        nameoption1: form.nameoption1.value,
+        nameoption2: form.nameoption2.value,
+        businessobjectives: form.businessobjectives.value,
+        businessAddress: form.businessAddress.value,
+        fullName: form.fullName.value,
+        dob: form.dob.value,
+        applicantPhone: form.applicantPhone.value,
+        applicantEmail: form.applicantEmail.value,
+        residentialAddress: form.residentialAddress.value,
+        idType: form.idType.value,
+        idNumber: form.idNumber.value,
+        additionalNotes: form.additionalNotes.value
+      };
+
+      // Save safely intoCHT state
+      CHT.saveCACSubmission(submission);
+
+      // Populate confirmation screen
+      document.getElementById('confirmRefCode').textContent = refCode;
+      document.getElementById('confirmCategory').textContent = currentCategory.replace('-', ' ').toUpperCase();
+      document.getElementById('confirmName').textContent = form.fullName.value;
+      
+      // WhatsApp prefilled message
+      const waMsg = encodeURIComponent(`HelloCoach Hyela, I just submitted my CAC Registration Request on your website.\n\nReference: ${refCode}\nName: ${form.fullName.value}\nEntity: ${currentCategory}\nChoice 1: ${form.nameoption1.value}`);
+      document.getElementById('confirmWhatsappLink').href = `https://wa.me/2349159637287?text=${waMsg}`;
+
+      // Advance tostage 4
+      goToStage(4);
+    }
+  </script>
+</body>
+</html>

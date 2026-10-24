@@ -1,0 +1,928 @@
+﻿<!DoCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coach Hyela Tech Industries Limited | Tech &rdquo;¢ Creativity &rdquo;¢ Impact</title>
+  <meta name="description" content="official website of Coach Hyela Tech Industries Limited. Nigerian technology, creativity, practical AI training, and business support services.">
+  <meta name="keywords" content="Coach Hyela, AI training, CAC registration support, business plans, AI videocreation, UGC video, tech company Nigeria">
+  
+  <!-- openGraph / Social Sharing -->
+  <meta property="og:title" content="Coach Hyela Tech Industries Limited">
+  <meta property="og:description" content="Tech &rdquo;¢ Creativity &rdquo;¢ Impact. Empowering individuals and businesses through practical AI skills and corporate support.">
+  <meta property="og:image" content="assets/icons/logo.svg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  
+  <!-- Google Fonts Preconnect & Inter / Cinzel -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Main Stylesheet -->
+  <link rel="stylesheet" href="css/cht-style.css">
+
+  <style>
+    /* HeroSection Visuals */
+    .cht-hero{
+      position: relative;
+      padding: 70px 0 90px 0;
+      background: radial-gradient(circle at 80% 20%, rgba(20, 70, 45, 0.45) 0%, rgba(7, 30, 19, 0.95) 70%);
+      overflow: hidden;
+      border-bottom: 1px solid var(--cht-border-subtle);
+    }
+
+    .cht-hero-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    @media (min-width: 992px) {
+      .cht-hero{
+        padding: 100px 0 120px 0;
+      }
+      .cht-hero-grid {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+    }
+
+    .cht-hero-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 18px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid var(--cht-border);
+      border-radius: var(--cht-radius-full);
+      color: var(--cht-gold-light);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .cht-hero-title {
+      font-size: 2.5rem;
+      line-height: 1.18;
+      margin-bottom: 22px;
+      color: #FFFFFF;
+    }
+
+    @media (min-width: 768px) {
+      .cht-hero-title {
+        font-size: 3.5rem;
+      }
+    }
+
+    .cht-hero-lead {
+      font-size: 1.15rem;
+      color: var(--cht-text-secondary);
+      margin-bottom: 34px;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .cht-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .cht-hero-media-wrapper {
+      position: relative;
+      border-radius: var(--cht-radius-lg);
+      padding: 6px;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.5), rgba(12, 46, 29, 0.3) 50%, rgba(212, 175, 55, 0.2));
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), var(--cht-shadow-gold);
+    }
+
+    .cht-hero-video-box {
+      border-radius: calc(var(--cht-radius-lg) - 4px);
+      overflow: hidden;
+      background: #000;
+      position: relative;
+    }
+
+    .cht-hero-video-box video{
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cht-hero-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      background: rgba(9, 25, 16, 0.88);
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--cht-border);
+      border-radius: var(--cht-radius-md);
+      padding: 14px 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .cht-hero-badge-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: var(--cht-radius-sm);
+      background: rgba(212, 175, 55, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--cht-gold-light);
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    /* Core Pillars Strip */
+    .cht-pillars-strip {
+      background: var(--cht-bg-surface);
+      border-top: 1px solid var(--cht-border-subtle);
+      border-bottom: 1px solid var(--cht-border-subtle);
+      padding: 40px 0;
+    }
+
+    .cht-pillar-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .cht-pillar-num {
+      font-family: var(--font-serif);
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--cht-gold-500);
+      line-height: 1;
+      opacity: 0.8;
+    }
+
+    .cht-pillar-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .cht-pillar-desc {
+      font-size: 0.9rem;
+      color: var(--cht-text-muted);
+      line-height: 1.5;
+    }
+
+    /* Trust & Disclaimers Box */
+    .cht-trust-box {
+      background: linear-gradient(180deg, rgba(14, 37, 25, 0.9) 0%, rgba(9, 25, 16, 0.95) 100%);
+      border: 1px solid var(--cht-border);
+      border-radius: var(--cht-radius-lg);
+      padding: 36px;
+      margin-top: 50px;
+    }
+
+    .cht-trust-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Contact Announcement Bar -->
+  <div class="cht-top-bar" aria-label="official contact bar">
+    <div class="cht-container">
+      <div class="cht-top-bar-inner">
+        <div>
+          <span>official Nigerian Technology & Business Support Company</span>
+        </div>
+        <div class="cht-top-contact">
+          <a href="tel:09159637287" title="Call Coach Hyela">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            0915-963-7287
+          </a>
+          <a href="mailto:coachhyelatech@gmail.com" title="Email Coach Hyela">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            coachhyelatech@gmail.com
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Primary Sticky Navigation -->
+  <header class="cht-navbar">
+    <div class="cht-container">
+      <div class="cht-navbar-inner">
+        <!-- Logo-->
+        <a href="index.html" class="cht-brand-log&#10003; aria-label="Coach Hyela Tech Industries Home">
+          <img src="assets/icons/logo.svg" alt="Coach Hyela Tech Industries Limited Monogram Log&#10003; width="220" height="52">
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav aria-label="Main Navigation">
+          <ul class="cht-nav-links">
+            <li><a href="index.html" class="cht-nav-link active">Home</a></li>
+            <li><a href="about.html" class="cht-nav-link">About</a></li>
+            <li><a href="training.html" class="cht-nav-link">Training</a></li>
+            <li class="cht-dropdown">
+              <a href="services.html" class="cht-nav-link">Business Services &#9662;</a>
+              <div class="cht-dropdown-menu">
+                <a href="services.html#cac-support" class="cht-dropdown-item">CAC Registration Support</a>
+                <a href="services.html#business-plans" class="cht-dropdown-item">Business Plans & Feasibility</a>
+                <a href="services.html#loan-support" class="cht-dropdown-item">Loan Documentation Support</a>
+                <a href="services.html#cyber-cafe" class="cht-dropdown-item">Cyber Cafe & Portal Support</a>
+                <a href="services.html#web-solutions" class="cht-dropdown-item">Websites & Digital Solutions</a>
+                <a href="services.html#branding-design" class="cht-dropdown-item">Graphic Design & Branding</a>
+              </div>
+            </li>
+            <li><a href="cac.html" class="cht-nav-link">CAC Registration</a></li>
+            <li><a href="certificates.html" class="cht-nav-link">Student Portal &amp; Certificates</a></li>
+            <li><a href="contact.html" class="cht-nav-link">Contact</a></li>
+          </ul>
+        </nav>
+
+        <!-- CTA & Mobile Trigger -->
+        <div style="display: flex; align-items: center; gap: 14px;">
+          <a href="cac.html" class="cht-btn cht-btn-primary cht-btn-sm" style="display: none; @media(min-width: 640px){display:inline-flex;}">
+            Start Registration
+          </a>
+          <button class="cht-menu-toggle" aria-label="open mobile navigation menu" aria-expanded="false">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer overlay & Menu -->
+  <div class="cht-drawer-overlay"></div>
+  <aside class="cht-mobile-drawer" aria-label="Mobile Navigation" aria-hidden="true">
+    <div class="cht-drawer-header">
+      <img src="assets/icons/logo.svg" alt="Coach Hyela Logo" style="height: 40px; width: auto;">
+      <button class="cht-drawer-close" aria-label="Close menu" style="background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;">&#10005;</button>
+    </div>
+    <ul class="cht-drawer-links">
+      <li><a href="index.html" class="cht-drawer-link">Home</a></li>
+      <li><a href="about.html" class="cht-drawer-link">About Company</a></li>
+      <li><a href="training.html" class="cht-drawer-link">AI & Digital Training</a></li>
+      <li>
+        <a href="services.html" class="cht-drawer-link">Business Services</a>
+        <div class="cht-drawer-sublinks">
+          <a href="services.html#cac-support">CAC Registration Support</a>
+          <a href="services.html#business-plans">Business Plans</a>
+          <a href="services.html#loan-support">Loan Documentation</a>
+          <a href="services.html#web-solutions">Websites & Portals</a>
+          <a href="services.html#branding-design">Branding & Graphics</a>
+        </div>
+      </li>
+      <li><a href="cac.html" class="cht-drawer-link">CAC Interactive Guide</a></li>
+      <li><a href="certificates.html" class="cht-drawer-link">Student Portal &amp; Certificates</a></li>
+      <li><a href="verify.html" class="cht-drawer-link">QR Verification Tool</a></li>
+      <li><a href="contact.html" class="cht-drawer-link">Contact & Support</a></li>
+    </ul>
+    <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px;">
+      <a href="cac.html" class="cht-btn cht-btn-primary">Start CAC Request</a>
+      <a href="certificates.html" class="cht-btn cht-btn-outline">Learner Portal</a>
+    </div>
+  </aside>
+
+  <!-- HeroSection -->
+  <main id="main-content">
+    <section class="cht-hero">
+      <div class="cht-container">
+        <div class="cht-hero-grid">
+          <!-- Text Column -->
+          <div>
+            <div class="cht-hero-tagline">
+              <span>Tech &rdquo;¢ Creativity &rdquo;¢ Impact</span>
+            </div>
+            <h1 class="cht-hero-title heading-serif">
+              Practical Technology &amp; <span class="gold-gradient-text">Business Support</span> Built for Real Results
+            </h1>
+            <p class="cht-hero-lead">
+              Coach Hyela Tech Industries Limited equips individuals and entrepreneurs with practical artificial intelligence skills, modern creative workflows, and compliant CAC business registration support.
+            </p>
+            <div class="cht-hero-actions">
+              <a href="training.html" class="cht-btn cht-btn-primary">
+                Explore AI Training
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+              </a>
+              <a href="cac.html" class="cht-btn cht-btn-secondary">
+                Start CAC Registration
+              </a>
+              <a href="contact.html" class="cht-btn cht-btn-outline">
+                Contact Us
+              </a>
+            </div>
+
+          </div>
+
+          <!-- Branded CHT Technology & Creative StudioShowcase -->
+          <div class="cht-hero-media-wrapper">
+            <div style="background: linear-gradient(145deg, #0C2E1D 0%, #061A0F 100%); border: 1px solid var(--cht-border-strong); border-radius: calc(var(--cht-radius-lg) - 4px); padding: 36px 28px; text-align: center; box-shadow: var(--cht-shadow-lg);">
+              <div style="display: inline-flex; align-items: center; justify-content: center; width: 80px; height: 80px; border-radius: 16px; background: rgba(212, 175, 55, 0.12); border: 2px solid var(--cht-gold-500); margin-bottom: 20px;">
+                <span style="font-family: var(--font-serif); font-size: 2.2rem; color: var(--cht-gold-light); letter-spacing: 2px;">CHT</span>
+              </div>
+              <h3 style="font-family: var(--font-serif); font-size: 1.4rem; font-weight: 700; color: #FFFFFF; margin-bottom: 10px;">
+                Coach Hyela Tech Industries
+              </h3>
+              <p style="font-size: 0.92rem; color: var(--cht-gold-light); font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 20px;">
+                Tech &bull; Creativity &bull; Impact
+              </p>
+              <div style="background: rgba(0,0,0,0.3); border: 1px solid var(--cht-border-subtle); border-radius: 10px; padding: 18px; text-align: left; margin-bottom: 20px; font-size: 0.88rem; color: var(--cht-text-secondary); line-height: 1.7;">
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <span style="color: var(--cht-gold-500); font-weight: bold;">&#10003;</span>
+                  <span>Practical Artificial Intelligence Training</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <span style="color: var(--cht-gold-500); font-weight: bold;">&#10003;</span>
+                  <span>AI Video Creation &amp; High-Impact UGC Media</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <span style="color: var(--cht-gold-500); font-weight: bold;">&#10003;</span>
+                  <span>CAC Business Registration &amp; Documentation</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="color: var(--cht-gold-500); font-weight: bold;">&#10003;</span>
+                  <span>Business Planning &amp; Creative Automation</span>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: center; gap: 10px;">
+                <a href="training.html" class="cht-btn cht-btn-primary cht-btn-sm">Explore Courses</a>
+                <a href="cac.html" class="cht-btn cht-btn-outline cht-btn-sm">CAC Support</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Rolling Cohort & Pricing Ticker -->
+    <div class="cht-ticker-wrap" aria-label="Announcement Ticker">
+      <div class="cht-ticker-move">
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">November 2026 Cohort</span>
+          <span>Next Intensive Practical Training Cohort Begins This <strong>November</strong></span>
+        </div>
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">Enrolment Active</span>
+          <span>Priority Slot Booking Is Open &bull; <strong>Price To Be Announced Soon</strong></span>
+        </div>
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">Official Payment</span>
+          <span>PalmPay / Direct Transfer: <strong>7011706511</strong> (Eljoshua Hyelakuri Emmanuel)</span>
+        </div>
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">November 2026 Cohort</span>
+          <span>Next Intensive Practical Training Cohort Begins This <strong>November</strong></span>
+        </div>
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">Enrolment Active</span>
+          <span>Priority Slot Booking Is Open &bull; <strong>Price To Be Announced Soon</strong></span>
+        </div>
+        <div class="cht-ticker-item">
+          <span class="cht-ticker-pill">Official Payment</span>
+          <span>PalmPay / Direct Transfer: <strong>7011706511</strong> (Eljoshua Hyelakuri Emmanuel)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Three Pillars Strip -->
+    <section class="cht-pillars-strip" aria-label="Company Core Pillars">
+      <div class="cht-container">
+        <div class="cht-grid cht-grid-3">
+          <div class="cht-pillar-item">
+            <span class="cht-pillar-num">01</span>
+            <div>
+              <h2 class="cht-pillar-title">Tech</h2>
+              <p class="cht-pillar-desc">Modern web solutions, automated business workflows, and practical artificial intelligence tools to10x productivity.</p>
+            </div>
+          </div>
+          <div class="cht-pillar-item">
+            <span class="cht-pillar-num">02</span>
+            <div>
+              <h2 class="cht-pillar-title">Creativity</h2>
+              <p class="cht-pillar-desc">AI videogeneration, UGC-style marketing campaigns, and distinct brand identity that commands client trust.</p>
+            </div>
+          </div>
+          <div class="cht-pillar-item">
+            <span class="cht-pillar-num">03</span>
+            <div>
+              <h2 class="cht-pillar-title">Impact</h2>
+              <p class="cht-pillar-desc">Guiding Nigerian entrepreneurs through legal CAC formalization, bankable business plans, and verifiable skills.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Training Preview Section -->
+    <section class="cht-section">
+      <div class="cht-container">
+        <div class="cht-section-header">
+          <span class="cht-section-tag">Empowerment Through Skills</span>
+          <h2 class="cht-section-title heading-serif">Confirmed AI &amp; Digital Skills Programmes</h2>
+          <p class="cht-section-desc">
+            Learn directly from real practical workflows. Every course is focused on tangible commercial output, client acquisition, and measurable efficiency.
+          </p>
+        </div>
+
+        <div class="cht-grid cht-grid-2">
+          <!-- Course Card 1 -->
+          <div class="cht-card">
+            <div class="cht-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect><line x1="7" y1="2" x2="7" y2="22"></line><line x1="17" y1="2" x2="17" y2="22"></line><line x1="2" y1="12" x2="22" y2="12"></line><line x1="2" y1="7" x2="7" y2="7"></line><line x1="2" y1="17" x2="7" y2="17"></line><line x1="17" y1="17" x2="22" y2="17"></line><line x1="17" y1="7" x2="22" y2="7"></line></svg></div>
+            <div style="font-size: 0.8rem; color: var(--cht-gold-500); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Popular Practical Track</div>
+            <div class="cht-pricing-rolling" style="margin-bottom: 10px;"><span class="cht-pulse-dot"></span> Next Cohort: November 2026 &bull; Price To Be Announced Soon</div>
+            <h3 class="cht-card-title">AI Video Creation &amp; UGC Advertising</h3>
+            <p class="cht-card-text">
+              Master prompt engineering for photorealistic AI video scenes, AI avatar lip-sync, voice cloning, and CapCut post-production for high-converting marketing ads.
+            </p>
+            <div style="border-top: 1px solid var(--cht-border-subtle); padding-top: 16px; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--cht-text-muted);">4 Weeks Intensive</span>
+              <button type="button" onclick="openBookingModal('AI Video Creation & UGC Advertising')" class="cht-btn cht-btn-primary cht-btn-sm">Book November Slot</button>
+              <a href="training.html#ai-video-ugc" class="cht-btn cht-btn-outline cht-btn-sm">Curriculum &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Course Card 2 -->
+          <div class="cht-card">
+            <div class="cht-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a4 4 0 0 0-4 4v1H7a5 5 0 0 0-5 5c0 2.2 1.4 4.1 3.4 4.7A4.98 4.98 0 0 0 9 21.9V22h6v-.1c1.8-.4 3.3-1.8 3.6-3.6 2-.6 3.4-2.5 3.4-4.7a5 5 0 0 0-5-5h-1V6a4 4 0 0 0-4-4z"></path></svg></div>
+            <div style="font-size: 0.8rem; color: var(--cht-gold-500); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Everyday Productivity</div>
+            <div class="cht-pricing-rolling" style="margin-bottom: 10px;"><span class="cht-pulse-dot"></span> Next Cohort: November 2026 &bull; Price To Be Announced Soon</div>
+            <h3 class="cht-card-title">AI &amp; Creative Workflows for Individuals</h3>
+            <p class="cht-card-text">
+              Learn practical generative AI tooling (LLMs, Canva AI, Claude, ChatGPT) for automating research, drafting business proposals, and creative daily workflows.
+            </p>
+            <div style="border-top: 1px solid var(--cht-border-subtle); padding-top: 16px; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--cht-text-muted);">3 Weeks Cohort</span>
+              <button type="button" onclick="openBookingModal('AI & Creative Workflows for Individuals')" class="cht-btn cht-btn-primary cht-btn-sm">Book November Slot</button>
+              <a href="training.html#ai-digital-skills" class="cht-btn cht-btn-outline cht-btn-sm">Curriculum &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Course Card 3 -->
+          <div class="cht-card">
+            <div class="cht-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg></div>
+            <div style="font-size: 0.8rem; color: var(--cht-gold-500); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">Technical Track</div>
+            <div class="cht-pricing-rolling" style="margin-bottom: 10px;"><span class="cht-pulse-dot"></span> Next Cohort: November 2026 &bull; Price To Be Announced Soon</div>
+            <h3 class="cht-card-title">100% AI Website &amp; Web App Building (Zero Coding)</h3>
+            <p class="cht-card-text">
+              Build, test, host, and launch modern websites and apps 100% using AI and free platforms. No manual coding or HTML5 required &mdash; build and deploy live assets even directly from an Android smartphone.
+            </p>
+            <div style="border-top: 1px solid var(--cht-border-subtle); padding-top: 16px; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--cht-text-muted);">6 Weeks Hands-on</span>
+              <button type="button" onclick="openBookingModal('100% AI Website & Web App Building')" class="cht-btn cht-btn-primary cht-btn-sm">Book November Slot</button>
+              <a href="training.html#website-building" class="cht-btn cht-btn-outline cht-btn-sm">Curriculum &rarr;</a>
+            </div>
+          </div>
+
+          <!-- Course Card 4 -->
+          <div class="cht-card">
+            <div class="cht-card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg></div>
+            <div style="font-size: 0.8rem; color: var(--cht-gold-500); font-weight: 700; text-transform: uppercase; margin-bottom: 8px;">operations &amp; Growth</div>
+            <div class="cht-pricing-rolling" style="margin-bottom: 10px;"><span class="cht-pulse-dot"></span> Next Cohort: November 2026 &bull; Price To Be Announced Soon</div>
+            <h3 class="cht-card-title">Business &amp; Creative Automation</h3>
+            <p class="cht-card-text">
+              Connect everyday business tools, automate WhatsApp lead follow-ups, and generate invoices automatically toscale your venture efficiently.
+            </p>
+            <div style="border-top: 1px solid var(--cht-border-subtle); padding-top: 16px; margin-top: auto; display: flex; justify-content: space-between; align-items: center;">
+              <span style="font-size: 0.85rem; color: var(--cht-text-muted);">3 Weeks Lab</span>
+              <button type="button" onclick="openBookingModal('Business & Creative Automation')" class="cht-btn cht-btn-primary cht-btn-sm">Book November Slot</button>
+              <a href="training.html#business-automation" class="cht-btn cht-btn-outline cht-btn-sm">Curriculum &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="training.html" class="cht-btn cht-btn-primary">
+            Explore Full Course Catalogue &amp; Enrolment &rarr;
+          </a>
+        </div>
+
+
+        <!-- Official Payment Details Card -->
+        <div class="cht-payment-card" style="margin-top: 40px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px;">
+            <div>
+              <span class="cht-section-tag" style="background: rgba(212, 175, 55, 0.2);">Official Payment Channels</span>
+              <h3 class="heading-serif" style="color: #fff; font-size: 1.5rem; margin-top: 6px;">PalmPay &amp; Bank Transfer Credentials</h3>
+              <p style="color: var(--cht-text-secondary); font-size: 0.95rem; max-width: 650px; margin-top: 6px;">
+                Official tuition and slot reservations for Coach Hyela Tech Industries Limited are processed securely via PalmPay and direct bank transfer. Always verify the beneficiary name before confirming payment.
+              </p>
+            </div>
+            <div style="text-align: right;">
+              <span class="status-pill approved" style="font-size: 0.85rem; padding: 6px 14px;">Active &bull; Verified</span>
+            </div>
+          </div>
+
+          <div class="cht-grid cht-grid-2" style="margin-top: 24px; gap: 20px;">
+            <div class="cht-account-number-box">
+              <div>
+                <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--cht-text-muted);">PalmPay Account Number</div>
+                <div class="cht-acc-num">7011706511</div>
+              </div>
+              <button type="button" class="cht-copy-btn" onclick="copyAccountNumber('7011706511', this)">Copy Number</button>
+            </div>
+
+            <div class="cht-account-number-box">
+              <div>
+                <div style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1px; color: var(--cht-text-muted);">Account Beneficiary Name</div>
+                <div style="font-size: 1.15rem; font-weight: 700; color: #FFFFFF;">Eljoshua Hyelakuri Emmanuel</div>
+              </div>
+              <span style="font-size: 0.8rem; color: var(--cht-gold-light);">Official Beneficiary</span>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px; border-top: 1px solid rgba(212, 175, 55, 0.2); padding-top: 18px;">
+            <div style="font-size: 0.85rem; color: var(--cht-text-muted);">
+              After transfer or PalmPay payment, forward your transaction reference to WhatsApp <strong>0915-963-7287</strong> or log in to the Student Portal.
+            </div>
+            <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" onclick="openBookingModal('November 2026 Cohort')">
+              Reserve Your November Slot &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CAC Interactive Feature Callout -->
+    <section class="cht-section" style="background: var(--cht-bg-surface); border-top: 1px solid var(--cht-border-subtle); border-bottom: 1px solid var(--cht-border-subtle);">
+      <div class="cht-container">
+        <div class="cht-grid cht-grid-2" style="align-items: center;">
+          <div>
+            <span class="cht-section-tag">Corporate Affairs Commission Guide</span>
+            <h2 class="cht-section-title heading-serif">
+              Register Your Business with Confidence
+            </h2>
+            <p class="cht-section-desc" style="margin-bottom: 24px;">
+              Avoid common registration delays and query rejections on the CAC portal. our interactive guide walks you through current documentation rules for Business Names, Limited Liability Companies, and Incorporated Trustees.
+            </p>
+            <ul style="list-style: none; display: flex; flex-direction: column; gap: 14px; margin-bottom: 30px;">
+              <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: var(--cht-text-secondary);">
+                <span style="color: var(--cht-gold-500); font-size: 1.1rem;">&#10003;</span>
+                <span><strong>Pre-screened Name Search:</strong> We check availability and verify name eligibility before submission.</span>
+              </li>
+              <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: var(--cht-text-secondary);">
+                <span style="color: var(--cht-gold-500); font-size: 1.1rem;">&#10003;</span>
+                <span><strong>Accurate Documentation:</strong> We prepare and verify valid IDs, MEMART, and resolutions in full CAMA compliance.</span>
+              </li>
+              <li style="display: flex; align-items: flex-start; gap: 12px; font-size: 0.95rem; color: var(--cht-text-secondary);">
+                <span style="color: var(--cht-gold-500); font-size: 1.1rem;">&#10003;</span>
+                <span><strong>Transparent Processing:</strong> Nofalse 24-hour promises; clear distinction between statutory CAC fees and our support fee.</span>
+              </li>
+            </ul>
+            <a href="cac.html" class="cht-btn cht-btn-primary">
+              Launch Guided CAC Selector &rarr;
+            </a>
+          </div>
+
+          <div style="background: var(--cht-bg-card); border: 1px solid var(--cht-border); border-radius: var(--cht-radius-lg); padding: 30px; box-shadow: var(--cht-shadow-md);">
+            <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 16px; margin-bottom: 20px;">
+              <span style="font-weight: 700; color: #fff;">official Entity Categories</span>
+              <span style="font-size: 0.75rem; background: rgba(34, 197, 94, 0.2); color: #86EFAC; padding: 4px 10px; border-radius: 99px;">CAMA 2020 Compliant</span>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 14px;">
+              <a href="cac.html?type=business-name" style="display: block; padding: 14px; background: rgba(0,0,0,0.25); border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); text-decoration: none;">
+                <div style="font-weight: 600; color: #fff; margin-bottom: 4px;">Business Name (Sole Proprietor / Partnership)</div>
+                <div style="font-size: 0.85rem; color: var(--cht-text-muted);">Quickest route for trading names, soloconsultants, and retail shops.</div>
+              </a>
+              <a href="cac.html?type=llc-company" style="display: block; padding: 14px; background: rgba(0,0,0,0.25); border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); text-decoration: none;">
+                <div style="font-weight: 600; color: #fff; margin-bottom: 4px;">Private Limited Liability Company (LTD)</div>
+                <div style="font-size: 0.85rem; color: var(--cht-text-muted);">Separate corporate personality, share capital, and director governance.</div>
+              </a>
+              <a href="cac.html?type=incorporated-trustees" style="display: block; padding: 14px; background: rgba(0,0,0,0.25); border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); text-decoration: none;">
+                <div style="font-weight: 600; color: #fff; margin-bottom: 4px;">Incorporated Trustees (NGos, Foundations &amp; Clubs)</div>
+                <div style="font-size: 0.85rem; color: var(--cht-text-muted);">Non-profit corporate entity with formal constitution and trustee board.</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certificate Verification Teaser -->
+    <section class="cht-section">
+      <div class="cht-container">
+        <div class="cht-card" style="background: radial-gradient(circle at 10% 50%, rgba(20, 70, 45, 0.5) 0%, rgba(12, 46, 29, 0.8) 100%); border-color: var(--cht-border-strong);">
+          <div class="cht-grid cht-grid-2" style="align-items: center;">
+            <div>
+              <span class="cht-section-tag" style="background: rgba(212, 175, 55, 0.2);">Learner Credentials &amp; Verification</span>
+              <h2 class="cht-section-title heading-serif" style="font-size: 2.2rem; margin-bottom: 16px;">
+                Verified Coach Hyela Digital Certificates
+              </h2>
+              <p style="color: var(--cht-text-secondary); line-height: 1.7; margin-bottom: 24px;">
+                Eligible learners can sign in toview their enrolled programmes, download print-ready certificates, and present employers with an instantly scannable, tamper-evident QR verification page.
+              </p>
+              <div style="display: flex; flex-wrap: wrap; gap: 14px;">
+                <a href="certificates.html" class="cht-btn cht-btn-primary">
+                  Learner Portal Sign-In
+                </a>
+                <a href="verify.html" class="cht-btn cht-btn-outline">
+                  Scan / Verify Certificate
+                </a>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px;">
+              <div style="display: inline-flex; flex-direction: column; align-items: center; justify-content: center; background: #FAF7F0; padding: 20px; border-radius: var(--cht-radius-md); box-shadow: var(--cht-shadow-lg); border: 2px solid var(--cht-gold-500);">
+                <div id="demo-hero-qr" style="display: flex; justify-content: center; align-items: center;"></div>
+                <div style="color: #0A2919; font-size: 0.8rem; font-weight: 800; margin-top: 12px; letter-spacing: 1px; text-transform: uppercase;">
+                  Scan to Verify Authenticity
+                </div>
+                <div style="font-size: 0.72rem; color: #4B5563; margin-top: 4px;">Coach Hyela Official Credential</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Standards Section -->
+    <section class="cht-section" style="padding-top: 0;">
+      <div class="cht-container">
+        <div class="cht-trust-box">
+          <div class="cht-trust-header">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--cht-gold-500)" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <h3 class="heading-serif" style="font-size: 1.4rem; color: #fff;">Our Commitment to Professional Standards &amp; Transparency</h3>
+          </div>
+          <div class="cht-grid cht-grid-2" style="font-size: 0.92rem; color: var(--cht-text-secondary); line-height: 1.7;">
+            <div>
+              <p style="margin-bottom: 12px;">
+                <strong>Responsible Service Representations:</strong> Coach Hyela Tech Industries Limited provides expert documentation, name search, and filing assistance. official approval and statutory processing timelines remain under the discretion of the Corporate Affairs Commission (CAC).
+              </p>
+              <p>
+                <strong>Practical Training Standards:</strong> our training modules are designed for hands-on application and commercial digital skills. Every certificate issued is backed by verifiable capstone project evaluations.
+              </p>
+            </div>
+            <div>
+              <p style="margin-bottom: 12px;">
+                <strong>Financial Documentation Support:</strong> Business plans and financial records are prepared in alignment with professional institutional benchmarks. Credit decisions and loan disbursements remain the exclusive prerogative of lending bodies.
+              </p>
+              <p>
+                <strong>Independent Corporate Identity:</strong> Coach Hyela Tech Industries Limited operates strictly as an autonomous technology, creativity, training, and business-support enterprise.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Complete Standard Footer -->
+  <footer class="cht-footer">
+    <div class="cht-container">
+      <div class="cht-footer-grid">
+        <!-- Col 1: Brand & Tagline -->
+        <div class="cht-footer-col">
+          <img src="assets/icons/logo.svg" alt="Coach Hyela Tech Industries Limited" style="height: 48px; margin-bottom: 18px;">
+          <p style="color: var(--cht-text-muted); font-size: 0.9rem; line-height: 1.6; margin-bottom: 16px;">
+            A Nigerian technology, creativity, training, and business-support company.
+          </p>
+          <div style="font-weight: 700; color: var(--cht-gold-light); font-size: 0.88rem; letter-spacing: 1.5px;">
+            TECH &rdquo;¢ CREATIVITY &rdquo;¢ IMPACT
+          </div>
+        </div>
+
+        <!-- Col 2: Navigation -->
+        <div class="cht-footer-col">
+          <h4>Navigation</h4>
+          <ul class="cht-footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About Company</a></li>
+            <li><a href="training.html">AI &amp; Digital Training</a></li>
+            <li><a href="services.html">Business Services</a></li>
+            <li><a href="cac.html">CAC Registration</a></li>
+            <li><a href="certificates.html">Learner Portal</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 3: Services -->
+        <div class="cht-footer-col">
+          <h4>Key offerings</h4>
+          <ul class="cht-footer-links">
+            <li><a href="training.html#ai-video-ugc">AI Video&amp; UGC Creation</a></li>
+            <li><a href="training.html#ai-digital-skills">AI Workflows for Individuals</a></li>
+            <li><a href="services.html#cac-support">Business Name &amp; LLC Support</a></li>
+            <li><a href="services.html#business-plans">Bank-ReadyBusiness Plans</a></li>
+            <li><a href="services.html#loan-support">Loan Documentation Filing</a></li>
+            <li><a href="verify.html">Verify Certificate</a></li>
+          </ul>
+        </div>
+
+        <!-- Col 4: Verified Contact -->
+        <div class="cht-footer-col">
+          <h4>Direct Contact</h4>
+          <p style="color: var(--cht-text-muted); font-size: 0.9rem; margin-bottom: 14px;">
+            Reach Coach Hyela directly for corporate bookings, training enrolments, and business documentation assistance.
+          </p>
+          <div style="display: flex; flex-direction: column; gap: 10px;">
+            <a href="tel:09159637287" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #fff;">
+              <svg width="16" height="16" fill="var(--cht-gold-500)" viewBox="0 0 24 24"><path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1v3.5a1 1 0 01-1 1A17.93 17.93 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1 11.72 11.72 0 00.59 3.68 1 1 0 01-.24 1.02l-2.23 2.09z"/></svg>
+              0915-963-7287
+            </a>
+            <a href="mailto:coachhyelatech@gmail.com" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #fff;">
+              <svg width="16" height="16" fill="var(--cht-gold-500)" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              coachhyelatech@gmail.com
+            </a>
+            <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20I%20am%20reaching%20out%20from%20your%20website" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600; color: #22C55E;">
+              <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2z"/></svg>
+              Chat on WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="cht-footer-bottom">
+        <div>
+          &copy; 2026 Coach Hyela Tech Industries Limited. All Rights Reserved.
+        </div>
+        <div style="display: flex; gap: 20px;">
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="admin.html" style="color: var(--cht-text-muted); opacity: 0.7;">Admin Access</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/cht-core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Render sample QR code for verification teaser
+      const qrTarget = document.getElementById('demo-hero-qr');
+      if (qrTarget && window.CHT) {
+        const verifyUrl = window.location.origin + '/verify.html?code=CHT-2026-AI092';
+        qrTarget.innerHTML = CHT.generateQRCodeSVG(verifyUrl, 120);
+      }
+    });
+  </script>
+
+  <!-- Interactive Cohort Slot Booking Modal -->
+  <div class="cht-modal-overlay" id="modalBooking" role="dialog" aria-modal="true" aria-labelledby="modalBookingTitle">
+    <div class="cht-modal-card" style="max-width: 540px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 class="heading-serif" id="modalBookingTitle" style="color: #fff; font-size: 1.4rem; margin: 0;">Reserve Your November Slot</h3>
+        <button type="button" class="cht-drawer-close" onclick="closeBookingModal()" style="font-size: 1.4rem; background: none; border: none; color: #fff; cursor: pointer;">&times;</button>
+      </div>
+
+      <div id="bookingFormView">
+        <p style="color: var(--cht-text-secondary); font-size: 0.92rem; margin-bottom: 20px;">
+          The next training cohort begins in <strong>November 2026</strong>. Exact calendar dates and final course pricing will be communicated to registered applicants. Reserve your seat below to secure early admission.
+        </p>
+
+        <form id="formReserveSlot" onsubmit="handleSlotBookingSubmit(event)">
+          <div class="cht-form-group">
+            <label class="cht-label" for="bookFullName">Full Name <span class="req">*</span></label>
+            <input type="text" id="bookFullName" class="cht-input" placeholder="e.g. Samuel Danladi" required>
+          </div>
+
+          <div class="cht-form-group">
+            <label class="cht-label" for="bookEmail">Email Address <span class="req">*</span></label>
+            <input type="email" id="bookEmail" class="cht-input" placeholder="e.g. samuel@example.com" required>
+          </div>
+
+          <div class="cht-form-group">
+            <label class="cht-label" for="bookPhone">Phone / WhatsApp Number <span class="req">*</span></label>
+            <input type="tel" id="bookPhone" class="cht-input" placeholder="e.g. 08012345678" required>
+          </div>
+
+          <div class="cht-form-group">
+            <label class="cht-label" for="bookCourse">Select Training Track <span class="req">*</span></label>
+            <select id="bookCourse" class="cht-select" required>
+              <option value="AI Video Creation & UGC Advertising">AI Video Creation &amp; UGC-Style Advertising</option>
+              <option value="AI & Creative Workflows for Individuals">AI &amp; Creative Workflows for Individuals</option>
+              <option value="Modern Website Building & Digital Solutions">Modern Website Building &amp; Digital Solutions</option>
+              <option value="Business & Creative Automation">Business &amp; Creative Automation</option>
+            </select>
+          </div>
+
+          <div style="background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); border-radius: 8px; padding: 12px; margin-bottom: 20px;">
+            <div style="font-size: 0.8rem; color: var(--cht-gold-light); font-weight: 700; text-transform: uppercase;">Official Payment Reference</div>
+            <div style="font-size: 0.85rem; color: #FFFFFF; margin-top: 4px;">
+              PalmPay / Direct Transfer: <strong>7011706511</strong> &bull; <strong>Eljoshua Hyelakuri Emmanuel</strong>
+            </div>
+          </div>
+
+          <button type="submit" class="cht-btn cht-btn-primary" style="width: 100%;">
+            Confirm Slot Reservation &rarr;
+          </button>
+        </form>
+      </div>
+
+      <!-- Success View -->
+      <div id="bookingSuccessView" style="display: none; text-align: center; padding: 10px 0;">
+        <div style="width: 56px; height: 56px; background: rgba(16, 185, 129, 0.15); border: 1px solid var(--cht-success); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; font-size: 1.8rem; color: var(--cht-success);">
+          &#10003;
+        </div>
+        <h4 class="heading-serif" style="color: #fff; font-size: 1.3rem; margin-bottom: 8px;">Reservation Received!</h4>
+        <p style="color: var(--cht-text-secondary); font-size: 0.9rem; margin-bottom: 16px;">
+          Your priority booking reference is <strong id="bookingRefCode" style="color: var(--cht-gold-light); font-family: monospace; font-size: 1.1rem;"></strong>.
+        </p>
+
+        <div style="background: rgba(0,0,0,0.3); border-radius: 8px; padding: 14px; text-align: left; font-size: 0.85rem; color: var(--cht-text-muted); margin-bottom: 20px;">
+          <div><strong>Track:</strong> <span id="bookingConfCourse" style="color:#fff;"></span></div>
+          <div><strong>Applicant:</strong> <span id="bookingConfName" style="color:#fff;"></span></div>
+          <div><strong>Cohort:</strong> <span style="color:#fff;">November 2026</span></div>
+          <div style="margin-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 8px;">
+            <strong>Official PalmPay / Transfer:</strong> <code>7011706511</code> (Eljoshua Hyelakuri Emmanuel)
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: center;">
+          <a id="bookingWhatsappBtn" href="#" target="_blank" class="cht-btn cht-btn-primary cht-btn-sm">
+            Chat on WhatsApp to Confirm &rarr;
+          </a>
+          <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="closeBookingModal()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script>
+    function openBookingModal(courseTitle) {
+      const modal = document.getElementById('modalBooking');
+      if (modal) {
+        if (courseTitle) {
+          const select = document.getElementById('bookCourse');
+          if (select) {
+            for (let i = 0; i < select.options.length; i++) {
+              if (select.options[i].value === courseTitle || select.options[i].text.includes(courseTitle)) {
+                select.selectedIndex = i;
+                break;
+              }
+            }
+          }
+        }
+        document.getElementById('bookingFormView').style.display = 'block';
+        document.getElementById('bookingSuccessView').style.display = 'none';
+        modal.classList.add('active');
+      }
+    }
+
+    function closeBookingModal() {
+      const modal = document.getElementById('modalBooking');
+      if (modal) modal.classList.remove('active');
+    }
+
+    function copyAccountNumber(accNum, btn) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(accNum).then(() => {
+          const origText = btn.textContent;
+          btn.textContent = 'Copied!';
+          btn.style.background = 'var(--cht-success)';
+          btn.style.color = '#FFFFFF';
+          setTimeout(() => {
+            btn.textContent = origText;
+            btn.style.background = '';
+            btn.style.color = '';
+          }, 2000);
+        });
+      } else {
+        alert('Account Number: ' + accNum);
+      }
+    }
+
+    function handleSlotBookingSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('bookFullName').value.trim();
+      const email = document.getElementById('bookEmail').value.trim();
+      const phone = document.getElementById('bookPhone').value.trim();
+      const course = document.getElementById('bookCourse').value;
+
+      const refCode = 'SLOT-NOV-' + Math.floor(1000 + Math.random() * 9000);
+      const bookingData = { refCode, name, email, phone, course, cohort: 'November 2026', date: new Date().toISOString() };
+
+      const existing = JSON.parse(localStorage.getItem('cht_slot_bookings') || '[]');
+      existing.push(bookingData);
+      localStorage.setItem('cht_slot_bookings', JSON.stringify(existing));
+
+      document.getElementById('bookingRefCode').textContent = refCode;
+      document.getElementById('bookingConfName').textContent = name;
+      document.getElementById('bookingConfCourse').textContent = course;
+
+      const waMsg = encodeURIComponent(`Hello Coach Hyela, I have reserved a slot for the November 2026 cohort.\n\nRef Code: ${refCode}\nName: ${name}\nCourse: ${course}\nEmail: ${email}\nPhone: ${phone}\n\nKindly notify me when the exact dates and final pricing are published.`);
+      document.getElementById('bookingWhatsappBtn').href = `https://wa.me/2349159637287?text=${waMsg}`;
+
+      document.getElementById('bookingFormView').style.display = 'none';
+      document.getElementById('bookingSuccessView').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>

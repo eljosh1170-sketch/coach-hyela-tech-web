@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 380 84" width="380" height="84">
+  <defs>
+    <!-- Rich Multi-tone Metallic Gold Gradients -->
+    <linearGradient id="goldPrimary" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3C4" />
+      <stop offset="25%" stop-color="#E5C07B" />
+      <stop offset="55%" stop-color="#C59B27" />
+      <stop offset="85%" stop-color="#9A7814" />
+      <stop offset="100%" stop-color="#6E5005" />
+    </linearGradient>
+
+    <linearGradient id="goldHighlight" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#AA820A" />
+      <stop offset="50%" stop-color="#FCE5A2" />
+      <stop offset="100%" stop-color="#E5C07B" />
+    </linearGradient>
+
+    <!-- Deep Executive Forest Green Gradient with Vignette Depth -->
+    <radialGradient id="shieldBg" cx="40%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#14432A" />
+      <stop offset="60%" stop-color="#0A2919" />
+      <stop offset="100%" stop-color="#04140C" />
+    </radialGradient>
+
+    <!-- Drop Shadow Filter for 3D Depth -->
+    <filter id="shieldShadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#000000" flood-opacity="0.6" />
+    </filter>
+
+    <filter id="innerBevel" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="1" dy="1" stdDeviation="1" flood-color="#FFF3C4" flood-opacity="0.3" result="light" />
+      <feDropShadow dx="-1" dy="-1" stdDeviation="1" flood-color="#000000" flood-opacity="0.6" result="dark" />
+    </filter>
+  </defs>
+
+  <!-- Left: Prestigious Executive Crest -->
+  <g transform="translate(8, 6)" filter="url(#shieldShadow)">
+    <!-- Outer Octagonal Shield Frame -->
+    <polygon points="12,0 60,0 72,12 72,60 60,72 12,72 0,60 0,12" 
+             fill="url(#shieldBg)" 
+             stroke="url(#goldPrimary)" 
+             stroke-width="2.5" />
+
+    <!-- Delicate Inner Bevel Inset -->
+    <polygon points="15,4 57,4 68,15 68,57 57,68 15,68 4,57 4,15" 
+             fill="none" 
+             stroke="url(#goldHighlight)" 
+             stroke-width="1" 
+             stroke-opacity="0.45" />
+
+    <!-- Corner Diamond Accents -->
+    <circle cx="12" cy="12" r="1.5" fill="url(#goldPrimary)" />
+    <circle cx="60" cy="12" r="1.5" fill="url(#goldPrimary)" />
+    <circle cx="12" cy="60" r="1.5" fill="url(#goldPrimary)" />
+    <circle cx="60" cy="60" r="1.5" fill="url(#goldPrimary)" />
+
+    <!-- Interlocking Classical CHT Monogram Treatment -->
+    <!-- 'C' Arc -->
+    <path d="M 33 24 C 23 24 18 29 18 36 C 18 43 23 48 33 48" 
+          fill="none" 
+          stroke="url(#goldPrimary)" 
+          stroke-width="3.5" 
+          stroke-linecap="round" />
+
+    <!-- 'H' Dual Pillars & Crossbar -->
+    <line x1="33" y1="22" x2="33" y2="50" stroke="url(#goldHighlight)" stroke-width="3" stroke-linecap="round" />
+    <line x1="43" y1="22" x2="43" y2="50" stroke="url(#goldHighlight)" stroke-width="3" stroke-linecap="round" />
+    <line x1="33" y1="36" x2="43" y2="36" stroke="url(#goldPrimary)" stroke-width="2.8" />
+
+    <!-- 'T' Balanced Header & Central Spire -->
+    <line x1="45" y1="22" x2="57" y2="22" stroke="url(#goldPrimary)" stroke-width="3.5" stroke-linecap="round" />
+    <line x1="51" y1="22" x2="51" y2="50" stroke="url(#goldPrimary)" stroke-width="3" stroke-linecap="round" />
+
+    <!-- Center Base Star Accent -->
+    <polygon points="36,56 37.5,59.5 41,59.5 38,61.5 39.5,65 36,63 32.5,65 34,61.5 31,59.5 34.5,59.5" 
+             fill="url(#goldPrimary)" opacity="0.95" />
+  </g>
+
+  <!-- Right: Classic Corporate Typography -->
+  <g transform="translate(94, 28)">
+    <!-- Company Name in Cinzel Elegance -->
+    <text x="0" y="0" 
+          font-family="'Cinzel', 'Playfair Display', Georgia, serif" 
+          font-size="17" 
+          font-weight="700" 
+          letter-spacing="1.4" 
+          fill="#FFFFFF">
+      COACH HYELA
+    </text>
+    
+    <!-- Sub-brand in Plus Jakarta Sans -->
+    <text x="0" y="19" 
+          font-family="'Plus Jakarta Sans', system-ui, sans-serif" 
+          font-size="10.5" 
+          font-weight="600" 
+          letter-spacing="2.6" 
+          fill="url(#goldPrimary)">
+      TECH INDUSTRIES LIMITED
+    </text>
+    
+    <!-- Official Slogan -->
+    <text x="0" y="36" 
+          font-family="'Plus Jakarta Sans', system-ui, sans-serif" 
+          font-size="9" 
+          font-weight="500" 
+          letter-spacing="1.5" 
+          fill="#B5C9BE">
+      Tech, Creativity, and Impact.
+    </text>
+  </g>
+</svg>

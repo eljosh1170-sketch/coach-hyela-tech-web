@@ -1,0 +1,83 @@
+{
+  "certificates": [
+    {
+      "id": "CHT-2026-AI092",
+      "verifyCode": "CHT-2026-AI092",
+      "learnerName": "Bilkisu Danjuma",
+      "learnerEmail": "bilkisu.learner@testmail.com",
+      "courseId": "ai-video-ugc",
+      "courseTitle": "AI Video Creation & UGC-Style Advertising",
+      "issueDate": "October 14, 2026",
+      "status": "VALID",
+      "statusReason": "Successfully completed all capstone video assignments and commercial workflow requirements.",
+      "credentialType": "Executive Certificate of Practical Completion",
+      "sealText": "COACH HYELA TECH INDUSTRIES • OFFICIAL VERIFIED CREDENTIAL",
+      "instructor": "Coach Hyela",
+      "instructorTitle": "Lead Instructor & Director",
+      "topicsCompleted": [
+        "Photorealistic Prompt Engineering",
+        "AI Avatar Lip-Sync Calibration",
+        "CapCut Post-Production & Sound Design",
+        "UGC Brand Commercials"
+      ]
+    },
+    {
+      "id": "CHT-2026-WD104",
+      "verifyCode": "CHT-2026-WD104",
+      "learnerName": "Emmanuel K. Ogbonna",
+      "learnerEmail": "emmanuel.learner@testmail.com",
+      "courseId": "website-building",
+      "courseTitle": "100% AI Website & Web App Building (Zero Coding)",
+      "issueDate": "October 02, 2026",
+      "status": "VALID",
+      "statusReason": "Demonstrated full proficiency in AI-driven website generation, prompt engineering, mobile testing, and modern cloud deployment.",
+      "credentialType": "Professional Technical Certificate",
+      "sealText": "COACH HYELA TECH INDUSTRIES • OFFICIAL VERIFIED CREDENTIAL",
+      "instructor": "Coach Hyela",
+      "instructorTitle": "Lead Instructor & Director",
+      "topicsCompleted": [
+        "100% AI-Driven Web & App Generation",
+        "Free AI Builders, Prompting & Layout Systems",
+        "Android Smartphone Web Creation & Management",
+        "Free Cloud Edge Hosting & Custom Domain Launch"
+      ]
+    },
+    {
+      "id": "CHT-2026-WF045",
+      "verifyCode": "CHT-2026-WF045",
+      "learnerName": "Zainab Al-Hassan",
+      "learnerEmail": "zainab.learner@testmail.com",
+      "courseId": "business-automation",
+      "courseTitle": "Business & Creative Automation",
+      "issueDate": "September 28, 2026",
+      "status": "VALID",
+      "statusReason": "Successfully configured enterprise lead capture, WhatsApp workflow triggers, and document automation pipelines.",
+      "credentialType": "Workflow Specialist Certification",
+      "sealText": "COACH HYELA TECH INDUSTRIES • OFFICIAL VERIFIED CREDENTIAL",
+      "instructor": "Coach Hyela",
+      "instructorTitle": "Lead Instructor & Director",
+      "topicsCompleted": [
+        "Business Bottleneck Mapping",
+        "Automated WhatsApp Lead Routing",
+        "Client Invoice & Receipt Pipelines",
+        "Zero-Code Webhook Integrations"
+      ]
+    },
+    {
+      "id": "CHT-2026-REV088",
+      "verifyCode": "CHT-2026-REV088",
+      "learnerName": "Sample Incomplete Candidate",
+      "learnerEmail": "revoked.sample@testmail.com",
+      "courseId": "ai-digital-skills",
+      "courseTitle": "Artificial Intelligence & Creative Workflows for Individuals",
+      "issueDate": "August 15, 2026",
+      "status": "REVOKED",
+      "statusReason": "Record withdrawn: Incomplete coursework submission / administrative withdrawal.",
+      "credentialType": "Certificate of Completion",
+      "sealText": "COACH HYELA TECH INDUSTRIES • STATUS REVOKED",
+      "instructor": "Coach Hyela",
+      "instructorTitle": "Lead Instructor & Director",
+      "topicsCompleted": []
+    }
+  ]
+}

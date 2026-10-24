@@ -1,0 +1,343 @@
+{
+  "company": {
+    "name": "Coach Hyela Tech Industries Limited",
+    "coachName": "Coach Hyela",
+    "spellingVerification": "Hyela (H-Y-E-L-A)",
+    "tagline": "Tech • Creativity • Impact",
+    "phoneDisplay": "0915-963-7287",
+    "phoneRaw": "09159637287",
+    "phoneIntl": "+2349159637287",
+    "email": "coachhyelatech@gmail.com",
+    "mission": "To equip individuals and entrepreneurs with practical technology, creative, and business-support skills that help them turn ideas into meaningful progress.",
+    "vision": "To help build a future where people and businesses can use technology and creativity to create sustainable opportunities and lasting impact.",
+    "coreValues": [
+      {
+        "title": "Practical Mastery",
+        "description": "Skills taught through real creative and technical workflows, readytoproduce income and solve problems immediately."
+      },
+      {
+        "title": "Uncompromising Integrity",
+        "description": "Clear guidance with zero false promises. Transparent timelines and independent legal processing."
+      },
+      {
+        "title": "Modern Innovation",
+        "description": "Leveraging state-of-the-art AI, automation, and modern web frameworks to give entrepreneurs a competitive edge."
+      },
+      {
+        "title": "Sustainable Impact",
+        "description": "Empowering learners and business owners to build enduring, legally registered, resilient enterprises."
+      }
+    ],
+    "disclaimers": {
+      "cac": "Coach Hyela Tech Industries Limited provides expert documentation, name search, and filing assistance. official approval and processing timelines remain under the statutory discretion of the Corporate Affairs Commission (CAC).",
+      "loans": "We provide professional business plans, financial forecasting, and documentation support. Loan approvals remain the sole discretion of the lending institutions and funding bodies."
+    }
+  },
+  "trainingPrograms": [
+    {
+      "id": "ai-video-ugc",
+      "title": "AI Video Creation & UGC-Style Advertising",
+      "badge": "Popular High-Income Skill",
+      "summary": "Master AI avatar generation, voice cloning, script engineering, and videoediting for high-converting marketing content.",
+      "audience": "Content creators, digital marketers, entrepreneurs, and video editors wanting tomultiply output.",
+      "topics": [
+        "Prompt engineering for photorealistic AI video scenes",
+        "AI avatar creation, styling, and lip-sync calibration",
+        "Voiceover synthesis, emotion tuning, and audiorefinement",
+        "CapCut and professional mobile/desktop post-production",
+        "Creating UGC-style brand commercials and ad variations",
+        "Commercial monetization strategies and client delivery"
+      ],
+      "format": "Hands-on Practical Training (Interactive modules & guided projects)",
+      "requirements": "Smartphone or laptop with standard internet connection. Noprior videocoding experience needed.",
+      "duration": "4 Weeks Intensive (Flexible schedule available)",
+      "certification": "Verified Coach Hyela Digital Credential upon capstone project approval",
+      "nextCohort": "November 2026",
+      "pricing": "Rolling Admission • Price To Be Announced Soon",
+      "enrolmentStatus": "Early Slot Booking Open"
+    },
+    {
+      "id": "ai-digital-skills",
+      "title": "Artificial Intelligence & Creative Workflows for Individuals",
+      "badge": "Essential Foundation",
+      "summary": "Practical training in everyday generative AI tools toautomate writing, creative design, research, and productivity.",
+      "audience": "Professionals, students, freelancers, and small business operators seeking 10x daily efficiency.",
+      "topics": [
+        "Core LLM prompting: Claude, ChatGPT, Gemini for research and strategy",
+        "AI graphic generation, styling tokens, and Canva AI integration",
+        "Automating document drafting, reports, and client proposals",
+        "organizing daily creative workflows with smart AI assistants",
+        "Ethical guidelines, safety, and commercial copyright awareness"
+      ],
+      "format": "Interactive Live/Hybrid Workshops with project exercises",
+      "requirements": "PC, tablet, or smartphone.",
+      "duration": "3 Weeks (Evening & Weekend cohorts)",
+      "certification": "Verified Coach Hyela Certificate of Completion",
+      "nextCohort": "November 2026",
+      "pricing": "Rolling Admission • Price To Be Announced Soon",
+      "enrolmentStatus": "Early Slot Booking Open"
+    },
+    {
+      "id": "website-building",
+      "title": "100% AI Website & Web App Building (Zero Coding)",
+      "badge": "In-Demand Tech Skill",
+      "summary": "Learn how to build responsive, lightning-fast business websites and landing pages without getting lost in complex server setups.",
+      "audience": "Aspiring web developers, agency freelancers, and business owners whowant their own digital storefront.",
+      "topics": [
+        "100% AI-Driven Website & Web App Generation",
+        "Free AI Builders, Prompt Engineering & Layout Systems",
+        "Building & Managing Web Assets on an Android Smartphone",
+        "Interactive Testing & Real-Time Prototyping",
+        "Free Cloud Edge Hosting & Custom Domain Setup"
+      ],
+      "format": "Hands-on project-based boot camp",
+      "requirements": "Laptop or desktop computer recommended.",
+      "duration": "6 Weeks Project Bootcamp",
+      "certification": "Verified Coach Hyela Technical Credential",
+      "nextCohort": "November 2026",
+      "pricing": "Rolling Admission • Price To Be Announced Soon",
+      "enrolmentStatus": "Early Slot Booking Open",
+      "tagline": "Build, test, host, and launch fully functional websites and apps 100% with AI and free platforms — even from an Android smartphone.",
+      "description": "Master the modern practical workflow of building, testing, hosting, and launching professional business websites and web apps 100% using AI tools and free platforms. No manual coding or HTML5 required. Learn how to prompt, test, deploy for free, and manage web assets even directly from an Android smartphone or basic computer.",
+      "prerequisites": "Android smartphone or everyday computer, basic internet connection",
+      "capstone": "Prompt, generate, test, and launch a complete live business website and digital web app hosted for free on the edge, accessible globally."
+    },
+    {
+      "id": "business-automation",
+      "title": "Business & Creative Automation",
+      "badge": "Scalability Skill",
+      "summary": "Connect your apps, automate customer follow-ups, auto-generate invoices, and streamline daily repetitive tasks.",
+      "audience": "Busy business owners, virtual assistants, operations managers, and agency founders.",
+      "topics": [
+        "Mapping manual business bottlenecks and design automation flows",
+        "WhatsApp Business auto-responders and message triage",
+        "Automating customer lead capture from web forms intoGoogle Sheets / databases",
+        "Automated PDF document, receipt, and invoice generation",
+        "Hands-on integration with zero-code webhooks and free workflow tools"
+      ],
+      "format": "Practical implementation lab",
+      "requirements": "Basic computer literacy and an active business workflow toautomate.",
+      "duration": "3 Weeks",
+      "certification": "Verified Coach Hyela Workflow Specialist Certificate",
+      "nextCohort": "November 2026",
+      "pricing": "Rolling Admission • Price To Be Announced Soon",
+      "enrolmentStatus": "Early Slot Booking Open"
+    }
+  ],
+  "businessServices": [
+    {
+      "id": "cac-support",
+      "title": "CAC Business Registration & Filing Support",
+      "badge": "Corporate Formalization",
+      "description": "Guided assistance with Business Name, Private Limited Company (LLC), and Incorporated Trustees filings, documentation, and pre-submission compliance.",
+      "deliverables": [
+        "Name availability search guidance",
+        "Accurate category selection & object clauses",
+        "Director & shareholder documentation review",
+        "Prompt status tracking support"
+      ],
+      "turnaround": "Subject to official CAC statutory timelines",
+      "actionLink": "cac.html"
+    },
+    {
+      "id": "business-plans",
+      "title": "Bank-Ready Business Plans & Feasibility Studies",
+      "badge": "Commercial Finance",
+      "description": "Comprehensive, lender-ready business plans with 3-year cash flow projections, market analysis, and funding proposals designed to satisfy commercial banks and microfinance institutions.",
+      "deliverables": [
+        "Executive summary & operational model",
+        "3-to-5 year financial forecast tables",
+        "Risk mitigation analysis",
+        "Executive PDF & editable presentation format"
+      ],
+      "turnaround": "3 to 5 business days",
+      "actionLink": "contact.html?service=business-plans"
+    },
+    {
+      "id": "loan-support",
+      "title": "Loan Application & Financial Documentation Support",
+      "badge": "Growth Capital",
+      "description": "Professional support in compiling, structuring, and reviewing financial statements, proposal letters, and supporting documentation for commercial financing applications.",
+      "deliverables": [
+        "Application checklist auditing",
+        "Statement formatting & balance restructuring",
+        "Formal cover letters & corporate profiles"
+      ],
+      "turnaround": "2 to 4 business days",
+      "actionLink": "contact.html?service=loan-support"
+    },
+    {
+      "id": "cyber-cafe",
+      "title": "Online Cyber Café & Digital Bureau Services",
+      "badge": "Portal Support",
+      "description": "Fast remote and physical bureau support for official government portals, Tax Identification Number (TIN) validation, digital registrations, and formatting documents for high-stakes electronic submissions.",
+      "deliverables": [
+        "TIN validation & profile verification",
+        "Government portal submissions & tracking",
+        "Document scanning, optimization & PDF formatting"
+      ],
+      "turnaround": "Same-day / Express service",
+      "actionLink": "contact.html?service=cyber-cafe"
+    },
+    {
+      "id": "web-solutions",
+      "title": "Custom Website Solutions & Graphic Design",
+      "badge": "Digital Presence",
+      "description": "Fast modern websites, strategic brand identities, executive logo designs, promotional graphics, and high-converting marketing creatives for Nigerian businesses.",
+      "deliverables": [
+        "Responsive business web architecture",
+        "Corporate logo & brand identity suites",
+        "Social media marketing assets & graphics",
+        "Domain setup & free SSL configuration"
+      ],
+      "turnaround": "5 to 10 business days",
+      "actionLink": "contact.html?service=web-solutions"
+    },
+    {
+      "id": "ai-ugc-videos",
+      "title": "AI UGC Video Production & Ad Creatives",
+      "badge": "Viral Marketing",
+      "description": "High-converting user-generated content (UGC) style video commercials, photorealistic AI avatars, script engineering, and product advertisements crafted for TikTok, Instagram Reels, and YouTube ads.",
+      "deliverables": [
+        "High-converting video ad script writing",
+        "Photorealistic AI avatar endorsements",
+        "CapCut post-production & sound design",
+        "Vertical 9:16 reels ready for immediate ad spend"
+      ],
+      "turnaround": "2 to 4 business days",
+      "actionLink": "contact.html?service=ai-ugc-videos"
+    }
+  ],
+  "cacCategories": [
+    {
+      "id": "business-name",
+      "name": "Business Name / Sole Proprietorship (or Partnership)",
+      "formCode": "CAC-BN01",
+      "timeline": "Typically 3 - 7 Business Days upon submission",
+      "whoItIsFor": "Small businesses, soloentrepreneurs, artisans, retail stores, and service consultants looking for quick legal recognition and a dedicated corporate bank account.",
+      "keyFeatures": [
+        "Simplest and most affordable CAC entity",
+        "Permits legal trading and opening a corporate bank account in Nigeria",
+        "Can be upgraded toa Limited Liability Company (LLC) as your enterprise expands"
+      ],
+      "requiredFromClient": [
+        "Two(2) proposed business names (e.g. Choice 1 and Alternative Choice)",
+        "Precise nature / specific category of business activities",
+        "Full business address (state, LGA, street name, building number)",
+        "Proprietor(s) full legal name, date of birth, phone number, and active email",
+        "Proprietor(s) residential address",
+        "one valid government-issued ID (NIN Slip / Card, International Passport, Driver's License, or Voter's Card)",
+        "Clear digital passport photograph",
+        "Clear signature specimen on clean white paper"
+      ],
+      "handledByCoachHyela": [
+        "Pre-screening names for CAC restrictions or prohibited words",
+        "official Name Availability Search & Reservation on CAC CRP portal",
+        "Accurate classification of business objectives according tostandard CAC codes",
+        "Completing electronic Form CAC-BN01",
+        "Document formatting and portal upload compliance",
+        "Monitoring status, resolving query notes, and delivering the official electronic Certificate & Certified Extract (Status Report)"
+      ],
+      "feesNote": "official CAC statutory reservation and filing fees + optional Coach Hyela professional filing assistance. Statutory fees are remitted directly toRemita / CAC."
+    },
+    {
+      "id": "llc-company",
+      "name": "Private Limited Liability Company (LTD)",
+      "formCode": "CAC-CR01 (Company Incorporation)",
+      "timeline": "Typically 5 - 10 Business Days upon submission",
+      "whoItIsFor": "Companies seeking limited liability protection, corporate contracts, multi-shareholder structures, tech startups, and firms bidding for formal tenders or grants.",
+      "keyFeatures": [
+        "Separate legal entity from directors and shareholders",
+        "Share capital structure (Minimum 100,000 to1,000,000+ shares depending on industry)",
+        "Strongest credibility with banks, enterprise partners, and investors"
+      ],
+      "requiredFromClient": [
+        "Two(2) proposed company names ending with 'Limited' or 'Ltd'",
+        "Authorized share capital amount and how shares are divided among shareholders",
+        "Registered office physical address in Nigeria",
+        "Particulars of minimum 1 Director and Shareholders (full name, residential address, DoB, phone, email)",
+        "Valid government ID (NIN, Passport, Driver's License) for each director & shareholder",
+        "Clear passport photographs and signature specimens",
+        "Particulars of Company Secretary (optional for small private companies under CAMA)"
+      ],
+      "handledByCoachHyela": [
+        "official Company Name Availability Search & Reservation",
+        "Drafting/adoption of standard Memorandum and Articles of Association (MEMART)",
+        "Proper allotment of shares and drafting Statement of Issued Share Capital",
+        "Filing Notice of Situation of Registered office",
+        "Document formatting, FIRS stamp duty coordination, and CRP electronic submission",
+        "Tracking approval, downloading digital Certificate of Incorporation and formal Status Report"
+      ],
+      "feesNote": "Includes official CAC name reservation fee, statutory incorporation filing fee, and Federal Inland Revenue Service (FIRS) stamp duty depending on share capital, plus Coach Hyela handling fee."
+    },
+    {
+      "id": "incorporated-trustees",
+      "name": "Incorporated Trustees (NGos, Foundations, Clubs, Associations)",
+      "formCode": "CAC-IT01",
+      "timeline": "Typically 3 - 6 Weeks (includes statutory notice periods)",
+      "whoItIsFor": "Non-profit organizations, charity foundations, community associations, alumni bodies, faith-based ministries, and advocacy initiatives.",
+      "keyFeatures": [
+        "Non-profit corporate status with perpetual succession",
+        "Ability tohold land and enter contracts on behalf of the trust",
+        "Required for international donor grants and formal NGobank accounts"
+      ],
+      "requiredFromClient": [
+        "Proposed name (typically starting with or containing 'Incorporated Trustees of...')",
+        "Comprehensive Aims and objectives of the body",
+        "Particulars of minimum two(2) Trustees (full names, addresses, occupations, phone, email)",
+        "Valid government IDs, passport photos, and signature specimens of all trustees",
+        "Signed Minutes of the meeting where trustees were formally appointed",
+        "Adopted Constitution of the Association"
+      ],
+      "handledByCoachHyela": [
+        "Name availability reservation with CAC Incorporated Trustees registry",
+        "Reviewing the Constitution and Aims/objectives for CAMA compliance",
+        "Preparing the Trustee Declaration Forms / Affidavits",
+        "Arranging required statutory Newspaper Publications in national dailies",
+        "Final portal dossier submission, managing registry reviews, and securing the Certificate of Incorporation"
+      ],
+      "feesNote": "CAC name reservation, statutory filing fees, mandatory newspaper publication costs, and Coach Hyela professional dossier assembly fee."
+    },
+    {
+      "id": "post-incorporation",
+      "name": "Post-Incorporation Compliance & Changes",
+      "formCode": "CAC-P01 toP05",
+      "timeline": "Varies by application type (3 - 14 Days)",
+      "whoItIsFor": "Alreadyregistered businesses or companies needing updates, annual filings, or regulatory status maintenance.",
+      "keyFeatures": [
+        "Keeps entity in good standing (Active status on CAC public search)",
+        "Avoids costly late-filing default penalties",
+        "Required for banking revalidation and regulatory clearance"
+      ],
+      "requiredFromClient": [
+        "Existing CAC Registration Number (RC / BN / IT Number)",
+        "Current Status Report or Certificate",
+        "Specific change required (e.g., Annual Returns, Director change, Address update, Share increase)",
+        "Board resolution or proprietor authorization letter"
+      ],
+      "handledByCoachHyela": [
+        "Entity audit on the CAC CRP database",
+        "Drafting required board resolutions and change schedules",
+        "Filing statutory Annual Returns tomaintain Active status",
+        "Filing changes in directors, proprietors, or registered address",
+        "Retrieving updated certified Status Reports"
+      ],
+      "feesNote": "Statutory CAC filing charges and any accumulated late-filing penalties set by CAC + Coach Hyela filing fee."
+    }
+  ],
+  "upcomingCohort": {
+    "cohortMonth": "November 2026",
+    "headline": "Upcoming Intensive Training Cohort — November 2026",
+    "status": "Slot Booking Now Open",
+    "pricingNotice": "Rolling Admission • Official Pricing To Be Announced Soon",
+    "bookingInfo": "Exact class start dates and final pricing will be communicated shortly. Reserve your slot now with priority placement.",
+    "paymentDetails": {
+      "bankName": "PalmPay",
+      "platform": "PalmPay / Direct Bank Transfer",
+      "accountNumber": "7011706511",
+      "accountName": "Eljoshua Hyelakuri Emmanuel",
+      "verificationSpelling": "Hyelakuri (H-Y-E-L-A-K-U-R-I)",
+      "instructions": "Transfer payments or PalmPay receipts should be retained. Verify the account name displays 'Eljoshua Hyelakuri Emmanuel' on PalmPay prior to completing your transaction."
+    }
+  }
+}

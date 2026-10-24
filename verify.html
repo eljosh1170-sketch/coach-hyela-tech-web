@@ -1,0 +1,314 @@
+﻿<!DoCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificate Verification System | Coach Hyela Tech Industries</title>
+  <meta name="description" content="Public Certificate Verification System for Coach Hyela Tech Industries Limited. Confirm authenticity of issued credentials.">
+  
+  <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/cht-style.css">
+
+  <style>
+    .cht-verify-card {
+      background: var(--cht-bg-surface);
+      border: 1px solid var(--cht-border);
+      border-radius: var(--cht-radius-lg);
+      padding: 36px;
+      max-width: 680px;
+      margin: 0 auto;
+      box-shadow: var(--cht-shadow-md);
+    }
+    .cht-badge-valid {
+      background: var(--cht-success-bg);
+      border: 1px solid var(--cht-success);
+      color: #86EFAC;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .cht-badge-revoked {
+      background: var(--cht-error-bg);
+      border: 1px solid var(--cht-error);
+      color: #FCA5A5;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      border-radius: 99px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+    .cht-data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      font-size: 0.95rem;
+    }
+    .cht-data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--cht-border-subtle);
+    }
+    .cht-data-table td:first-child {
+      color: var(--cht-text-muted);
+      width: 38%;
+      font-weight: 500;
+    }
+    .cht-data-table td:last-child {
+      color: #FFFFFF;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Bar -->
+  <div class="cht-top-bar">
+    <div class="cht-container">
+      <div class="cht-top-bar-inner">
+        <div><span>official Public Credential Verification Portal</span></div>
+        <div class="cht-top-contact">
+          <a href="tel:09159637287">0915-963-7287</a>
+          <a href="mailto:coachhyelatech@gmail.com">coachhyelatech@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <header class="cht-navbar">
+    <div class="cht-container">
+      <div class="cht-navbar-inner">
+        <a href="index.html" class="cht-brand-logo">
+          <img src="assets/icons/logo.svg" alt="Coach Hyela Logo" width="220" height="52">
+        </a>
+        <nav aria-label="Main Navigation">
+          <ul class="cht-nav-links">
+            <li><a href="index.html" class="cht-nav-link">Home</a></li>
+            <li><a href="about.html" class="cht-nav-link">About</a></li>
+            <li><a href="training.html" class="cht-nav-link">Training</a></li>
+            <li><a href="services.html" class="cht-nav-link">Business Services</a></li>
+            <li><a href="cac.html" class="cht-nav-link">CAC Registration</a></li>
+            <li><a href="certificates.html" class="cht-nav-link">Certificates</a></li>
+            <li><a href="contact.html" class="cht-nav-link">Contact</a></li>
+          </ul>
+        </nav>
+        <button class="cht-menu-toggle" aria-label="open mobile navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Drawer -->
+  <div class="cht-drawer-overlay"></div>
+  <aside class="cht-mobile-drawer" aria-hidden="true">
+    <div class="cht-drawer-header">
+      <img src="assets/icons/logo.svg" alt="Coach Hyela Logo" style="height: 40px;">
+      <button class="cht-drawer-close" style="background:none; border:none; color:#fff; font-size:1.5rem;">&#10005;</button>
+    </div>
+    <ul class="cht-drawer-links">
+      <li><a href="index.html" class="cht-drawer-link">Home</a></li>
+      <li><a href="about.html" class="cht-drawer-link">About Company</a></li>
+      <li><a href="training.html" class="cht-drawer-link">AI &amp; Digital Training</a></li>
+      <li><a href="services.html" class="cht-drawer-link">Business Services</a></li>
+      <li><a href="cac.html" class="cht-drawer-link">CAC Registration</a></li>
+      <li><a href="certificates.html" class="cht-drawer-link">Certificates</a></li>
+      <li><a href="contact.html" class="cht-drawer-link">Contact</a></li>
+    </ul>
+  </aside>
+
+  <main id="main-content">
+    <section class="cht-section" style="background: radial-gradient(circle at 50% 20%, rgba(20, 70, 45, 0.45) 0%, rgba(7, 30, 19, 0.95) 85%); border-bottom: 1px solid var(--cht-border-subtle); padding: 60px 0;">
+      <div class="cht-container" style="text-align: center; max-width: 760px; margin: 0 auto;">
+        <span class="cht-section-tag">Tamper-Evident Credential Registry</span>
+        <h1 class="cht-hero-title heading-serif" style="font-size: 2.6rem; margin-bottom: 14px;">
+          Certificate <span class="gold-gradient-text">Verification</span>
+        </h1>
+        <p class="cht-section-desc">
+          Verify the authenticity of digital certificates issued by Coach Hyela Tech Industries Limited. Enter the unique identifier printed on the credential or scanned from its QR code.
+        </p>
+      </div>
+    </section>
+
+    <!-- Verification Section -->
+    <section class="cht-section">
+      <div class="cht-container">
+
+        <!-- Verification Search Bar -->
+        <div style="max-width: 580px; margin: 0 auto40px auto;">
+          <form id="verifyForm" onsubmit="handleManualSearch(event)" style="display: flex; gap: 10px;">
+            <input type="text" id="certCodeInput" class="cht-input" placeholder="e.g. CHT-2026-AI092" style="font-family: monospace; font-weight: 600; text-transform: uppercase;" required>
+            <button type="submit" class="cht-btn cht-btn-primary" style="flex-shrink: 0;">
+              Verify Code
+            </button>
+          </form>
+          <div style="font-size: 0.8rem; color: var(--cht-text-muted); margin-top: 8px; text-align: center;">
+            Demo test records: <code>CHT-2026-AI092</code> (Valid) &rdquo;¢ <code>CHT-2026-WD104</code> (Valid) &rdquo;¢ <code>CHT-2026-REV088</code> (Revoked)
+          </div>
+        </div>
+
+        <!-- Verification Result Card (Populated by JS) -->
+        <div id="verifyResultContainer" style="display: none;">
+          <div class="cht-verify-card">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 18px; margin-bottom: 20px;">
+              <div>
+                <span style="font-size: 0.78rem; color: var(--cht-text-muted); text-transform: uppercase; letter-spacing: 1px;">official Verification Record</span>
+                <div style="font-family: monospace; font-size: 1.15rem; color: var(--cht-gold-light); font-weight: 700;" id="resCode">CHT-XXXX</div>
+              </div>
+              <div id="resBadge">
+                <!-- Status Badge -->
+              </div>
+            </div>
+
+            <table class="cht-data-table">
+              <tbody>
+                <tr>
+                  <td>Credential Holder:</td>
+                  <td id="resName">Full Name</td>
+                </tr>
+                <tr>
+                  <td>Programme / Course:</td>
+                  <td id="resCourse">Course Title</td>
+                </tr>
+                <tr>
+                  <td>Credential Type:</td>
+                  <td id="resType">Professional Certificate</td>
+                </tr>
+                <tr>
+                  <td>Issue Date:</td>
+                  <td id="resDate">October 14, 2026</td>
+                </tr>
+                <tr>
+                  <td>Issuing Entity:</td>
+                  <td>Coach Hyela Tech Industries Limited</td>
+                </tr>
+                <tr>
+                  <td>Authorized By:</td>
+                  <td id="resSigner">Coach Hyela (Director)</td>
+                </tr>
+                <tr id="resReasonRow" style="display: none;">
+                  <td>Administrative Note:</td>
+                  <td id="resReason" style="color: #FCA5A5;">Reason text</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Security & Privacy Guarantee Notice -->
+            <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--cht-border-subtle); font-size: 0.82rem; color: var(--cht-text-muted); line-height: 1.6;">
+              <strong>Privacy Protection Notice:</strong> In adherence toour strict privacy standards, this public registry discloses only verified credential status and course completion metadata. Personal email addresses, phone numbers, and identity documents are strictly shielded from public disclosure.
+            </div>
+
+          </div>
+        </div>
+
+        <!-- NoT FoUND CARD -->
+        <div id="verifyNotFound" style="display: none;">
+          <div class="cht-verify-card" style="border-color: rgba(239, 68, 68, 0.4); text-align: center;">
+            <div style="margin-bottom: 12px; display: flex; justify-content: center;"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+            <h3 class="heading-serif" style="color: #fff; font-size: 1.4rem; margin-bottom: 8px;">Record Not Found</h3>
+            <p style="color: var(--cht-text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px;">
+              Noauthentic certificate record was found matching the code: <code id="notFoundCode" style="color: var(--cht-gold-light); font-weight: 700;"></code>.
+            </p>
+            <p style="color: var(--cht-text-muted); font-size: 0.85rem; line-height: 1.5;">
+              Please double check the spelling and formatting. If you believe this is an error, please reach out toCoach Hyela support at <a href="mailto:coachhyelatech@gmail.com">coachhyelatech@gmail.com</a> with a copy of your document.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Registry Authenticity Notice -->
+    <section class="cht-section" style="padding-top: 0;">
+      <div class="cht-container">
+        <div style="background: rgba(14, 37, 25, 0.6); border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px; text-align: center; font-size: 0.85rem; color: var(--cht-text-muted);">
+          This public verification system validates official credentials issued directly by <strong>Coach Hyela Tech Industries Limited</strong>.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="cht-footer">
+    <div class="cht-container">
+      <div class="cht-footer-bottom">
+        <div>&copy; 2026 Coach Hyela Tech Industries Limited. All Rights Reserved.</div>
+        <div>
+          <a href="privacy.html">Privacy Policy</a> &rdquo;¢ <a href="certificates.html">Learner Portal</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/cht-core.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Check if code was passed in URL query param
+      const urlParams = new URLSearchParams(window.location.search);
+      const code = urlParams.get('code');
+      if (code) {
+        document.getElementById('certCodeInput').value = code;
+        executeLookup(code);
+      }
+    });
+
+    function handleManualSearch(e) {
+      e.preventDefault();
+      const code = document.getElementById('certCodeInput').value.trim();
+      executeLookup(code);
+    }
+
+    function executeLookup(code) {
+      const resultBox = document.getElementById('verifyResultContainer');
+      const notFoundBox = document.getElementById('verifyNotFound');
+
+      resultBox.style.display = 'none';
+      notFoundBox.style.display = 'none';
+
+      if (!code) return;
+
+      const cert = CHT.findCertificateById(code);
+      if (!cert) {
+        document.getElementById('notFoundCode').textContent = code;
+        notFoundBox.style.display = 'block';
+        return;
+      }
+
+      // Populate details
+      document.getElementById('resCode').textContent = cert.verifyCode;
+      document.getElementById('resName').textContent = cert.learnerName;
+      document.getElementById('resCourse').textContent = cert.courseTitle;
+      document.getElementById('resType').textContent = cert.credentialType;
+      document.getElementById('resDate').textContent = cert.issueDate;
+      document.getElementById('resSigner').textContent = `${cert.instructor} (${cert.instructorTitle})`;
+
+      const badgeEl = document.getElementById('resBadge');
+      const reasonRow = document.getElementById('resReasonRow');
+      const reasonEl = document.getElementById('resReason');
+
+      if (cert.status === 'VALID') {
+        badgeEl.innerHTML = `<span class="cht-badge-valid">&#10003; OFFICIAL VALID CREDENTIAL</span>`;
+        reasonRow.style.display = 'none';
+      } else {
+        badgeEl.innerHTML = `<span class="cht-badge-revoked">&#10005; RECoRD REVOKED / INACTIVE</span>`;
+        reasonRow.style.display = 'table-row';
+        reasonEl.textContent = cert.statusReason || 'Record withdrawn by administrator.';
+      }
+
+      resultBox.style.display = 'block';
+      resultBox.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
