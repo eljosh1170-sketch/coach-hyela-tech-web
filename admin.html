@@ -76,6 +76,9 @@
     .status-pill.rejected { background: rgba(239, 68, 68, 0.2); color: #FCA5A5; border: 1px solid rgba(239, 68, 68, 0.5); }
     .status-pill.more_info{ background: rgba(59, 130, 246, 0.2); color: #93C5FD; border: 1px solid rgba(59, 130, 246, 0.5); }
   </style>
+    <!-- Firebase SDKs for Real-time Cloud Synchronization -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
@@ -130,6 +133,69 @@
           </div>
         </div>
 
+        <!-- EXECUTIVE KPI METRICS BAR -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <!-- Metric 1: Total Page Views -->
+          <div style="background: #081B11; border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cht-text-muted); font-weight: 700;">Total Website Views</span>
+              <span style="font-size: 1.2rem;">👁️</span>
+            </div>
+            <div id="metricPageViews" style="font-size: 2rem; font-weight: 800; color: #fff; font-family: 'Cinzel', serif;">0</div>
+            <div style="font-size: 0.75rem; color: #86EFAC; margin-top: 4px; display: flex; align-items: center; gap: 4px;">
+              <span style="display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: #22C55E;"></span>
+              Live visitor tracking active
+            </div>
+          </div>
+
+          <!-- Metric 2: Unique Visitors -->
+          <div style="background: #081B11; border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cht-text-muted); font-weight: 700;">Unique Visitors</span>
+              <span style="font-size: 1.2rem;">👥</span>
+            </div>
+            <div id="metricUniqueVisitors" style="font-size: 2rem; font-weight: 800; color: var(--cht-gold-light); font-family: 'Cinzel', serif;">0</div>
+            <div style="font-size: 0.75rem; color: var(--cht-text-muted); margin-top: 4px;">Across mobile &amp; desktop</div>
+          </div>
+
+          <!-- Metric 3: Student Applications -->
+          <div style="background: #081B11; border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cht-text-muted); font-weight: 700;">Student Applications</span>
+              <span style="font-size: 1.2rem;">🎓</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <div id="metricTotalApps" style="font-size: 2rem; font-weight: 800; color: #fff; font-family: 'Cinzel', serif;">0</div>
+              <span id="metricPendingPill" class="status-pill pending" style="font-size: 0.7rem;">0 Pending</span>
+            </div>
+            <div style="font-size: 0.75rem; color: var(--cht-text-muted); margin-top: 4px;">Certificate claims submitted</div>
+          </div>
+
+          <!-- Metric 4: CAC Registrations -->
+          <div style="background: #081B11; border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cht-text-muted); font-weight: 700;">CAC Registrations</span>
+              <span style="font-size: 1.2rem;">🏛️</span>
+            </div>
+            <div id="metricTotalCAC" style="font-size: 2rem; font-weight: 800; color: #fff; font-family: 'Cinzel', serif;">0</div>
+            <div style="font-size: 0.75rem; color: var(--cht-text-muted); margin-top: 4px;">Corporate filings submitted</div>
+          </div>
+
+          <!-- Metric 5: Cloud Status -->
+          <div style="background: #081B11; border: 1px solid var(--cht-border-subtle); border-radius: var(--cht-radius-md); padding: 18px 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.5px; color: var(--cht-text-muted); font-weight: 700;">Sync Network</span>
+              <span style="font-size: 1.2rem;">⚡</span>
+            </div>
+            <div style="font-size: 1.2rem; font-weight: 700; color: #86EFAC; margin-top: 4px; display: flex; align-items: center; gap: 8px;">
+              <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #22C55E; box-shadow: 0 0 10px #22C55E;"></span>
+              Cloud Live
+            </div>
+            <div id="metricLastSync" style="font-size: 0.75rem; color: var(--cht-text-muted); margin-top: 6px;">Real-time Firestore active</div>
+          </div>
+        </div>
+
+
         <!-- Admin Navigation Tabs -->
         <div style="display: flex; overflow-x: auto; gap: 10px; border-bottom: 1px solid var(--cht-border); margin-bottom: 24px;">
           <button type="button" class="admin-tab-btn active" id="tabBtnEligibility" onclick="switchAdminTab('eligibility')">
@@ -150,6 +216,9 @@
           <button type="button" class="admin-tab-btn" id="tabBtnLiveContent" onclick="switchAdminTab('liveContent')" style="background: rgba(212, 175, 55, 0.12); border-color: var(--cht-gold-500); color: var(--cht-gold-light);">
             <span style="color: var(--cht-gold-light);">&#9998;</span> Live Website Content Editor
           </button>
+          <button type="button" class="admin-tab-btn" id="tabBtnAnalytics" onclick="switchAdminTab('analytics')">
+            📊 Live Visitor Analytics &amp; Activity
+          </button>
         </div>
 
         <!-- ========================================== -->
@@ -161,9 +230,14 @@
               <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Certificate Eligibility Review</h2>
               <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Review student submissions. only approved students can claim and generate official certificates.</p>
             </div>
-            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminEligibility()">
-              Refresh Requests
-            </button>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" onclick="openManualAddAppModal()">
+                + Manually Add Student Application
+              </button>
+              <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminEligibility()">
+                Refresh Requests
+              </button>
+            </div>
           </div>
 
           <div class="cht-table-responsive">
@@ -180,7 +254,7 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbodyid="tableBodyEligibility">
+              <tbody id="tableBodyEligibility">
                 <!-- Populated via JS -->
               </tbody>
             </table>
@@ -214,7 +288,7 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbodyid="tableBodyStudents">
+              <tbody id="tableBodyStudents">
                 <!-- Populated via JS -->
               </tbody>
             </table>
@@ -248,7 +322,7 @@
                   <th>Actions</th>
                 </tr>
               </thead>
-              <tbodyid="adminCertsTableBody">
+              <tbody id="adminCertsTableBody">
                 <!-- Dynamically loaded -->
               </tbody>
             </table>
@@ -277,7 +351,7 @@
                   <th>ID Info</th>
                 </tr>
               </thead>
-              <tbodyid="adminCACTableBody">
+              <tbody id="adminCACTableBody">
                 <!-- Dynamically loaded -->
               </tbody>
             </table>
@@ -339,7 +413,7 @@
                   <th>Message Preview</th>
                 </tr>
               </thead>
-              <tbodyid="tableBodyNotifs">
+              <tbody id="tableBodyNotifs">
                 <!-- Populated via JS -->
               </tbody>
             </table>
@@ -458,11 +532,99 @@
             </div>
           </div>
         </div>
+        <!-- ========================================== -->
+        <!-- TAB 7: VISITOR ANALYTICS & ACTIVITY STREAM -->
+        <!-- ========================================== -->
+        <div id="tabContentAnalytics" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h2 class="heading-serif" style="color: #fff; font-size: 1.35rem;">Live Visitor Analytics &amp; Activity Stream</h2>
+              <p style="color: var(--cht-text-muted); font-size: 0.85rem;">Real-time feed of visitor interactions, student logins, course applications, and administrative actions.</p>
+            </div>
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="renderAdminAnalytics()">
+              Refresh Stream
+            </button>
+          </div>
+
+          <div class="cht-table-responsive">
+            <table class="cht-admin-table">
+              <thead>
+                <tr>
+                  <th style="width: 170px;">Timestamp</th>
+                  <th style="width: 140px;">Activity Type</th>
+                  <th>Page / Source</th>
+                  <th style="width: 110px;">Device</th>
+                  <th>Action Details</th>
+                </tr>
+              </thead>
+              <tbody id="tableBodyActivityStream">
+                <tr><td colspan="5" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Listening for real-time visitor activity...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
 
       </div>
 
     </div>
   </main>
+
+  
+  <!-- MODAL: MANUALLY ADD STUDENT APPLICATION -->
+  <div class="cht-modal-overlay" id="modalManualAddApp">
+    <div class="cht-modal-card" style="max-width: 540px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 10px;">
+        <h3 class="heading-serif" style="color: #fff; font-size: 1.3rem;">Manually Record Student Application</h3>
+        <button type="button" onclick="closeManualAddAppModal()" style="background: none; border: none; color: #fff; font-size: 1.4rem; cursor: pointer;">✕</button>
+      </div>
+
+      <p style="color: var(--cht-text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 16px;">
+        Use this form to immediately record a student application (e.g. from a WhatsApp screenshot or previous session). The record will sync straight to Google Cloud Firestore.
+      </p>
+
+      <form onsubmit="handleManualAddAppSubmit(event)">
+        <div class="cht-form-group">
+          <label class="cht-label" for="manualAppName">Student Full Legal Name <span class="req">*</span></label>
+          <input type="text" id="manualAppName" class="cht-input" placeholder="e.g. Bilkisu Danjuma" required>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="manualAppEmail">Student Email Address <span class="req">*</span></label>
+          <input type="email" id="manualAppEmail" class="cht-input" placeholder="e.g. student@example.com" required>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="manualAppCourse">Course Programme <span class="req">*</span></label>
+          <select id="manualAppCourse" class="cht-select" required>
+            <option value="ai-video-ugc|AI Video Creation & UGC-Style Advertising">AI Video Creation &amp; UGC-Style Advertising</option>
+            <option value="website-building|Modern Website Building & Digital Presence">Modern Website Building &amp; Digital Presence</option>
+            <option value="ai-digital-skills|Artificial Intelligence & Creative Workflows for Individuals">Artificial Intelligence &amp; Creative Workflows</option>
+            <option value="corporate-ict|Executive Corporate Training & Digital Operations">Executive Corporate Training &amp; Digital Operations</option>
+            <option value="graphics-branding|Commercial Smartphone Graphic Design & Brand Identity">Commercial Smartphone Graphic Design &amp; Brand Identity</option>
+            <option value="social-media-growth|Social Media Strategy & Organic Lead Generation">Social Media Strategy &amp; Organic Lead Generation</option>
+          </select>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="manualAppStatus">Initial Status <span class="req">*</span></label>
+          <select id="manualAppStatus" class="cht-select" required>
+            <option value="PENDING">PENDING (Awaiting evaluation)</option>
+            <option value="APPROVED">APPROVED (Issue certificate immediately)</option>
+          </select>
+        </div>
+
+        <div class="cht-form-group">
+          <label class="cht-label" for="manualAppNotes">Instructor Evaluation Notes</label>
+          <textarea id="manualAppNotes" class="cht-textarea" style="min-height: 70px;" placeholder="e.g. Verified via WhatsApp capstone submission."></textarea>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
+          <button type="button" class="cht-btn cht-btn-outline" onclick="closeManualAddAppModal()">Cancel</button>
+          <button type="submit" class="cht-btn cht-btn-primary" id="btnSubmitManualApp">Save &amp; Sync to Cloud</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <!-- MoDAL: REVIEW ELIGIBILITY REQUEST -->
   <div class="cht-modal-overlay" id="modalReviewEligibility">
@@ -633,12 +795,90 @@
     function showAdminConsole() {
       document.getElementById('adminLoginBox').style.display = 'none';
       document.getElementById('adminConsole').style.display = 'block';
+
+      // 1. Initial renders
       renderAdminEligibility();
       renderAdminStudents();
       renderAdminCertificates();
       renderAdminCAC();
       renderAdminNotifs();
-        initEmailSettings();
+      initEmailSettings();
+
+      // 2. Real-time Cloud Firestore Listeners (Live across any device in Nigeria)
+      if (window.CHT) {
+        // Real-time Student Eligibility Applications
+        if (CHT.subscribeCloudRequests) {
+          CHT.subscribeCloudRequests(reqs => {
+            renderAdminEligibility(reqs);
+          });
+        }
+        // Real-time Registered Students Directory
+        if (CHT.subscribeCloudStudents) {
+          CHT.subscribeCloudStudents(students => {
+            renderAdminStudents(students);
+          });
+        }
+        // Real-time CAC Inquiries Inbox
+        if (CHT.subscribeCloudCAC) {
+          CHT.subscribeCloudCAC(subs => {
+            renderAdminCAC(subs);
+          });
+        }
+        // Real-time Visitor Stats Counter
+        if (CHT.subscribeVisitorStats) {
+          CHT.subscribeVisitorStats(stats => {
+            updateAdminMetricCards(stats);
+          });
+        }
+        // Real-time Activity Stream Feed
+        if (CHT.subscribeActivityLogs) {
+          CHT.subscribeActivityLogs(logs => {
+            renderAdminActivityStream(logs);
+          });
+        }
+      }
+    }
+
+    function updateAdminMetricCards(stats) {
+      if (!stats) return;
+      const elViews = document.getElementById('metricPageViews');
+      const elVisitors = document.getElementById('metricUniqueVisitors');
+      const elLastSync = document.getElementById('metricLastSync');
+      if (elViews && stats.pageViews !== undefined) elViews.textContent = Number(stats.pageViews).toLocaleString();
+      if (elVisitors && stats.visitors !== undefined) elVisitors.textContent = Number(stats.visitors).toLocaleString();
+      if (elLastSync && stats.lastActive) {
+        elLastSync.textContent = 'Active: ' + new Date(stats.lastActive).toLocaleTimeString();
+      }
+    }
+
+    let latestActivityLogs = [];
+    function renderAdminActivityStream(logs) {
+      if (logs) latestActivityLogs = logs;
+      const tbody = document.getElementById('tableBodyActivityStream');
+      if (!tbody) return;
+      if (!latestActivityLogs || latestActivityLogs.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding:24px; color:var(--cht-text-muted);">No activity recorded yet. Browse the public website to see live events appear here.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = latestActivityLogs.map(log => {
+        let pillColor = 'approved';
+        if (log.type === 'STUDENT_APPLICATION' || log.type === 'MANUAL_APP_SYNC') pillColor = 'pending';
+        if (log.type === 'ADMIN_DECISION') pillColor = 'more_info';
+        if (log.type === 'CAC_REGISTRATION') pillColor = 'approved';
+
+        const timeStr = log.timestamp ? new Date(log.timestamp).toLocaleTimeString() : 'Just now';
+
+        return `
+          <tr>
+            <td style="font-size:0.78rem; font-family:monospace; color:var(--cht-text-muted);">${timeStr}</td>
+            <td><span class="status-pill ${pillColor}" style="font-size:0.7rem;">${log.type}</span></td>
+            <td style="color:#fff; font-weight:600;">${log.page || 'Website'}</td>
+            <td><span style="font-size:0.8rem; color:var(--cht-gold-light);">${log.device || 'Web'}</span></td>
+            <td style="font-size:0.82rem; color:var(--cht-text-secondary);">${log.details || 'Visited page'}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function logoutAdminSession() {
@@ -648,7 +888,7 @@
     }
 
     function switchAdminTab(tab) {
-      const tabs = ['eligibility', 'students', 'certs', 'cac', 'notifs', 'liveContent'];
+      const tabs = ['eligibility', 'students', 'certs', 'cac', 'notifs', 'liveContent', 'analytics'];
       tabs.forEach(t => {
         const btn = document.getElementById('tabBtn' + capitalize(t));
         const content = document.getElementById('tabContent' + capitalize(t));
@@ -661,7 +901,8 @@
       if (tab === 'certs') renderAdminCertificates();
       if (tab === 'cac') renderAdminCAC();
       if (tab === 'notifs') renderAdminNotifs();
-        initEmailSettings();
+      if (tab === 'analytics') renderAdminActivityStream();
+      initEmailSettings();
 
       if (tab === 'liveContent') renderLiveContentEditor();
     }
@@ -847,16 +1088,24 @@
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    // 1. RENDER ELIGIBILITY
-    function renderAdminEligibility() {
-      const reqs = CHT.getEligibilityRequests();
-      const tbody= document.getElementById('tableBodyEligibility');
+    // 1. RENDER ELIGIBILITY WITH CLOUD SYNC & EXECUTIVE METRIC UPDATES
+    let currentEligibilityReqs = [];
+    function renderAdminEligibility(cloudReqs) {
+      const reqs = cloudReqs || CHT.getEligibilityRequests();
+      currentEligibilityReqs = reqs;
+      const tbody = document.getElementById('tableBodyEligibility');
+      if (!tbody) return;
       
       const pendingCount = reqs.filter(r => r.status === 'PENDING').length;
-      document.getElementById('badgePendingCount').textContent = pendingCount;
+      const badge = document.getElementById('badgePendingCount');
+      if (badge) badge.textContent = pendingCount;
+      const metricPending = document.getElementById('metricPendingPill');
+      if (metricPending) metricPending.textContent = `${pendingCount} Pending`;
+      const metricTotal = document.getElementById('metricTotalApps');
+      if (metricTotal) metricTotal.textContent = reqs.length;
 
       if (reqs.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Noeligibility requests recorded.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:24px; color:var(--cht-text-muted);">No eligibility requests recorded yet. Click "+ Manually Add Student Application" above to record one.</td></tr>`;
         return;
       }
 
@@ -864,15 +1113,15 @@
         let pillClass = 'pending';
         if (r.status === 'APPROVED') pillClass = 'approved';
         else if (r.status === 'REJECTED') pillClass = 'rejected';
-        else if (r.status === 'MORE_INFo') pillClass = 'more_info';
+        else if (r.status === 'MORE_INFO' || r.status === 'MORE_INFo') pillClass = 'more_info';
 
         return `
           <tr>
             <td><strong style="font-family:monospace; color:var(--cht-gold-light);">${r.id}</strong></td>
-            <td style="color:#fff; font-weight:600;">${r.fullName}</td>
-            <td><span style="color:var(--cht-text-muted);">${r.email}</span></td>
-            <td>${r.courseTitle}</td>
-            <td style="font-size:0.8rem;">${new Date(r.submissionDate).toLocaleDateString()}</td>
+            <td style="color:#fff; font-weight:600;">${r.fullName || 'Student'}</td>
+            <td><span style="color:var(--cht-text-muted);">${r.email || '-'}</span></td>
+            <td>${r.courseTitle || r.courseId || '-'}</td>
+            <td style="font-size:0.8rem;">${r.submissionDate ? new Date(r.submissionDate).toLocaleDateString() : 'Recent'}</td>
             <td><span class="status-pill ${pillClass}">${r.status}</span></td>
             <td style="font-size:0.8rem; max-width:200px;">${r.adminNotes || '—'}</td>
             <td>
@@ -892,9 +1141,9 @@
       }).join('');
     }
 
-    // 2. REVIEW MoDAL LoGIC
+    // 2. REVIEW MODAL LOGIC & CLOUD UPDATE
     function openReviewModal(reqId) {
-      const reqs = CHT.getEligibilityRequests();
+      const reqs = currentEligibilityReqs.length > 0 ? currentEligibilityReqs : CHT.getEligibilityRequests();
       const req = reqs.find(r => r.id === reqId);
       if (!req) return;
 
@@ -912,25 +1161,67 @@
       document.getElementById('modalReviewEligibility').classList.remove('active');
     }
 
-    function handleReviewSubmit(e) {
+    async function handleReviewSubmit(e) {
       e.preventDefault();
       const reqId = document.getElementById('reviewReqId').value;
       const status = document.getElementById('reviewStatusSelect').value;
       const notes = document.getElementById('reviewAdminNotes').value.trim();
 
-      const res = CHT.updateEligibilityStatus(reqId, status, notes);
+      const res = await CHT.updateEligibilityStatusCloud(reqId, status, notes);
       closeReviewModal();
       alert(res.message);
       renderAdminEligibility();
       renderAdminStudents();
+      renderAdminCertificates();
       renderAdminNotifs();
-        initEmailSettings();
+      initEmailSettings();
     }
 
-    // 3. RENDER STUDENTS DIRECToRY
-    function renderAdminStudents() {
-      const users = CHT.getUsers();
-      const tbody= document.getElementById('tableBodyStudents');
+    // MANUAL APPLICATION ADD MODAL HANDLERS
+    function openManualAddAppModal() {
+      document.getElementById('modalManualAddApp').classList.add('active');
+    }
+    function closeManualAddAppModal() {
+      document.getElementById('modalManualAddApp').classList.remove('active');
+    }
+    async function handleManualAddAppSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('manualAppName').value.trim();
+      const email = document.getElementById('manualAppEmail').value.trim();
+      const rawCourse = document.getElementById('manualAppCourse').value;
+      const status = document.getElementById('manualAppStatus').value;
+      const notes = document.getElementById('manualAppNotes').value.trim();
+
+      const [courseId, courseTitle] = rawCourse.split('|');
+
+      const btn = document.getElementById('btnSubmitManualApp');
+      if (btn) btn.disabled = true;
+
+      const res = await CHT.createEligibilityRequestCloud({
+        fullName: name,
+        email: email,
+        courseId: courseId,
+        courseTitle: courseTitle,
+        status: status,
+        adminNotes: notes || (status === 'APPROVED' ? 'Approved by Coach Hyela administration.' : 'Awaiting evaluation.')
+      });
+
+      if (btn) btn.disabled = false;
+      closeManualAddAppModal();
+
+      if (res.success) {
+        alert(`Application recorded and synced to Cloud Firestore!\nReference: ${res.request.id}\nStatus: ${status}`);
+        renderAdminEligibility();
+        renderAdminCertificates();
+      } else {
+        alert('Error recording application: ' + res.message);
+      }
+    }
+
+    // 3. RENDER STUDENTS DIRECTORY WITH CLOUD SYNC
+    function renderAdminStudents(cloudStudents) {
+      const users = cloudStudents || CHT.getUsers();
+      const tbody = document.getElementById('tableBodyStudents');
 
       if (users.length === 0) {
         tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--cht-text-muted);">Nostudent accounts found.</td></tr>`;
@@ -1044,11 +1335,14 @@
       }
     }
 
-    // 5. RENDER CAC INBoX
-    function renderAdminCAC() {
-      const submissions = CHT.getCACSubmissions();
-      document.getElementById('cacCountLabel').textContent = `${submissions.length} Total Submissions`;
-      const tbody= document.getElementById('adminCACTableBody');
+    // 5. RENDER CAC INBOX WITH METRIC CARD UPDATE
+    function renderAdminCAC(cloudSubs) {
+      const submissions = cloudSubs || CHT.getCACSubmissions();
+      const label = document.getElementById('cacCountLabel');
+      if (label) label.textContent = `${submissions.length} Total Submissions`;
+      const metricCAC = document.getElementById('metricTotalCAC');
+      if (metricCAC) metricCAC.textContent = submissions.length;
+      const tbody = document.getElementById('adminCACTableBody');
 
       if (submissions.length === 0) {
         tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px; color:var(--cht-text-muted);">NoCAC client submissions received yet. Complete the form on cac.html totest intake.</td></tr>`;

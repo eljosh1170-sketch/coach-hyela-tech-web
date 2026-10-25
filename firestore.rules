@@ -1,0 +1,44 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. ELIGIBILITY REQUESTS (Student applications & Admin approval)
+    match /eligibility_requests/{requestId} {
+      allow read, create, update: if true;
+      allow delete: if request.auth != null;
+    }
+
+    // 2. CERTIFICATES (Public QR verification & Admin issuance)
+    match /certificates/{certId} {
+      allow read, create, update: if true;
+      allow delete: if request.auth != null;
+    }
+
+    // 3. CAC SUBMISSIONS (Client registration requests & Admin review)
+    match /cac_submissions/{submissionId} {
+      allow read, create, update: if true;
+      allow delete: if request.auth != null;
+    }
+
+    // 4. VISITOR STATS & ANALYTICS (Live counters)
+    match /visitor_stats/{docId} {
+      allow read, write: if true;
+    }
+
+    // 5. ACTIVITY LOGS (Live audit trail of actions)
+    match /activity_logs/{logId} {
+      allow read, write: if true;
+    }
+
+    // 6. STUDENTS DIRECTORY
+    match /students/{studentId} {
+      allow read, write: if true;
+    }
+
+    // Default catch-all
+    match /{document=**} {
+      allow read, write: if true;
+    }
+  }
+}

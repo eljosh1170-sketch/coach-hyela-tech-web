@@ -344,6 +344,348 @@ const CHT = (function () {
     }
   }
 
+
+  // ==========================================
+  // REAL-TIME CLOUD FIRESTORE SYNCHRONIZATION
+  // ==========================================
+  const CHT_FIREBASE_CONFIG = {
+    projectId: 'coachhyelatech-d3207',
+    appId: '1:946569619362:web:d03da6c819375625c034fb',
+    storageBucket: 'coachhyelatech-d3207.firebasestorage.app',
+    apiKey: 'AIzaSyB4j-litduC2dvVAdMcyJUTVa7sqDmqiPY',
+    authDomain: 'coachhyelatech-d3207.firebaseapp.com',
+    messagingSenderId: '946569619362',
+    measurementId: 'G-5LNNMMX44T'
+  };
+
+  function getFirestore() {
+    try {
+      if (typeof firebase !== 'undefined' && firebase.firestore) {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(CHT_FIREBASE_CONFIG);
+        }
+        return firebase.firestore();
+      }
+    } catch (e) {
+      console.warn('[CHT Cloud] Firestore init error:', e);
+    }
+    return null;
+  }
+
+  // Real-time Cloud Eligibility Requests Listener
+  function subscribeCloudRequests(callback) {
+    const db = getFirestore();
+    if (db) {
+      return db.collection('eligibility_requests')
+        .orderBy('submissionDate', 'desc')
+        .onSnapshot(snapshot => {
+          const cloudReqs = [];
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            cloudReqs.push(data);
+          });
+          if (cloudReqs.length > 0) {
+            saveEligibilityRequests(cloudReqs);
+          }
+          if (callback) callback(cloudReqs);
+        }, err => {
+          console.warn('[CHT Cloud] Requests snapshot error:', err);
+          if (callback) callback(getEligibilityRequests());
+        });
+    } else {
+      if (callback) callback(getEligibilityRequests());
+      return null;
+    }
+  }
+
+  // Real-time Cloud Activity Logger & Visitor Stats Tracker
+  async function trackVisitorActivity(pageTitle) {
+    const db = getFirestore();
+    const isNewVisitor = !localStorage.getItem('cht_visited_before');
+    localStorage.setItem('cht_visited_before', 'true');
+    const device = window.innerWidth <= 768 ? 'Mobile' : 'Desktop';
+
+    if (db) {
+      try {
+        // Increment metrics counter
+        const metricsRef = db.collection('visitor_stats').doc('metrics');
+        const increment = firebase.firestore.FieldValue.increment;
+        await metricsRef.set({
+          pageViews: increment(1),
+          visitors: increment(isNewVisitor ? 1 : 0),
+          lastActive: new Date().toISOString()
+        }, { merge: true });
+
+        // Record activity log item
+        await db.collection('activity_logs').add({
+          type: 'PAGE_VIEW',
+          page: pageTitle || window.location.pathname,
+          device: device,
+          timestamp: new Date().toISOString()
+        });
+      } catch (e) {
+        console.warn('[CHT Cloud] Stats tracking error:', e);
+      }
+    }
+  }
+
+  // Subscribe to Live Visitor Stats
+  function subscribeVisitorStats(callback) {
+    const db = getFirestore();
+    if (db) {
+      return db.collection('visitor_stats').doc('metrics')
+        .onSnapshot(doc => {
+          if (doc.exists) {
+            callback(doc.data());
+          } else {
+            callback({ pageViews: 0, visitors: 0, lastActive: new Date().toISOString() });
+          }
+        }, err => {
+          console.warn('[CHT Cloud] Stats error:', err);
+          callback({ pageViews: 0, visitors: 0, lastActive: null });
+        });
+    }
+    return null;
+  }
+
+  // Subscribe to Live Activity Logs
+  function subscribeActivityLogs(callback) {
+    const db = getFirestore();
+    if (db) {
+      return db.collection('activity_logs')
+        .orderBy('timestamp', 'desc')
+        .limit(20)
+        .onSnapshot(snapshot => {
+          const logs = [];
+          snapshot.forEach(doc => logs.push(doc.data()));
+          callback(logs);
+        }, err => console.warn('[CHT Cloud] Activity logs error:', err));
+    }
+    return null;
+  }
+
+  
+  // Subscribe to Registered Students from Cloud Firestore
+  function subscribeCloudStudents(callback) {
+    const db = getFirestore();
+    if (db) {
+      return db.collection('students')
+        .orderBy('registeredAt', 'desc')
+        .onSnapshot(snapshot => {
+          const cloudStudents = [];
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            cloudStudents.push(data);
+          });
+          if (cloudStudents.length > 0) {
+            const local = getUsers();
+            const map = new Map();
+            local.forEach(u => map.set(u.id || u.email, u));
+            cloudStudents.forEach(u => map.set(u.id || u.email, u));
+            saveUsers(Array.from(map.values()));
+          }
+          if (callback) callback(cloudStudents);
+        }, err => {
+          console.warn('[CHT Cloud] Students snapshot error:', err);
+          if (callback) callback(getUsers());
+        });
+    } else {
+      if (callback) callback(getUsers());
+      return null;
+    }
+  }
+
+  // Save Student directly to Cloud Firestore
+  async function saveStudentCloud(studentData) {
+    const db = getFirestore();
+    if (db && studentData) {
+      try {
+        const id = studentData.id || ('USR-' + Date.now().toString(36).toUpperCase());
+        studentData.id = id;
+        await db.collection('students').doc(id).set(studentData, { merge: true });
+        await db.collection('activity_logs').add({
+          type: 'STUDENT_REGISTER',
+          page: 'Student Portal',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `${studentData.fullName} (${studentData.email}) account registered`,
+          timestamp: new Date().toISOString()
+        });
+        return { success: true, student: studentData };
+      } catch (e) {
+        console.warn('[CHT Cloud] Save student error:', e);
+        return { success: false, message: e.message };
+      }
+    }
+    return { success: false, message: 'Firestore unavailable' };
+  }
+
+  // Manually Create / Sync Eligibility Request from Admin Console to Cloud
+  async function createEligibilityRequestCloud(reqData) {
+    const db = getFirestore();
+    const id = reqData.id || ('REQ-2026-' + Math.random().toString(36).substring(2, 6).toUpperCase());
+    const newReq = {
+      id: id,
+      userId: reqData.userId || ('USR-' + Date.now().toString(36).substring(2, 7).toUpperCase()),
+      fullName: reqData.fullName || 'Student',
+      email: reqData.email ? reqData.email.trim().toLowerCase() : '',
+      courseId: reqData.courseId || 'general',
+      courseTitle: reqData.courseTitle || 'Training Course',
+      submissionDate: reqData.submissionDate || new Date().toISOString(),
+      status: reqData.status || 'PENDING',
+      adminNotes: reqData.adminNotes || 'Manually entered / synced by Coach Hyela administration.',
+      reviewedAt: reqData.status === 'APPROVED' ? new Date().toISOString() : null,
+      certificateIssued: false,
+      certificateCode: null
+    };
+
+    if (reqData.status === 'APPROVED') {
+      const code = 'CHT-2026-' + Math.random().toString(36).substring(2, 6).toUpperCase();
+      newReq.certificateIssued = true;
+      newReq.certificateCode = code;
+
+      if (db) {
+        await db.collection('certificates').doc(code).set({
+          id: code,
+          verifyCode: code,
+          learnerName: newReq.fullName,
+          learnerEmail: newReq.email,
+          courseId: newReq.courseId,
+          courseTitle: newReq.courseTitle,
+          issueDate: new Date().toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }),
+          status: 'VALID',
+          statusReason: 'Coursework certified by Coach Hyela administration.',
+          credentialType: 'Executive Certificate of Practical Completion',
+          instructor: 'Coach Hyela',
+          instructorTitle: 'Lead Instructor & Director',
+          topicsCompleted: ['Practical Capstone Completion', 'Verified Project Workflow']
+        });
+      }
+    }
+
+    if (db) {
+      await db.collection('eligibility_requests').doc(id).set(newReq);
+      await db.collection('activity_logs').add({
+        type: 'MANUAL_APP_SYNC',
+        page: 'Operations Hub',
+        device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+        details: `Application ${id} created for ${newReq.fullName} (${newReq.email})`,
+        timestamp: new Date().toISOString()
+      });
+    }
+
+    // Save locally
+    const reqs = getEligibilityRequests();
+    reqs.unshift(newReq);
+    saveEligibilityRequests(reqs);
+
+    return { success: true, request: newReq };
+  }
+
+  // Real-time Cloud CAC Inquiries Listener
+  function subscribeCloudCAC(callback) {
+    const db = getFirestore();
+    if (db) {
+      return db.collection('cac_submissions')
+        .orderBy('timestamp', 'desc')
+        .onSnapshot(snapshot => {
+          const subs = [];
+          snapshot.forEach(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            subs.push(data);
+          });
+          if (subs.length > 0) {
+            localStorage.setItem(STORAGE_KEYS.CAC_SUBMISSIONS, JSON.stringify(subs));
+          }
+          if (callback) callback(subs);
+        }, err => {
+          console.warn('[CHT Cloud] CAC snapshot error:', err);
+          if (callback) callback(getCACSubmissions());
+        });
+    } else {
+      if (callback) callback(getCACSubmissions());
+      return null;
+    }
+  }
+
+  // Find Certificate by ID from Cloud Firestore fallback
+  async function findCertificateByIdCloud(code) {
+    const local = findCertificateById(code);
+    if (local) return local;
+
+    const db = getFirestore();
+    if (db && code) {
+      try {
+        const clean = code.trim().toUpperCase();
+        const doc = await db.collection('certificates').doc(clean).get();
+        if (doc.exists) {
+          const cert = doc.data();
+          const certs = getCertificates();
+          certs.unshift(cert);
+          saveCertificates(certs);
+          return cert;
+        }
+      } catch (e) {
+        console.warn('[CHT Cloud] Find cert error:', e);
+      }
+    }
+    return null;
+  }
+
+  // Cloud Sync for Submitting Eligibility Request
+  async function submitEligibilityRequestCloud(userId, fullName, email, courseId, courseTitle) {
+    const res = submitEligibilityRequest(userId, fullName, email, courseId, courseTitle);
+    if (!res.success) return res;
+
+    const db = getFirestore();
+    if (db && res.request) {
+      try {
+        await db.collection('eligibility_requests').doc(res.request.id).set(res.request);
+        await db.collection('activity_logs').add({
+          type: 'STUDENT_APPLICATION',
+          page: 'Learner Portal',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `${fullName} (${email}) applied for ${courseTitle}`,
+          timestamp: new Date().toISOString()
+        });
+        console.log('[CHT Cloud] Eligibility request synced to Firestore:', res.request.id);
+      } catch (err) {
+        console.warn('[CHT Cloud] Firestore submit error:', err);
+      }
+    }
+    return res;
+  }
+
+  // Cloud Sync for Updating Eligibility Status
+  async function updateEligibilityStatusCloud(requestId, newStatus, adminNotes = '') {
+    const res = updateEligibilityStatus(requestId, newStatus, adminNotes);
+    if (!res.success) return res;
+
+    const db = getFirestore();
+    if (db) {
+      try {
+        await db.collection('eligibility_requests').doc(requestId).update({
+          status: newStatus,
+          adminNotes: adminNotes || (newStatus === 'APPROVED' ? "Approved by Coach Hyela administration." : "Updated by administrator."),
+          reviewedAt: new Date().toISOString()
+        });
+        await db.collection('activity_logs').add({
+          type: 'ADMIN_DECISION',
+          page: 'Operations Hub',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `Admin set Request ${requestId} to ${newStatus}`,
+          timestamp: new Date().toISOString()
+        });
+        console.log('[CHT Cloud] Eligibility status updated in Firestore:', requestId, newStatus);
+      } catch (err) {
+        console.warn('[CHT Cloud] Firestore update error:', err);
+      }
+    }
+    return res;
+  }
+
   // Student Account Registration with Verification Code
   async function registerStudent(fullName, email, password) {
     if (!fullName || !email || !password) {
@@ -747,6 +1089,22 @@ const CHT = (function () {
     req.certificateCode = certCode;
     saveEligibilityRequests(reqs);
 
+    const db = getFirestore();
+    if (db) {
+      db.collection('certificates').doc(certCode).set(newCert).catch(e => console.warn('[CHT Cloud] Cert save error:', e));
+      db.collection('eligibility_requests').doc(requestId).update({
+        certificateIssued: true,
+        certificateCode: certCode
+      }).catch(e => console.warn('[CHT Cloud] Req cert update error:', e));
+      db.collection('activity_logs').add({
+        type: 'CERTIFICATE_CLAIMED',
+        page: 'Student Portal',
+        device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+        details: `Certificate ${certCode} claimed by ${req.fullName} (${req.email})`,
+        timestamp: new Date().toISOString()
+      }).catch(e => console.warn('[CHT Cloud] Cert log error:', e));
+    }
+
     // Notify student
     logNotification(
       req.email,
@@ -796,9 +1154,22 @@ const CHT = (function () {
       const existing = JSON.parse(localStorage.getItem(STORAGE_KEYS.CAC_SUBMISSIONS) || '[]');
       existing.unshift(submission);
       localStorage.setItem(STORAGE_KEYS.CAC_SUBMISSIONS, JSON.stringify(existing));
+
+      const db = getFirestore();
+      if (db && submission) {
+        const id = submission.refCode || ('CAC-' + Date.now().toString(36).toUpperCase());
+        db.collection('cac_submissions').doc(id).set(submission).catch(e => console.warn('[CHT Cloud] CAC save error:', e));
+        db.collection('activity_logs').add({
+          type: 'CAC_REGISTRATION',
+          page: 'CAC Registration Portal',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `CAC Request ${id}: ${submission.fullName} (${submission.email}) - ${submission.type || 'Filing'}`,
+          timestamp: new Date().toISOString()
+        }).catch(e => console.warn('[CHT Cloud] CAC log error:', e));
+      }
       return true;
     } catch (e) {
-      console.error('Failed tosave CAC submission:', e);
+      console.error('Failed to save CAC submission:', e);
       return false;
     }
   }
@@ -1109,9 +1480,20 @@ const CHT = (function () {
     getAuthLearner,
     setAuthLearner,
     logoutLearner,
-    // Eligibility
+    // Eligibility & Cloud
     getEligibilityRequests,
     submitEligibilityRequest,
+    submitEligibilityRequestCloud,
+    updateEligibilityStatusCloud,
+    createEligibilityRequestCloud,
+    subscribeCloudRequests,
+    subscribeCloudStudents,
+    saveStudentCloud,
+    subscribeCloudCAC,
+    findCertificateByIdCloud,
+    trackVisitorActivity,
+    subscribeVisitorStats,
+    subscribeActivityLogs,
     claimCertificate,
     // Certificates
     getCertificates,
@@ -1152,4 +1534,9 @@ if (typeof module !== 'undefined' && module.exports) {
 document.addEventListener('DOMContentLoaded', () => {
   CHT.initNavToggle();
   CHT.applyLiveContentToDOM();
+  if (typeof window !== 'undefined' && !window.location.pathname.toLowerCase().includes('admin.html')) {
+    if (CHT.trackVisitorActivity) {
+      CHT.trackVisitorActivity(document.title);
+    }
+  }
 });
