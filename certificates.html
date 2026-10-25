@@ -213,6 +213,9 @@
     }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <!-- Google Firebase App & Authentication SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 </head>
 <body>
 
@@ -316,6 +319,17 @@
           <!-- VIEW 1: SIGN IN FORM -->
           <div id="viewLogin">
             <form id="formStudentLogin" onsubmit="handleLoginSubmit(event)">
+              <!-- Google 1-Click Automated Sign-In -->
+              <button type="button" class="cht-btn" onclick="handleGoogleSignIn()" style="width: 100%; margin-bottom: 16px; background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.95rem;">
+                <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+                Continue with Google
+              </button>
+
+              <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <div style="flex: 1; height: 1px; background: var(--cht-border);"></div>
+                <span style="padding: 0 12px; font-size: 0.78rem; color: var(--cht-text-muted); text-transform: uppercase;">or sign in with email</span>
+                <div style="flex: 1; height: 1px; background: var(--cht-border);"></div>
+              </div>
               <div class="cht-form-group">
                 <label class="cht-label" for="loginEmail">Email Address <span class="req">*</span></label>
                 <input type="email" id="loginEmail" class="cht-input" placeholder="student@example.com" required>
@@ -342,6 +356,17 @@
           <!-- VIEW 2: REGISTRATION FORM -->
           <div id="viewRegister" style="display: none;">
             <form id="formStudentRegister" onsubmit="handleRegisterSubmit(event)">
+              <!-- Google 1-Click Automated Sign-Up -->
+              <button type="button" class="cht-btn" onclick="handleGoogleSignIn()" style="width: 100%; margin-bottom: 16px; background: #ffffff; color: #1f2937; border: 1px solid #e5e7eb; display: flex; align-items: center; justify-content: center; gap: 10px; font-weight: 600; font-size: 0.95rem;">
+                <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.874 2.684-6.616z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.707c-.18-.54-.282-1.117-.282-1.707s.102-1.167.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 7.293C4.672 5.166 6.656 3.58 9 3.58z"/></svg>
+                Sign Up with Google
+              </button>
+
+              <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <div style="flex: 1; height: 1px; background: var(--cht-border);"></div>
+                <span style="padding: 0 12px; font-size: 0.78rem; color: var(--cht-text-muted); text-transform: uppercase;">or register with email</span>
+                <div style="flex: 1; height: 1px; background: var(--cht-border);"></div>
+              </div>
               <div class="cht-form-group">
                 <label class="cht-label" for="regFullName">Full Legal Name <span class="req">*</span></label>
                 <input type="text" id="regFullName" class="cht-input" placeholder="First and Last Name (as desired on certificate)" required>
@@ -671,6 +696,69 @@
     // Pending email state for verification
     let pendingVerificationEmail = null;
 
+    
+    // ==========================================
+    // GOOGLE FIREBASE AUTOMATED AUTHENTICATION
+    // ==========================================
+    const FIREBASE_CONFIG = {
+      projectId: 'coachhyelatech-d3207',
+      appId: '1:946569619362:web:d03da6c819375625c034fb',
+      storageBucket: 'coachhyelatech-d3207.firebasestorage.app',
+      apiKey: 'AIzaSyB4j-litduC2dvVAdMcyJUTVa7sqDmqiPY',
+      authDomain: 'coachhyelatech-d3207.firebaseapp.com',
+      messagingSenderId: '946569619362',
+      measurementId: 'G-5LNNMMX44T'
+    };
+
+    let fbAuth = null;
+    try {
+      if (typeof firebase !== 'undefined') {
+        if (!firebase.apps.length) {
+          firebase.initializeApp(FIREBASE_CONFIG);
+        }
+        fbAuth = firebase.auth();
+      }
+    } catch (e) {
+      console.warn('[CHT Auth] Firebase init error:', e);
+    }
+
+    // Automated 1-Click Google Sign-In / Sign-Up
+    async function handleGoogleSignIn() {
+      if (!fbAuth) {
+        showAuthAlert('Google authentication service is initializing. Please try again or use email sign-in.', true);
+        return;
+      }
+      try {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const res = await fbAuth.signInWithPopup(provider);
+        const gUser = res.user;
+
+        const studentUser = {
+          id: 'USR-' + gUser.uid.substring(0, 8).toUpperCase(),
+          fullName: gUser.displayName || gUser.email.split('@')[0],
+          email: gUser.email.toLowerCase(),
+          emailVerified: true,
+          registeredAt: new Date().toISOString(),
+          driveAccess: false
+        };
+
+        CHT.setAuthLearner(studentUser);
+        showAuthAlert('Welcome ' + studentUser.fullName + '! Signed in via Google.', false);
+        setTimeout(() => {
+          showStudentDashboard(studentUser);
+        }, 800);
+      } catch (err) {
+        console.error('Google Sign-in error:', err);
+        if (err.code === 'auth/popup-closed-by-user') return;
+        if (err.code === 'auth/configuration-not-found' || err.code === 'auth/operation-not-allowed') {
+          showAuthAlert('Google Sign-In is being activated on the project. Please sign in with email and password below.', true);
+        } else {
+          showAuthAlert(err.message, true);
+        }
+      }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
       // Check active student session
       const authUser = CHT.getAuthLearner();
@@ -715,13 +803,44 @@
       document.getElementById('authAlertBanner').style.display = 'none';
     }
 
-    // 1. REGISTRATION HANDLER
+    // 1. REGISTRATION HANDLER (Automated via Google Firebase with fallback)
     async function handleRegisterSubmit(e) {
       e.preventDefault();
       const name = document.getElementById('regFullName').value.trim();
       const email = document.getElementById('regEmail').value.trim();
       const pass = document.getElementById('regPassword').value;
 
+      if (fbAuth) {
+        try {
+          const userCred = await fbAuth.createUserWithEmailAndPassword(email, pass);
+          if (userCred.user) {
+            await userCred.user.updateProfile({ displayName: name });
+            await userCred.user.sendEmailVerification();
+            
+            showAuthAlert(`Account created successfully! Google has dispatched a secure verification link to ${email}. Please check your email inbox (and spam folder) and click the link to verify.`, false);
+            setTimeout(() => {
+              switchAuthTab('login');
+              document.getElementById('loginEmail').value = email;
+            }, 3500);
+            return;
+          }
+        } catch (fbErr) {
+          console.warn('[CHT Auth] Firebase register error:', fbErr.code, fbErr.message);
+          if (fbErr.code === 'auth/email-already-in-use') {
+            showAuthAlert("An account with this email already exists. Please sign in or reset your password.", true);
+            return;
+          } else if (fbErr.code === 'auth/invalid-email') {
+            showAuthAlert("Google validation error: Please enter a valid email address.", true);
+            return;
+          } else if (fbErr.code === 'auth/weak-password') {
+            showAuthAlert("Password must be at least 6 characters.", true);
+            return;
+          }
+          // If project Auth is not yet toggled in console, proceed seamlessly with internal engine
+        }
+      }
+
+      // Internal verification engine
       const res = await CHT.registerStudent(name, email, pass);
       if (!res.success) {
         showAuthAlert(res.message, true);
@@ -765,12 +884,48 @@
       if (resendCodeField) resendCodeField.value = '';
     }
 
-    // 3. LOGIN HANDLER
+    // 3. LOGIN HANDLER (Automated via Google Firebase with fallback)
     async function handleLoginSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('loginEmail').value.trim();
       const pass = document.getElementById('loginPassword').value;
 
+      if (fbAuth) {
+        try {
+          const userCred = await fbAuth.signInWithEmailAndPassword(email, pass);
+          if (userCred.user) {
+            if (!userCred.user.emailVerified) {
+              showAuthAlert("Your email address is not verified yet. Google has sent a verification email to " + email + ". Please check your inbox and click the verification link before signing in.", true);
+              return;
+            }
+            const studentUser = {
+              id: "USR-" + userCred.user.uid.substring(0, 8).toUpperCase(),
+              fullName: userCred.user.displayName || email.split('@')[0],
+              email: userCred.user.email.toLowerCase(),
+              emailVerified: true,
+              registeredAt: new Date().toISOString(),
+              driveAccess: false
+            };
+            CHT.setAuthLearner(studentUser);
+            showAuthAlert("Welcome back, " + studentUser.fullName + "!", false);
+            setTimeout(() => {
+              showStudentDashboard(studentUser);
+            }, 600);
+            return;
+          }
+        } catch (fbErr) {
+          console.warn('[CHT Auth] Firebase login error:', fbErr.code);
+          if (fbErr.code === 'auth/wrong-password' || fbErr.code === 'auth/invalid-credential') {
+            showAuthAlert("Invalid email or password. Please try again.", true);
+            return;
+          } else if (fbErr.code === 'auth/user-not-found') {
+            showAuthAlert("No account found with this email. Please click Create Account.", true);
+            return;
+          }
+        }
+      }
+
+      // Internal auth engine
       const res = await CHT.loginStudent(email, pass);
       if (!res.success) {
         if (res.requiresVerification) {
