@@ -59,46 +59,18 @@ const CHT = (function () {
     }
   ];
 
-  // Pre-seeded eligibility requests
+  // Active student eligibility requests
   const DEFAULT_ELIGIBILITY = [
     {
-      id: "REQ-2026-001",
-      userId: "USR-001",
-      fullName: "Bilkisu Danjuma",
-      email: "bilkisu.learner@testmail.com",
+      id: "REQ-2026-AYO1",
+      userId: "USR-OjS5lcUI",
+      fullName: "Ayomide Emmanuel",
+      email: "emmanuelekhator5683@gmail.com",
       courseId: "ai-video-ugc",
       courseTitle: "AI Video Creation & UGC-Style Advertising",
-      submissionDate: "2026-10-12T10:15:00.000Z",
-      status: "APPROVED", // PENDING, APPROVED, REJECTED, MORE_INFo
-      adminNotes: "All capstone videos submitted and verified by Coach Hyela.",
-      reviewedAt: "2026-10-13T16:00:00.000Z",
-      certificateIssued: true,
-      certificateCode: "CHT-2026-AI092"
-    },
-    {
-      id: "REQ-2026-002",
-      userId: "USR-002",
-      fullName: "Emmanuel K. Ogbonna",
-      email: "emmanuel.learner@testmail.com",
-      courseId: "website-building",
-      courseTitle: "Modern Website Building & Digital Presence",
-      submissionDate: "2026-10-14T08:20:00.000Z",
-      status: "APPROVED",
-      adminNotes: "Demonstrated responsive HTML5/CSS and web project deployment.",
-      reviewedAt: "2026-10-15T11:45:00.000Z",
-      certificateIssued: true,
-      certificateCode: "CHT-2026-WD104"
-    },
-    {
-      id: "REQ-2026-003",
-      userId: "USR-003",
-      fullName: "Tariq Ibrahim",
-      email: "tariq.student@testmail.com",
-      courseId: "ai-digital-skills",
-      courseTitle: "Artificial Intelligence & Creative Workflows for Individuals",
-      submissionDate: "2026-10-19T14:10:00.000Z",
+      submissionDate: "2026-10-25T19:43:00.000Z",
       status: "PENDING",
-      adminNotes: "Awaiting final prompt engineering evaluation from instructor.",
+      adminNotes: "Application received. Pending evaluation by Coach Hyela.",
       reviewedAt: null,
       certificateIssued: false,
       certificateCode: null
@@ -187,9 +159,49 @@ const CHT = (function () {
     try {
       if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
         localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(DEFAULT_USERS));
+      } else {
+        try {
+          const uList = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+          if (!uList.some(u => u.email === 'emmanuelekhator5683@gmail.com')) {
+            uList.unshift({
+              id: "USR-OjS5lcUI",
+              fullName: "Ayomide Emmanuel",
+              email: "emmanuelekhator5683@gmail.com",
+              registeredAt: "2026-10-25T19:15:36.000Z",
+              emailVerified: true,
+              assignedCourses: ["ai-video-ugc"],
+              driveAccess: false
+            });
+            localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(uList));
+          }
+        } catch(e) {}
       }
+
       if (!localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS)) {
         localStorage.setItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS, JSON.stringify(DEFAULT_ELIGIBILITY));
+      } else {
+        try {
+          let reqList = JSON.parse(localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS) || '[]');
+          // Remove outdated dummy test users if present
+          reqList = reqList.filter(r => !r.email.includes('@testmail.com'));
+          if (!reqList.some(r => r.email === 'emmanuelekhator5683@gmail.com')) {
+            reqList.unshift({
+              id: "REQ-2026-AYO1",
+              userId: "USR-OjS5lcUI",
+              fullName: "Ayomide Emmanuel",
+              email: "emmanuelekhator5683@gmail.com",
+              courseId: "ai-video-ugc",
+              courseTitle: "AI Video Creation & UGC-Style Advertising",
+              submissionDate: "2026-10-25T19:43:00.000Z",
+              status: "PENDING",
+              adminNotes: "Application received. Pending evaluation by Coach Hyela.",
+              reviewedAt: null,
+              certificateIssued: false,
+              certificateCode: null
+            });
+          }
+          localStorage.setItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS, JSON.stringify(reqList));
+        } catch(e) {}
       }
       if (!localStorage.getItem(STORAGE_KEYS.CERTIFICATES)) {
         localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify(DEFAULT_CERTIFICATES));
