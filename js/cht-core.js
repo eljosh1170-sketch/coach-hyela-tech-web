@@ -377,7 +377,6 @@ const CHT = (function () {
     const db = getFirestore();
     if (db) {
       return db.collection('eligibility_requests')
-        .orderBy('submissionDate', 'desc')
         .onSnapshot(snapshot => {
           const cloudReqs = [];
           snapshot.forEach(doc => {
@@ -385,6 +384,7 @@ const CHT = (function () {
             data.id = doc.id;
             cloudReqs.push(data);
           });
+          cloudReqs.sort((a, b) => new Date(b.submissionDate || 0) - new Date(a.submissionDate || 0));
           if (cloudReqs.length > 0) {
             saveEligibilityRequests(cloudReqs);
           }
@@ -454,12 +454,11 @@ const CHT = (function () {
     const db = getFirestore();
     if (db) {
       return db.collection('activity_logs')
-        .orderBy('timestamp', 'desc')
-        .limit(20)
         .onSnapshot(snapshot => {
           const logs = [];
           snapshot.forEach(doc => logs.push(doc.data()));
-          callback(logs);
+          logs.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+          callback(logs.slice(0, 30));
         }, err => console.warn('[CHT Cloud] Activity logs error:', err));
     }
     return null;
@@ -471,7 +470,6 @@ const CHT = (function () {
     const db = getFirestore();
     if (db) {
       return db.collection('students')
-        .orderBy('registeredAt', 'desc')
         .onSnapshot(snapshot => {
           const cloudStudents = [];
           snapshot.forEach(doc => {
@@ -479,6 +477,7 @@ const CHT = (function () {
             data.id = doc.id;
             cloudStudents.push(data);
           });
+          cloudStudents.sort((a, b) => new Date(b.registeredAt || 0) - new Date(a.registeredAt || 0));
           if (cloudStudents.length > 0) {
             const local = getUsers();
             const map = new Map();
@@ -588,7 +587,6 @@ const CHT = (function () {
     const db = getFirestore();
     if (db) {
       return db.collection('cac_submissions')
-        .orderBy('timestamp', 'desc')
         .onSnapshot(snapshot => {
           const subs = [];
           snapshot.forEach(doc => {
@@ -596,6 +594,7 @@ const CHT = (function () {
             data.id = doc.id;
             subs.push(data);
           });
+          subs.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
           if (subs.length > 0) {
             localStorage.setItem(STORAGE_KEYS.CAC_SUBMISSIONS, JSON.stringify(subs));
           }
