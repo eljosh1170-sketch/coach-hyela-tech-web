@@ -474,6 +474,11 @@
                   <label class="cht-label" for="liveEditorEmail">Official Contact Email</label>
                   <input type="email" id="liveEditorEmail" class="cht-input live-trackable" oninput="onLiveFieldInput()">
                 </div>
+                <div class="cht-form-group">
+                  <label class="cht-label" for="liveEditorMasterDriveUrl">VIP Master Prompts Google Drive Folder Link</label>
+                  <input type="url" id="liveEditorMasterDriveUrl" class="cht-input live-trackable" oninput="onLiveFieldInput()" placeholder="https://drive.google.com/drive/folders/...">
+                  <div class="cht-help-text">Live Google Drive link unlocked automatically for approved VIP candidates.</div>
+                </div>
               </div>
 
               <!-- Section 2: PalmPay Account Details -->
@@ -774,7 +779,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=20261025_04"></script>
+  <script src="js/cht-core.js?v=20261025_07"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -926,7 +931,8 @@
         tickerText: document.getElementById('liveEditorTickerText') ? document.getElementById('liveEditorTickerText').value : '',
         pricingNotice: document.getElementById('liveEditorPricingNotice') ? document.getElementById('liveEditorPricingNotice').value : '',
         c3Title: document.getElementById('liveEditorC3Title') ? document.getElementById('liveEditorC3Title').value : '',
-        c3Desc: document.getElementById('liveEditorC3Desc') ? document.getElementById('liveEditorC3Desc').value : ''
+        c3Desc: document.getElementById('liveEditorC3Desc') ? document.getElementById('liveEditorC3Desc').value : '',
+        masterDriveUrl: document.getElementById('liveEditorMasterDriveUrl') ? document.getElementById('liveEditorMasterDriveUrl').value : ''
       };
     }
 
@@ -943,6 +949,7 @@
       if (document.getElementById('liveEditorPricingNotice')) document.getElementById('liveEditorPricingNotice').value = data.pricingNotice || '';
       if (document.getElementById('liveEditorC3Title')) document.getElementById('liveEditorC3Title').value = data.c3Title || '';
       if (document.getElementById('liveEditorC3Desc')) document.getElementById('liveEditorC3Desc').value = data.c3Desc || '';
+      if (document.getElementById('liveEditorMasterDriveUrl')) document.getElementById('liveEditorMasterDriveUrl').value = data.masterDriveUrl || 'https://drive.google.com/drive/folders/1_0uldj8-IFcWQxRa4PuFRFVgCRDeSNDJ?usp=drive_link';
     }
 
     function renderLiveContentEditor() {
@@ -1255,12 +1262,12 @@
       `).join('');
     }
 
-    function handleToggleDrive(email, newAccess) {
-      const res = CHT.toggleDriveAccess(email, newAccess);
+    async function handleToggleDrive(email, newAccess) {
+      const res = await CHT.toggleDriveAccess(email, newAccess);
       alert(res.message);
       renderAdminStudents();
       renderAdminNotifs();
-        initEmailSettings();
+      initEmailSettings();
     }
 
     function openEditStudentModal(userId) {

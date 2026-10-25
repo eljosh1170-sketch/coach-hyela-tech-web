@@ -360,6 +360,7 @@ const CHT = (function () {
   // ==========================================
   // REAL-TIME CLOUD FIRESTORE SYNCHRONIZATION
   // ==========================================
+    const CHT_MASTER_DRIVE_URL = "https://drive.google.com/drive/folders/1_0uldj8-IFcWQxRa4PuFRFVgCRDeSNDJ?usp=drive_link";
   const CHT_FIREBASE_CONFIG = {
     projectId: 'coachhyelatech-d3207',
     appId: '1:946569619362:web:d03da6c819375625c034fb',
@@ -1285,23 +1286,50 @@ const CHT = (function () {
   }
 
   // Admin toggle drive access
-  function toggleDriveAccess(email, hasAccess) {
+  async function toggleDriveAccess(email, hasAccess) {
     if (!isAdminLoggedIn()) return { success: false, message: "Unauthorized." };
     const users = getUsers();
     const user = users.find(u => u.email.toLowerCase() === email.toLowerCase());
     if (user) {
       user.driveAccess = hasAccess;
+      user.vipAccess = hasAccess;
       saveUsers(users);
+
+      const db = getFirestore();
+      if (db) {
+        try {
+          await db.collection('students').doc(user.id).set({
+            driveAccess: hasAccess,
+            vipAccess: hasAccess,
+            email: user.email,
+            fullName: user.fullName
+          }, { merge: true });
+          await db.collection('activity_logs').add({
+            type: 'VIP_ACCESS_TOGGLE',
+            page: 'Operations Hub',
+            device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+            details: `Admin set VIP Google Drive access to ${hasAccess ? 'GRANTED' : 'REVOKED'} for ${email}`,
+            timestamp: new Date().toISOString()
+          });
+        } catch(e) {
+          console.warn('[CHT Cloud] Firestore drive toggle error:', e);
+        }
+      }
 
       logNotification(
         email,
-        `Course Resource Access Updated`,
-        `Your access to the restricted Coach Hyela Student Google Drive repository has been ${hasAccess ? 'ACTIVATED' : 'REVOKED'}.`,
-        'PERMISSIoNS'
+        `VIP Resource & Google Drive Access Updated`,
+        `Your access to the restricted Coach Hyela VIP Google Drive Master Prompts repository has been ${hasAccess ? 'ACTIVATED' : 'REVOKED'}.`,
+        'PERMISSIONS'
       );
-      return { success: true, message: `Drive access ${hasAccess ? 'granted' : 'revoked'}.` };
+      return { success: true, message: `VIP Drive access ${hasAccess ? 'granted' : 'revoked'} and synced to Google Cloud!` };
     }
     return { success: false, message: "Student not found." };
+  }
+
+  function getMasterDriveUrl() {
+    const content = getLiveContent();
+    return (content && content.masterDriveUrl) ? content.masterDriveUrl : CHT_MASTER_DRIVE_URL;
   }
 
   // Mobile Drawer Toggle
@@ -1520,6 +1548,7 @@ const CHT = (function () {
     updateEligibilityStatus,
     updateStudentDetails,
     toggleDriveAccess,
+    getMasterDriveUrl,
     // CAC
     saveCACSubmission,
     getCACSubmissions,
