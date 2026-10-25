@@ -285,6 +285,7 @@
                   <th>Email Verified</th>
                   <th>Assigned Courses</th>
                   <th>Drive Access</th>
+                  <th>Canva Pro VIP Status</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -779,7 +780,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=20261025_07"></script>
+  <script src="js/cht-core.js?v=20261025_08"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -1252,6 +1253,41 @@
             <button type="button" class="cht-btn cht-btn-sm ${u.driveAccess ? 'cht-btn-primary' : 'cht-btn-outline'}" style="padding:2px 8px; font-size:0.75rem;" onclick="handleToggleDrive('${u.email}', ${!u.driveAccess})">
               ${u.driveAccess ? '✓ Granted' : 'Locked (Click to Grant)'}
             </button>
+          </td>
+          <td>
+            ${(() => {
+              const status = u.canvaStatus || 'NOT_CLAIMED';
+              const email = u.canvaEmail || u.email;
+              if (status === 'REQUESTED') {
+                return `
+                  <div>
+                    <span class="status-pill pending" style="font-size:0.7rem;">Invite Requested</span>
+                    <div style="font-size:0.8rem; color:#fff; font-weight:600; margin:4px 0;">${email}</div>
+                    <div style="display:flex; gap:4px; margin-top:4px;">
+                      <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:2px 6px; font-size:0.7rem;" onclick="copyStudentEmail('${email}')">📋 Copy</button>
+                      <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="padding:2px 8px; font-size:0.7rem; font-weight:700;" onclick="handleMarkCanvaSent('${u.id}', '${email}')">✉️ Mark Invite Sent</button>
+                    </div>
+                  </div>
+                `;
+              } else if (status === 'INVITE_SENT') {
+                return `
+                  <div>
+                    <span class="status-pill approved" style="font-size:0.7rem;">✓ Invite Sent</span>
+                    <div style="font-size:0.75rem; color:var(--cht-text-muted); margin-top:2px;">${email}</div>
+                    <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:1px 6px; font-size:0.68rem; margin-top:4px;" onclick="handleMarkCanvaSent('${u.id}', '${email}')">Re-notify</button>
+                  </div>
+                `;
+              } else if (status === 'CLAIMED') {
+                return `
+                  <div>
+                    <span class="status-pill approved" style="font-size:0.7rem;">✓ Claimed & Active</span>
+                    <div style="font-size:0.75rem; color:var(--cht-text-muted); margin-top:2px;">${email}</div>
+                  </div>
+                `;
+              } else {
+                return `<span class="status-pill" style="opacity:0.6; font-size:0.7rem;">Not Claimed Yet</span>`;
+              }
+            })()}
           </td>
           <td>
             <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;" onclick="openEditStudentModal('${u.id}')">

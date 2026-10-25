@@ -698,7 +698,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=20261025_07"></script>
+  <script src="js/cht-core.js?v=20261025_08"></script>
   <script>
     // Pending email state for verification
     let pendingVerificationEmail = null;
@@ -1151,25 +1151,90 @@
       }).join('');
     }
 
-        // 7. RENDER RESTRICTED VIP GOOGLE DRIVE VAULT & MASTER PROMPTS
+            // 7. RENDER RESTRICTED VIP GOOGLE DRIVE VAULT & MASTER PROMPTS
     function renderDriveVault(user) {
       const users = CHT.getUsers();
       const freshUser = users.find(u => (u.id === user.id || u.email.toLowerCase() === user.email.toLowerCase())) || user;
       const isEligible = !!freshUser.driveAccess || !!user.driveAccess;
       const driveUrl = (window.CHT && CHT.getMasterDriveUrl) ? CHT.getMasterDriveUrl() : "https://drive.google.com/drive/folders/1_0uldj8-IFcWQxRa4PuFRFVgCRDeSNDJ?usp=drive_link";
+      const canvaStatus = freshUser.canvaStatus || user.canvaStatus || 'NOT_CLAIMED';
+      const canvaEmail = freshUser.canvaEmail || user.canvaEmail || user.email;
+      const aiProAccessed = !!freshUser.googleAiProAccessed || !!user.googleAiProAccessed;
 
       const badge = document.getElementById('drivePermissionBadge');
       const container = document.getElementById('driveAccessContainer');
 
       if (isEligible) {
         badge.innerHTML = `<span class="status-badge approved" style="background:#22C55E; color:#000; font-weight:800; padding:4px 10px;">✓ VIP ACCESS ACTIVE</span>`;
+
+        let canvaSectionHtml = '';
+        if (canvaStatus === 'INVITE_SENT') {
+          canvaSectionHtml = `
+            <div style="background: rgba(212, 175, 55, 0.15); border: 2px solid var(--cht-gold-500); border-radius: 8px; padding: 14px; margin-top: 10px;">
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--cht-gold-light); font-weight: 700; font-size: 0.95rem; margin-bottom: 4px;">
+                <span>📩 Canva Team Invite Sent!</span>
+              </div>
+              <p style="color: #fff; font-size: 0.85rem; line-height: 1.5; margin-bottom: 10px;">
+                An invitation has been sent to <strong>${canvaEmail}</strong> from <strong>Coach Hyela Tech Canva Team</strong>. Please check your email inbox and spam folder, and accept it to activate your 1-Year Pro access!
+              </p>
+              <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" onclick="handleConfirmCanvaAccepted('${user.id}')" style="font-size: 0.8rem; font-weight: 700;">
+                ✓ I Have Accepted the Canva Invite
+              </button>
+            </div>
+          `;
+        } else if (canvaStatus === 'CLAIMED') {
+          canvaSectionHtml = `
+            <div style="background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.4); border-radius: 8px; padding: 12px; margin-top: 10px;">
+              <span style="color: #86EFAC; font-weight: 700; font-size: 0.88rem;">✓ 1-Year Canva Pro Access Active on Team Workspace</span>
+              <div style="font-size: 0.8rem; color: var(--cht-text-muted); margin-top: 2px;">Registered Email: ${canvaEmail}</div>
+            </div>
+          `;
+        } else if (canvaStatus === 'REQUESTED') {
+          canvaSectionHtml = `
+            <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.4); border-radius: 8px; padding: 12px; margin-top: 10px;">
+              <span style="color: #FCD34D; font-weight: 700; font-size: 0.88rem;">⏳ Canva Team Invite Request Pending</span>
+              <p style="color: var(--cht-text-secondary); font-size: 0.82rem; margin: 4px 0 0 0;">
+                Your request for <strong>${canvaEmail}</strong> has been received by Coach Hyela. An invite will be dispatched to your inbox shortly.
+              </p>
+            </div>
+          `;
+        } else {
+          canvaSectionHtml = `
+            <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px; margin-top: 10px;">
+              <div style="font-size: 0.88rem; color: #fff; font-weight: 600; margin-bottom: 8px;">
+                Have you already claimed your Canva Pro?
+              </div>
+              <div style="display: flex; gap: 16px; margin-bottom: 10px;">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--cht-text-secondary); font-size: 0.85rem;">
+                  <input type="radio" name="canvaClaimCheck" value="yes" onchange="toggleCanvaInput(true, '${user.id}')">
+                  <span>Yes, I have it</span>
+                </label>
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--cht-text-secondary); font-size: 0.85rem;">
+                  <input type="radio" name="canvaClaimCheck" value="no" checked onchange="toggleCanvaInput(false, '${user.id}')">
+                  <span>No, I need access</span>
+                </label>
+              </div>
+              <div id="canvaEmailBox">
+                <label class="cht-label" style="font-size: 0.8rem; margin-bottom: 4px;">Enter your email for Canva Team Invite:</label>
+                <div style="display: flex; gap: 8px;">
+                  <input type="email" id="inputCanvaEmail" class="cht-input" value="${user.email}" style="padding: 6px 12px; font-size: 0.85rem;" required>
+                  <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="white-space: nowrap; padding: 6px 14px; font-weight: 700;" onclick="handleSubmitCanvaClaim('${user.id}')">
+                    Request Invite →
+                  </button>
+                </div>
+                <div class="cht-help-text" style="font-size: 0.75rem; margin-top: 4px;">Coach Hyela will dispatch your invite from the Coach Hyela Tech Canva Team.</div>
+              </div>
+            </div>
+          `;
+        }
+
         container.innerHTML = `
           <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: var(--cht-radius-md); padding: 18px; margin-bottom: 16px;">
             <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: #86EFAC; font-weight: 700; font-size: 0.92rem;">
               <span>🌟 Exclusive VIP Candidate Access Granted for ${user.email}</span>
             </div>
             
-            <div style="display: flex; flex-direction: column; gap: 12px;">
+            <div style="display: flex; flex-direction: column; gap: 14px;">
               <!-- 1. Master AI Prompts & E-Books Google Drive -->
               <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 14px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
@@ -1186,27 +1251,46 @@
 
               <!-- 2. Canva Pro 1-Year Access -->
               <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
                   <strong style="color: #fff; font-size: 0.95rem;">🎨 Canva Pro (1-Year VIP Access)</strong>
                   <span class="status-pill approved" style="font-size: 0.7rem;">Active</span>
                 </div>
-                <p style="color: var(--cht-text-muted); font-size: 0.82rem; line-height: 1.5; margin-bottom: 12px;">
-                  1-Year premium Canva Pro creative suite license. To claim your direct team invite, tap below to notify Coach Hyela directly on WhatsApp with your verified email (${user.email}).
+                <p style="color: var(--cht-text-muted); font-size: 0.82rem; line-height: 1.5; margin-bottom: 8px;">
+                  1-Year full Canva Pro creative suite license managed by Coach Hyela Tech.
                 </p>
-                <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20my%20VIP%20student%20access%20is%20active%20on%20the%20website.%20Please%20grant%20my%20email%20(${encodeURIComponent(user.email)})%20direct%20access%20to%20the%201-Year%20Canva%20Pro%20Team%20workspace." target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-outline cht-btn-sm" style="display: inline-flex; align-items: center; gap: 6px; border-color: #25D366; color: #86EFAC;">
-                  Claim Canva Pro Access on WhatsApp 💬
-                </a>
+                ${canvaSectionHtml}
               </div>
 
               <!-- 3. Google AI Pro Package -->
               <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
                   <strong style="color: #fff; font-size: 0.95rem;">⚡ Google AI Pro (18-Month Package)</strong>
                   <span class="status-pill approved" style="font-size: 0.7rem;">Included</span>
                 </div>
-                <p style="color: var(--cht-text-muted); font-size: 0.82rem; line-height: 1.5; margin: 0;">
-                  Complete 18-month curriculum and practical enterprise AI automation blueprints, accessible directly inside your Master Google Drive folder above.
+                <p style="color: var(--cht-text-muted); font-size: 0.82rem; line-height: 1.5; margin-bottom: 10px;">
+                  Complete 18-month curriculum and practical enterprise AI automation blueprints, accessible directly inside your Master Google Drive folder.
                 </p>
+                
+                <div style="background: rgba(0,0,0,0.25); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 12px;">
+                  <div style="font-size: 0.88rem; color: #fff; font-weight: 600; margin-bottom: 6px;">
+                    Have you accessed your Google AI Pro 18-Month Package?
+                  </div>
+                  <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px;">
+                    <div style="display: flex; gap: 16px;">
+                      <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--cht-text-secondary); font-size: 0.85rem;">
+                        <input type="radio" name="aiProCheck" value="yes" ${aiProAccessed ? 'checked' : ''} onchange="handleAiProCheck(true, '${user.id}')">
+                        <span>Yes</span>
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; color: var(--cht-text-secondary); font-size: 0.85rem;">
+                        <input type="radio" name="aiProCheck" value="no" ${!aiProAccessed ? 'checked' : ''} onchange="handleAiProCheck(false, '${user.id}')">
+                        <span>No</span>
+                      </label>
+                    </div>
+                    <a href="${driveUrl}" target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-outline cht-btn-sm" style="font-size: 0.75rem; padding: 4px 10px;">
+                      Open in Master Drive ↗
+                    </a>
+                  </div>
+                </div>
               </div>
 
               <!-- 4. Certified Credential -->
@@ -1244,6 +1328,34 @@
           </div>
         `;
       }
+    }
+
+    function toggleCanvaInput(hasClaimed, userId) {
+      const box = document.getElementById('canvaEmailBox');
+      if (box) box.style.display = hasClaimed ? 'none' : 'block';
+      if (hasClaimed) {
+        CHT.confirmCanvaAccepted(userId);
+      }
+    }
+
+    async function handleSubmitCanvaClaim(userId) {
+      const emailInput = document.getElementById('inputCanvaEmail');
+      if (!emailInput || !emailInput.value.trim()) {
+        alert("Please enter a valid email address.");
+        return;
+      }
+      const email = emailInput.value.trim();
+      const res = await CHT.submitCanvaClaim(userId, email);
+      alert(res.message);
+    }
+
+    async function handleConfirmCanvaAccepted(userId) {
+      const res = await CHT.confirmCanvaAccepted(userId);
+      alert(res.message);
+    }
+
+    async function handleAiProCheck(accessed, userId) {
+      await CHT.setGoogleAiProStatus(userId, accessed);
     }
 
     // 8. CLAIM CERTIFICATE ACTIoN

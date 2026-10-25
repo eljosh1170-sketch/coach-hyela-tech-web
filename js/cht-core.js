@@ -1495,6 +1495,95 @@ const CHT = (function () {
     });
   }
 
+  
+  // Canva Pro Claim & Dispatch Helpers
+  async function submitCanvaClaim(userId, canvaEmail) {
+    const db = getFirestore();
+    if (db && userId) {
+      try {
+        await db.collection('students').doc(userId).set({
+          canvaStatus: 'REQUESTED',
+          canvaEmail: canvaEmail.trim().toLowerCase(),
+          canvaRequestedAt: new Date().toISOString()
+        }, { merge: true });
+
+        await db.collection('activity_logs').add({
+          type: 'CANVA_CLAIM_REQUEST',
+          page: 'Student Portal',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `Canva Pro team invite requested for email: ${canvaEmail}`,
+          timestamp: new Date().toISOString()
+        });
+        return { success: true, message: "Canva Pro invite request submitted to Coach Hyela!" };
+      } catch (e) {
+        return { success: false, message: e.message };
+      }
+    }
+    return { success: false, message: "Cloud connection unavailable." };
+  }
+
+  async function confirmCanvaAccepted(userId) {
+    const db = getFirestore();
+    if (db && userId) {
+      try {
+        await db.collection('students').doc(userId).set({
+          canvaStatus: 'CLAIMED',
+          canvaClaimedAt: new Date().toISOString()
+        }, { merge: true });
+        return { success: true, message: "Canva Pro status marked as Claimed & Active!" };
+      } catch(e) {
+        return { success: false, message: e.message };
+      }
+    }
+    return { success: false, message: "Cloud connection unavailable." };
+  }
+
+  async function dispatchCanvaInvite(userId, studentEmail) {
+    const db = getFirestore();
+    if (db && userId) {
+      try {
+        await db.collection('students').doc(userId).set({
+          canvaStatus: 'INVITE_SENT',
+          canvaInviteSentAt: new Date().toISOString()
+        }, { merge: true });
+
+        await db.collection('activity_logs').add({
+          type: 'CANVA_INVITE_DISPATCHED',
+          page: 'Operations Hub',
+          device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
+          details: `Coach Hyela dispatched Canva Pro team invite to ${studentEmail}`,
+          timestamp: new Date().toISOString()
+        });
+
+        logNotification(
+          studentEmail,
+          "Canva Pro Team Invite Sent - Coach Hyela Tech",
+          "An email invitation has been sent to your inbox from Coach Hyela Tech Canva Team. Please accept the invitation to activate your 1-Year Pro access.",
+          "CANVA_VIP"
+        );
+        return { success: true, message: `Canva Pro invite notification sent to student dashboard for ${studentEmail}!` };
+      } catch(e) {
+        return { success: false, message: e.message };
+      }
+    }
+    return { success: false, message: "Cloud connection unavailable." };
+  }
+
+  async function setGoogleAiProStatus(userId, accessed) {
+    const db = getFirestore();
+    if (db && userId) {
+      try {
+        await db.collection('students').doc(userId).set({
+          googleAiProAccessed: !!accessed
+        }, { merge: true });
+        return { success: true };
+      } catch(e) {
+        return { success: false, message: e.message };
+      }
+    }
+    return { success: false };
+  }
+
   // Initial boot
   initStorage();
 
@@ -1549,6 +1638,10 @@ const CHT = (function () {
     updateStudentDetails,
     toggleDriveAccess,
     getMasterDriveUrl,
+    submitCanvaClaim,
+    confirmCanvaAccepted,
+    dispatchCanvaInvite,
+    setGoogleAiProStatus,
     // CAC
     saveCACSubmission,
     getCACSubmissions,
