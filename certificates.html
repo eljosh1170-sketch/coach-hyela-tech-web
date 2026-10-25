@@ -353,7 +353,7 @@
               <div class="cht-form-group">
                 <label class="cht-label" for="regEmail">Email Address <span class="req">*</span></label>
                 <input type="email" id="regEmail" class="cht-input" placeholder="your.email@example.com" required>
-                <div class="cht-help-text">A 6-digit verification code will be sent tothis email.</div>
+                <div class="cht-help-text">A secure email verification link from Coach Hyela Tech will be sent to this email.</div>
               </div>
 
               <div class="cht-form-group">
@@ -921,12 +921,34 @@
       showStudentDashboard(res.user);
     }
 
-    // 4. FORGOT & RESET PASSWORD HANDLERS
-    function handleForgotRequestSubmit(e) {
+    // 4. FORGOT & RESET PASSWORD HANDLERS (Automated via Google Firebase)
+    async function handleForgotRequestSubmit(e) {
       e.preventDefault();
       const email = document.getElementById('forgotEmailInput').value.trim();
+
+      if (fbAuth) {
+        try {
+          await fbAuth.sendPasswordResetEmail(email);
+          showAuthAlert(`Password reset link dispatched! Please check your email inbox (${email}) and follow the instructions to securely reset your password.`, false);
+          setTimeout(() => {
+            switchAuthTab('login');
+            document.getElementById('loginEmail').value = email;
+          }, 3500);
+          return;
+        } catch (err) {
+          console.warn('[CHT Auth] Reset error:', err);
+          if (err.code === 'auth/user-not-found') {
+            showAuthAlert("No account found with this email. Please verify the email or register a new account.", true);
+            return;
+          } else if (err.code === 'auth/invalid-email') {
+            showAuthAlert("Please enter a valid email address.", true);
+            return;
+          }
+        }
+      }
+
       const res = CHT.requestPasswordReset(email);
-      showAuthAlert(res.success ? `If an account exists for ${email}, a 6-digit password reset code has been dispatched to your email address. Please check your inbox.` : res.message, !res.success);
+      showAuthAlert(res.success ? `If an account exists for ${email}, password reset instructions have been dispatched to your email address. Please check your inbox.` : res.message, !res.success);
       if (res.success) {
         document.getElementById('formForgotRequest').style.display = 'none';
         document.getElementById('formResetSubmit').style.display = 'block';
