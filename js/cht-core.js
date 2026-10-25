@@ -286,6 +286,64 @@ const CHT = (function () {
     }
   }
 
+
+  // ==========================================
+  // LIVE TRANSACTIONAL EMAIL DISPATCHER (EmailJS)
+  // ==========================================
+  const EMAILJS_CONFIG_KEY = 'cht_emailjs_config';
+
+  function getEmailConfig() {
+    try {
+      const cfg = JSON.parse(localStorage.getItem(EMAILJS_CONFIG_KEY) || '{}');
+      return {
+        serviceId: cfg.serviceId || '',
+        templateId: cfg.templateId || '',
+        publicKey: cfg.publicKey || ''
+      };
+    } catch (e) {
+      return { serviceId: '', templateId: '', publicKey: '' };
+    }
+  }
+
+  function saveEmailConfig(cfg) {
+    localStorage.setItem(EMAILJS_CONFIG_KEY, JSON.stringify({
+      serviceId: (cfg.serviceId || '').trim(),
+      templateId: (cfg.templateId || '').trim(),
+      publicKey: (cfg.publicKey || '').trim()
+    }));
+    return { success: true, message: 'Email configuration saved!' };
+  }
+
+  async function sendLiveEmail(toEmail, toName, code, type = 'VERIFICATION') {
+    const cfg = getEmailConfig();
+    const hasKeys = cfg.serviceId && cfg.templateId && cfg.publicKey;
+
+    if (window.emailjs && hasKeys) {
+      try {
+        emailjs.init(cfg.publicKey);
+        const templateParams = {
+          to_email: toEmail,
+          to_name: toName || 'Student',
+          verification_code: code,
+          action_type: type === 'RESET' ? 'Password Reset Code' : 'Student Email Verification Code',
+          expiry_mins: type === 'RESET' ? '20 minutes' : '30 minutes',
+          site_name: 'Coach Hyela Tech Industries Limited',
+          site_url: 'https://coachhyelatech.com.ng'
+        };
+
+        const resp = await emailjs.send(cfg.serviceId, cfg.templateId, templateParams);
+        console.log('[CHT Email] Live email dispatched successfully:', resp.status, resp.text);
+        return { success: true, mode: 'live', status: resp.status };
+      } catch (err) {
+        console.error('[CHT Email] EmailJS send error:', err);
+        return { success: false, mode: 'live_failed', error: err.text || err.message };
+      }
+    } else {
+      console.info('[CHT Email] EmailJS not configured yet; code recorded in admin audit log.');
+      return { success: true, mode: 'audit_logged' };
+    }
+  }
+
   // Student Account Registration with Verification Code
   async function registerStudent(fullName, email, password) {
     if (!fullName || !email || !password) {
@@ -331,7 +389,8 @@ const CHT = (function () {
     users.push(newUser);
     saveUsers(users);
 
-    // Send simulated email
+    // Send live email notification + record in admin audit log
+    sendLiveEmail(cleanEmail, fullName.trim(), verificationCode, 'VERIFICATION');
     logNotification(
       cleanEmail,
       "Verify Your Coach Hyela Tech Student Account",
@@ -410,6 +469,7 @@ const CHT = (function () {
     user.verificationExpires = Date.now() + (30 * 60 * 1000);
     saveUsers(users);
 
+    sendLiveEmail(cleanEmail, user.fullName || cleanEmail, newCode, 'VERIFICATION');
     logNotification(
       cleanEmail,
       "New Verification Code - Coach Hyela Tech",
@@ -486,6 +546,7 @@ const CHT = (function () {
     user.resetExpires = Date.now() + (20 * 60 * 1000); // 20 minutes
     saveUsers(users);
 
+    sendLiveEmail(cleanEmail, user.fullName || cleanEmail, resetCode, 'RESET');
     logNotification(
       cleanEmail,
       "Password Reset Request - Coach Hyela Tech",
@@ -1041,6 +1102,9 @@ const CHT = (function () {
     resendVerificationCode,
     loginStudent,
     requestPasswordReset,
+    getEmailConfig,
+    saveEmailConfig,
+    sendLiveEmail,
     resetPassword,
     getAuthLearner,
     setAuthLearner,

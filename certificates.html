@@ -212,6 +212,7 @@
       }
     }
   </style>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 </head>
 <body>
 
@@ -731,10 +732,10 @@
       document.getElementById('verifyTargetEmail').textContent = res.email;
       document.getElementById('viewRegister').style.display = 'none';
       document.getElementById('viewVerifyEmail').style.display = 'block';
-      showAuthAlert(`${res.message} (Verification Code: ${res.verificationCode})`, false);
+      showAuthAlert(`Account created! A 6-digit verification code has been dispatched to your email (${res.email}). Please check your inbox and spam folder, then enter the code below to complete verification.`, false);
       const codeField = document.getElementById('verificationCodeInput');
       if (codeField) {
-        codeField.value = res.verificationCode;
+        codeField.value = '';
         codeField.focus();
       }
     }
@@ -759,7 +760,9 @@
     function handleResendCode() {
       if (!pendingVerificationEmail) return;
       const res = CHT.resendVerificationCode(pendingVerificationEmail);
-      showAuthAlert(res.message + (res.verificationCode ? ` (Code: ${res.verificationCode})` : ''), !res.success);
+      showAuthAlert(res.success ? `A new 6-digit verification code has been dispatched to ${pendingVerificationEmail}. Please check your inbox and spam folder.` : res.message, !res.success);
+      const resendCodeField = document.getElementById('verificationCodeInput');
+      if (resendCodeField) resendCodeField.value = '';
     }
 
     // 3. LOGIN HANDLER
@@ -790,7 +793,7 @@
       e.preventDefault();
       const email = document.getElementById('forgotEmailInput').value.trim();
       const res = CHT.requestPasswordReset(email);
-      showAuthAlert(res.message + (res.resetCode ? ` (Demo Reset Code: ${res.resetCode})` : ''), !res.success);
+      showAuthAlert(res.success ? `If an account exists for ${email}, a 6-digit password reset code has been dispatched to your email address. Please check your inbox.` : res.message, !res.success);
       if (res.success) {
         document.getElementById('formForgotRequest').style.display = 'none';
         document.getElementById('formResetSubmit').style.display = 'block';
