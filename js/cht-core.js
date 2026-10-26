@@ -647,8 +647,8 @@ const CHT = (function () {
   }
 
   // Cloud Sync for Submitting Eligibility Request
-  async function submitEligibilityRequestCloud(userId, fullName, email, courseId, courseTitle) {
-    const res = submitEligibilityRequest(userId, fullName, email, courseId, courseTitle);
+  async function submitEligibilityRequestCloud(userId, fullName, email, courseId, courseTitle, packageTier = 'VIP_BUNDLE') {
+    const res = submitEligibilityRequest(userId, fullName, email, courseId, courseTitle, packageTier);
     if (!res.success) return res;
 
     const db = getFirestore();
@@ -659,7 +659,7 @@ const CHT = (function () {
           type: 'STUDENT_APPLICATION',
           page: 'Learner Portal',
           device: window.innerWidth <= 768 ? 'Mobile' : 'Desktop',
-          details: `${fullName} (${email}) applied for ${courseTitle}`,
+          details: `${fullName} (${email}) applied for ${courseTitle} [${packageTier}]`,
           timestamp: new Date().toISOString()
         });
         console.log('[CHT Cloud] Eligibility request synced to Firestore:', res.request.id);
@@ -995,7 +995,7 @@ const CHT = (function () {
     }
   }
 
-  function submitEligibilityRequest(userId, fullName, email, courseId, courseTitle) {
+  function submitEligibilityRequest(userId, fullName, email, courseId, courseTitle, packageTier = 'VIP_BUNDLE') {
     if (!userId || !email || !courseId) {
       return { success: false, message: "Missing required request parameters." };
     }
@@ -1017,6 +1017,7 @@ const CHT = (function () {
       email: email,
       courseId: courseId,
       courseTitle: courseTitle,
+      packageTier: packageTier,
       submissionDate: new Date().toISOString(),
       status: "PENDING", // PENDING, APPROVED, REJECTED, MORE_INFo
       adminNotes: "Submitted by student. Awaiting administrative evaluation.",
@@ -1415,7 +1416,7 @@ const CHT = (function () {
     slogan: "Tech • Creativity • Impact",
     bankName: "PalmPay",
     accountNumber: "7011706511",
-    accountName: "Eljoshua Hyelakuri Emmanuel",
+    accountName: "EL JOSHUA HYELAKURI EMMANUEL",
     cohortMonth: "November 2026",
     pricingNotice: "Rolling Admission • Official Pricing To Be Announced Soon",
     tickerText: "Next Intensive Practical Training Cohort Begins This November",
