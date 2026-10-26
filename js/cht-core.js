@@ -1570,13 +1570,17 @@ const CHT = (function () {
     return { success: false, message: "Cloud connection unavailable." };
   }
 
-  async function setGoogleAiProStatus(userId, accessed) {
+  async function setMuseAiStatus(userId, accessed, whatsappNum = '') {
     const db = getFirestore();
     if (db && userId) {
       try {
-        await db.collection('students').doc(userId).set({
-          googleAiProAccessed: !!accessed
-        }, { merge: true });
+        const updateData = {
+          museAiAccessed: !!accessed
+        };
+        if (whatsappNum) {
+          updateData.museAiWhatsApp = whatsappNum.trim();
+        }
+        await db.collection('students').doc(userId).set(updateData, { merge: true });
         return { success: true };
       } catch(e) {
         return { success: false, message: e.message };
@@ -1584,6 +1588,7 @@ const CHT = (function () {
     }
     return { success: false };
   }
+  const setGoogleAiProStatus = setMuseAiStatus;
 
   // Initial boot
   initStorage();
@@ -1642,6 +1647,7 @@ const CHT = (function () {
     submitCanvaClaim,
     confirmCanvaAccepted,
     dispatchCanvaInvite,
+    setMuseAiStatus,
     setGoogleAiProStatus,
     // CAC
     saveCACSubmission,

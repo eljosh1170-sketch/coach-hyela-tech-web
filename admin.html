@@ -794,7 +794,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=20261026_01"></script>
+  <script src="js/cht-core.js?v=20261026_02"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -1328,9 +1328,16 @@
             })()}
           </td>
           <td>
-            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;" onclick="openEditStudentModal('${u.id}')">
-              Edit Details
-            </button>
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;" onclick="openEditStudentModal('${u.id}')">
+                Edit Details
+              </button>
+              ${(u.vipAccess || u.driveAccess) ? `
+                <a href="https://wa.me/?text=${encodeURIComponent(`Hello ${u.fullName}, congratulations on your VIP verification! Here are your activation credentials for Muse AI (1 Billion Credits):\n\n[Insert Voucher / Credentials Here]\n\nCoach Hyela Tech Industries`)}" target="_blank" class="cht-btn cht-btn-primary cht-btn-sm" style="padding:3px 8px; font-size:0.7rem; font-weight:700; background:#22C55E; color:#000; text-align:center; text-decoration:none;">
+                  📲 Send Muse AI on WA
+                </a>
+              ` : ''}
+            </div>
           </td>
         </tr>
       `).join('');

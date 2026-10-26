@@ -15,11 +15,11 @@
 ## 2. Pricing & Enrollment Down-Sell Structure (Promo valid till October 31st, 2026)
 - **Complete VIP Access Package**:
   - **Promo Price**: `₦2,500` (Discounted from `₦4,000`)
-  - **Includes**: Official Certificate of Completion (with QR code) + 1-Year Canva Pro Team Access + Google Drive Master Prompts & E-Books Vault + Google AI Pro 18-Month Package.
+  - **Includes**: Official Certificate of Completion (with QR code) + 1-Year Canva Pro Team Access + Google Drive Master Prompts & E-Books Vault + Muse AI (1 Billion Credits - delivered to student's WhatsApp).
 - **Official Certificate Only (Strategic Down-Sell)**:
   - **Promo Price**: `₦500` (Discounted from `₦5,000`)
   - **Strategic Purpose**: First time ever offered separately. Serves as a low-barrier down-sell so students who cannot afford ₦2,500 still contribute revenue. Zero lost leads.
-  - **Includes**: Official Certificate of Completion (with QR code). Canva Pro, Master Prompts, and Google AI Pro remain locked until upgraded.
+  - **Includes**: Official Certificate of Completion (with QR code). Canva Pro, Master Prompts, and Muse AI remain locked until upgraded.
 - **Promo Expiry**: **31st of October 2026**.
 
 ---
