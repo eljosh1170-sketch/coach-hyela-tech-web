@@ -661,7 +661,7 @@
         </div>
       </div>
 
-      <form onsubmit="handleReviewSubmit(event)">
+      <form id="formReviewEligibility" onsubmit="handleReviewSubmit(event)">
         <div class="cht-form-group">
           <label class="cht-label" for="reviewStatusSelect">Decision Status <span class="req">*</span></label>
           <select id="reviewStatusSelect" class="cht-select" required>
@@ -674,7 +674,7 @@
 
         <div class="cht-form-group">
           <label class="cht-label" for="reviewAdminNotes">Instructor / Evaluation Notes</label>
-          <textarea id="reviewAdminNotes" class="cht-textarea" style="min-height: 80px;" placeholder="Feedback or reason sent tostudent in email notification..."></textarea>
+          <textarea id="reviewAdminNotes" class="cht-textarea" style="min-height: 80px;" placeholder="Feedback or reason sent to student in email notification..."></textarea>
         </div>
 
         <div class="cht-form-group" id="groupGrantVipAccess" style="background: rgba(212,175,55,0.08); border: 1px solid rgba(212,175,55,0.25); border-radius: 6px; padding: 12px; margin-top: 12px;">
@@ -689,7 +689,7 @@
 
         <div style="display: flex; justify-content: flex-end; gap: 12px; margin-top: 20px;">
           <button type="button" class="cht-btn cht-btn-outline" onclick="closeReviewModal()">Cancel</button>
-          <button type="submit" class="cht-btn cht-btn-primary">Save Decision &amp; Dispatch Notification →</button>
+          <button type="button" id="btnSubmitReviewDecision" class="cht-btn cht-btn-primary" onclick="handleReviewSubmit(event)">Save Decision &amp; Dispatch Notification →</button>
         </div>
       </form>
     </div>
@@ -794,7 +794,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=20261026_02"></script>
+  <script src="js/cht-core.js?v=1793132529346"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -1154,13 +1154,18 @@
             <td><span class="status-pill ${pillClass}">${r.status}</span></td>
             <td style="font-size:0.8rem; max-width:200px;">${r.adminNotes || '—'}</td>
             <td>
-              <div style="display:flex; gap:6px;">
-                <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="openReviewModal('${r.id}')">
+              <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+                ${r.status === 'PENDING' ? `
+                  <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="padding:4px 10px; font-size:0.75rem; background:#22C55E; color:#000; font-weight:700; border-color:#22C55E;" onclick="handleQuickApprove('${r.id}')">
+                    ✓ Approve
+                  </button>
+                ` : ''}
+                <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 10px; font-size:0.75rem;" onclick="openReviewModal('${r.id}')">
                   Review / Update
                 </button>
                 ${r.certificateCode ? `
-                  <a href="verify.html?code=${r.certificateCode}" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem;">
-                    Cert
+                  <a href="verify.html?code=${r.certificateCode}" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm" style="padding:4px 8px; font-size:0.75rem; border-color:var(--cht-gold-500); color:var(--cht-gold-light);">
+                    Cert ↗
                   </a>
                 ` : ''}
               </div>
@@ -1173,14 +1178,14 @@
     // 2. REVIEW MODAL LOGIC & CLOUD UPDATE
     function openReviewModal(reqId) {
       const reqs = currentEligibilityReqs.length > 0 ? currentEligibilityReqs : CHT.getEligibilityRequests();
-      const req = reqs.find(r => r.id === reqId);
+      let req = reqs.find(r => r.id === reqId || (r.docId && r.docId === reqId));
       if (!req) return;
 
-      document.getElementById('reviewReqId').value = req.id;
-      document.getElementById('reviewStudentName').textContent = req.fullName;
-      document.getElementById('reviewStudentEmail').textContent = req.email;
-      document.getElementById('reviewCourseTitle').textContent = req.courseTitle;
-      document.getElementById('reviewStatusSelect').value = req.status;
+      document.getElementById('reviewReqId').value = req.id || reqId;
+      document.getElementById('reviewStudentName').textContent = req.fullName || 'Student';
+      document.getElementById('reviewStudentEmail').textContent = req.email || '-';
+      document.getElementById('reviewCourseTitle').textContent = req.courseTitle || 'Training Course';
+      document.getElementById('reviewStatusSelect').value = req.status || 'APPROVED';
       document.getElementById('reviewAdminNotes').value = req.adminNotes || '';
 
       const isCertOnly = req.packageTier === 'CERT_ONLY';
@@ -1195,6 +1200,12 @@
         chk.checked = !isCertOnly;
       }
 
+      const btn = document.getElementById('btnSubmitReviewDecision');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = 'Save Decision &amp; Dispatch Notification →';
+      }
+
       document.getElementById('modalReviewEligibility').classList.add('active');
     }
 
@@ -1203,19 +1214,78 @@
     }
 
     async function handleReviewSubmit(e) {
-      e.preventDefault();
-      const reqId = document.getElementById('reviewReqId').value;
-      const status = document.getElementById('reviewStatusSelect').value;
-      const notes = document.getElementById('reviewAdminNotes').value.trim();
+      if (e && e.preventDefault) e.preventDefault();
+      const submitBtn = document.getElementById('btnSubmitReviewDecision');
+      const originalBtnHtml = submitBtn ? submitBtn.innerHTML : 'Save Decision &amp; Dispatch Notification →';
 
-      const res = await CHT.updateEligibilityStatusCloud(reqId, status, notes);
-      if (status === 'APPROVED') {
-        const grantDrive = document.getElementById('reviewGrantDriveAccess') ? document.getElementById('reviewGrantDriveAccess').checked : true;
-        const studentEmail = document.getElementById('reviewStudentEmail').textContent.trim();
-        await CHT.toggleDriveAccess(studentEmail, grantDrive);
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '⏳ Saving Decision &amp; Syncing...';
       }
-      closeReviewModal();
-      alert(res.message);
+
+      try {
+        const reqId = document.getElementById('reviewReqId').value;
+        const status = document.getElementById('reviewStatusSelect').value;
+        const notes = document.getElementById('reviewAdminNotes').value.trim();
+        const studentName = document.getElementById('reviewStudentName') ? document.getElementById('reviewStudentName').textContent.trim() : '';
+        const studentEmail = document.getElementById('reviewStudentEmail') ? document.getElementById('reviewStudentEmail').textContent.trim() : '';
+        const courseTitle = document.getElementById('reviewCourseTitle') ? document.getElementById('reviewCourseTitle').textContent.trim() : '';
+        const grantDrive = document.getElementById('reviewGrantDriveAccess') ? document.getElementById('reviewGrantDriveAccess').checked : (status === 'APPROVED');
+
+        const res = await CHT.updateEligibilityStatusCloud(reqId, status, notes, {
+          fullName: studentName,
+          email: studentEmail,
+          courseTitle: courseTitle,
+          grantDrive: grantDrive
+        });
+
+        if (status === 'APPROVED' && studentEmail) {
+          await CHT.toggleDriveAccess(studentEmail, grantDrive, studentName);
+        }
+
+        closeReviewModal();
+        alert(res.message || 'Status updated to ' + status + ' and synchronized successfully!');
+        renderAdminEligibility();
+        renderAdminStudents();
+        renderAdminCertificates();
+        renderAdminNotifs();
+        initEmailSettings();
+      } catch (err) {
+        console.error('Error in handleReviewSubmit:', err);
+        alert('Could not save decision: ' + (err.message || 'Please check connection and retry.'));
+      } finally {
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = originalBtnHtml;
+        }
+      }
+    }
+
+    // Direct 1-Click Approval Shortcut
+    async function handleQuickApprove(reqId) {
+      const reqs = currentEligibilityReqs.length > 0 ? currentEligibilityReqs : CHT.getEligibilityRequests();
+      const req = reqs.find(r => r.id === reqId || (r.docId && r.docId === reqId));
+      const studentName = req ? req.fullName : 'Student';
+      const studentEmail = req ? req.email : '';
+      const courseTitle = req ? req.courseTitle : 'Training Course';
+      const isCertOnly = req && req.packageTier === 'CERT_ONLY';
+
+      if (!confirm(`Approve application for ${studentName} (${studentEmail}) and generate official certificate immediately?`)) {
+        return;
+      }
+
+      const res = await CHT.updateEligibilityStatusCloud(reqId, 'APPROVED', 'Approved by Coach Hyela administration.', {
+        fullName: studentName,
+        email: studentEmail,
+        courseTitle: courseTitle,
+        grantDrive: !isCertOnly
+      });
+
+      if (studentEmail) {
+        await CHT.toggleDriveAccess(studentEmail, !isCertOnly, studentName);
+      }
+
+      alert(res.message || `Application for ${studentName} approved and official certificate generated!`);
       renderAdminEligibility();
       renderAdminStudents();
       renderAdminCertificates();
@@ -1420,6 +1490,15 @@
           'Validated by Coach Hyela administration.';
         CHT.saveCertificates(certs);
         renderAdminCertificates();
+
+        if (typeof firebase !== 'undefined' && firebase.firestore && firebase.apps.length) {
+          try {
+            firebase.firestore().collection('certificates').doc(code).set({
+              status: newStatus,
+              statusReason: target.statusReason
+            }, { merge: true }).catch(e => console.warn('[CHT Cloud] Toggle cert status error:', e));
+          } catch(e) {}
+        }
       }
     }
 
