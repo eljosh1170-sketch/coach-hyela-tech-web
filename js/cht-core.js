@@ -16,125 +16,49 @@ const CHT = (function () {
     RATE_LIMITS: 'cht_rate_limits'
   };
 
-  // Pre-seeded initial accounts for testing & demonstration
-  const DEFAULT_USERS = [
-    {
-      id: "USR-001",
-      fullName: "Bilkisu Danjuma",
-      email: "bilkisu.learner@testmail.com",
-      passwordHash: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8", // 'password' in SHA-256
-      salt: "cht_salt_001",
-      emailVerified: true,
-      verificationToken: null,
-      verificationExpires: null,
-      registeredAt: "2026-10-10T09:00:00.000Z",
-      assignedCourses: ["ai-video-ugc"],
-      driveAccess: true
-    },
-    {
-      id: "USR-002",
-      fullName: "Emmanuel K. Ogbonna",
-      email: "emmanuel.learner@testmail.com",
-      passwordHash: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-      salt: "cht_salt_002",
-      emailVerified: true,
-      verificationToken: null,
-      verificationExpires: null,
-      registeredAt: "2026-10-12T14:30:00.000Z",
-      assignedCourses: ["website-building"],
-      driveAccess: true
-    },
-    {
-      id: "USR-003",
-      fullName: "Tariq Ibrahim",
-      email: "tariq.student@testmail.com",
-      passwordHash: "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
-      salt: "cht_salt_003",
-      emailVerified: true,
-      verificationToken: null,
-      verificationExpires: null,
-      registeredAt: "2026-10-18T11:00:00.000Z",
-      assignedCourses: [],
-      driveAccess: false
-    }
-  ];
+  // Default datasets - clean production empty states
+  const DEFAULT_USERS = [];
+  const DEFAULT_ELIGIBILITY = [];
+  const DEFAULT_CERTIFICATES = [];
 
-  // Active student eligibility requests
-  const DEFAULT_ELIGIBILITY = [
-    {
-      id: "REQ-2026-AYO1",
-      userId: "USR-OjS5lcUI",
-      fullName: "Ayomide Emmanuel",
-      email: "emmanuelekhator5683@gmail.com",
-      courseId: "ai-video-ugc",
-      courseTitle: "AI Video Creation & UGC-Style Advertising",
-      submissionDate: "2026-10-25T19:43:00.000Z",
-      status: "PENDING",
-      adminNotes: "Application received. Pending evaluation by Coach Hyela.",
-      reviewedAt: null,
-      certificateIssued: false,
-      certificateCode: null
-    }
-  ];
+  // Helper to identify and purge any historical test / demo accounts & records
+  function isTestRecord(item) {
+    if (!item) return false;
+    const str = typeof item === 'string' ? item.toLowerCase() : JSON.stringify(item).toLowerCase();
+    return str.includes('@testmail.com') ||
+           str.includes('testmail') ||
+           str.includes('emmanuelekhator5683@gmail.com') ||
+           str.includes('bilkisu danjuma') ||
+           str.includes('tariq ibrahim') ||
+           str.includes('usr-001') ||
+           str.includes('usr-002') ||
+           str.includes('usr-003') ||
+           str.includes('usr-ojs5lcui') ||
+           str.includes('req-2026-ayo1') ||
+           str.includes('cht-2026-ai092') ||
+           str.includes('cht-2026-wd104') ||
+           str.includes('cht-2026-rev088') ||
+           str.includes('sample incomplete candidate');
+  }
 
-  // Verified certificates dataset
-  const DEFAULT_CERTIFICATES = [
-    {
-      id: "CHT-2026-AI092",
-      verifyCode: "CHT-2026-AI092",
-      learnerName: "Bilkisu Danjuma",
-      learnerEmail: "bilkisu.learner@testmail.com",
-      courseId: "ai-video-ugc",
-      courseTitle: "AI Video Creation & UGC-Style Advertising",
-      issueDate: "October 14, 2026",
-      status: "VALID",
-      statusReason: "Successfully completed all capstone video assignments and commercial workflow requirements.",
-      credentialType: "Executive Certificate of Practical Completion",
-      instructor: "Coach Hyela",
-      instructorTitle: "Lead Instructor & Director",
-      topicsCompleted: [
-        "Photorealistic Prompt Engineering",
-        "AI Avatar Lip-Sync Calibration",
-        "CapCut Post-Production & Sound Design",
-        "UGC Brand Commercials"
-      ]
-    },
-    {
-      id: "CHT-2026-WD104",
-      verifyCode: "CHT-2026-WD104",
-      learnerName: "Emmanuel K. Ogbonna",
-      learnerEmail: "emmanuel.learner@testmail.com",
-      courseId: "website-building",
-      courseTitle: "Modern Website Building & Digital Presence",
-      issueDate: "October 02, 2026",
-      status: "VALID",
-      statusReason: "Demonstrated full proficiency in semantic HTML5, responsive CSS3, and modern web deployment.",
-      credentialType: "Professional Technical Certificate",
-      instructor: "Coach Hyela",
-      instructorTitle: "Lead Instructor & Director",
-      topicsCompleted: [
-        "Semantic HTML5 & Responsive CSS Layouts",
-        "Accessible Mobile Navigation",
-        "Form Integration & Database Workflows",
-        "High-Speed Edge Hosting Deployment"
-      ]
-    },
-    {
-      id: "CHT-2026-REV088",
-      verifyCode: "CHT-2026-REV088",
-      learnerName: "Sample Incomplete Candidate",
-      learnerEmail: "revoked.sample@testmail.com",
-      courseId: "ai-digital-skills",
-      courseTitle: "Artificial Intelligence & Creative Workflows for Individuals",
-      issueDate: "August 15, 2026",
-      status: "REVOKED",
-      statusReason: "Record withdrawn: Incomplete coursework submission / administrative withdrawal.",
-      credentialType: "Certificate of Completion",
-      instructor: "Coach Hyela",
-      instructorTitle: "Lead Instructor & Director",
-      topicsCompleted: []
-    }
-  ];
+  function purgeLocalTestData() {
+    try {
+      const purgeKey = (key) => {
+        try {
+          const list = JSON.parse(localStorage.getItem(key) || '[]');
+          if (Array.isArray(list)) {
+            const cleaned = list.filter(item => !isTestRecord(item));
+            localStorage.setItem(key, JSON.stringify(cleaned));
+          }
+        } catch(e) {}
+      };
+      purgeKey(STORAGE_KEYS.USERS);
+      purgeKey(STORAGE_KEYS.ELIGIBILITY_REQUESTS);
+      purgeKey(STORAGE_KEYS.CERTIFICATES);
+      purgeKey(STORAGE_KEYS.NOTIFICATION_LOG);
+      purgeKey(STORAGE_KEYS.CAC_SUBMISSIONS);
+    } catch(e) {}
+  }
 
   // SHA-256 helper using native Web CryptoAPI
   async function sha256(message) {
@@ -157,54 +81,16 @@ const CHT = (function () {
   // Initialize storage
   function initStorage() {
     try {
-      if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
-        localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(DEFAULT_USERS));
-      } else {
-        try {
-          const uList = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
-          if (!uList.some(u => u.email === 'emmanuelekhator5683@gmail.com')) {
-            uList.unshift({
-              id: "USR-OjS5lcUI",
-              fullName: "Ayomide Emmanuel",
-              email: "emmanuelekhator5683@gmail.com",
-              registeredAt: "2026-10-25T19:15:36.000Z",
-              emailVerified: true,
-              assignedCourses: ["ai-video-ugc"],
-              driveAccess: false
-            });
-            localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(uList));
-          }
-        } catch(e) {}
-      }
+      purgeLocalTestData();
 
+      if (!localStorage.getItem(STORAGE_KEYS.USERS)) {
+        localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify([]));
+      }
       if (!localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS)) {
-        localStorage.setItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS, JSON.stringify(DEFAULT_ELIGIBILITY));
-      } else {
-        try {
-          let reqList = JSON.parse(localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS) || '[]');
-          // Remove outdated dummy test users if present
-          reqList = reqList.filter(r => !r.email.includes('@testmail.com'));
-          if (!reqList.some(r => r.email === 'emmanuelekhator5683@gmail.com')) {
-            reqList.unshift({
-              id: "REQ-2026-AYO1",
-              userId: "USR-OjS5lcUI",
-              fullName: "Ayomide Emmanuel",
-              email: "emmanuelekhator5683@gmail.com",
-              courseId: "ai-video-ugc",
-              courseTitle: "AI Video Creation & UGC-Style Advertising",
-              submissionDate: "2026-10-25T19:43:00.000Z",
-              status: "PENDING",
-              adminNotes: "Application received. Pending evaluation by Coach Hyela.",
-              reviewedAt: null,
-              certificateIssued: false,
-              certificateCode: null
-            });
-          }
-          localStorage.setItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS, JSON.stringify(reqList));
-        } catch(e) {}
+        localStorage.setItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS, JSON.stringify([]));
       }
       if (!localStorage.getItem(STORAGE_KEYS.CERTIFICATES)) {
-        localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify(DEFAULT_CERTIFICATES));
+        localStorage.setItem(STORAGE_KEYS.CERTIFICATES, JSON.stringify([]));
       }
       if (!localStorage.getItem(STORAGE_KEYS.CAC_SUBMISSIONS)) {
         localStorage.setItem(STORAGE_KEYS.CAC_SUBMISSIONS, JSON.stringify([]));
@@ -249,9 +135,10 @@ const CHT = (function () {
   // User Management
   function getUsers() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+      const list = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+      return list.filter(u => !isTestRecord(u));
     } catch (e) {
-      return DEFAULT_USERS;
+      return [];
     }
   }
 
@@ -292,7 +179,8 @@ const CHT = (function () {
 
   function getNotificationLogs() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTIFICATION_LOG) || '[]');
+      const list = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTIFICATION_LOG) || '[]');
+      return list.filter(l => !isTestRecord(l));
     } catch (e) {
       return [];
     }
@@ -395,7 +283,9 @@ const CHT = (function () {
           snapshot.forEach(doc => {
             const data = doc.data();
             data.id = doc.id;
-            cloudReqs.push(data);
+            if (!isTestRecord(data)) {
+              cloudReqs.push(data);
+            }
           });
           cloudReqs.sort((a, b) => new Date(b.submissionDate || 0) - new Date(a.submissionDate || 0));
           if (cloudReqs.length > 0) {
@@ -469,7 +359,10 @@ const CHT = (function () {
       return db.collection('activity_logs')
         .onSnapshot(snapshot => {
           const logs = [];
-          snapshot.forEach(doc => logs.push(doc.data()));
+          snapshot.forEach(doc => {
+            const d = doc.data();
+            if (!isTestRecord(d)) logs.push(d);
+          });
           logs.sort((a, b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
           callback(logs.slice(0, 30));
         }, err => console.warn('[CHT Cloud] Activity logs error:', err));
@@ -488,7 +381,9 @@ const CHT = (function () {
           snapshot.forEach(doc => {
             const data = doc.data();
             data.id = doc.id;
-            cloudStudents.push(data);
+            if (!isTestRecord(data)) {
+              cloudStudents.push(data);
+            }
           });
           cloudStudents.sort((a, b) => new Date(b.registeredAt || 0) - new Date(a.registeredAt || 0));
           if (cloudStudents.length > 0) {
@@ -1014,9 +909,10 @@ const CHT = (function () {
   // ELIGIBILITY REQUESTS
   function getEligibilityRequests() {
     try {
-      return JSON.parse(localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS) || '[]');
+      const list = JSON.parse(localStorage.getItem(STORAGE_KEYS.ELIGIBILITY_REQUESTS) || '[]');
+      return list.filter(r => !isTestRecord(r));
     } catch (e) {
-      return DEFAULT_ELIGIBILITY;
+      return [];
     }
   }
 
@@ -1166,9 +1062,10 @@ const CHT = (function () {
   function getCertificates() {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.CERTIFICATES);
-      return data ? JSON.parse(data) : DEFAULT_CERTIFICATES;
+      const list = data ? JSON.parse(data) : [];
+      return list.filter(c => !isTestRecord(c));
     } catch (e) {
-      return DEFAULT_CERTIFICATES;
+      return [];
     }
   }
 

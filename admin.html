@@ -108,7 +108,7 @@
           <div class="cht-form-group">
             <label class="cht-label" for="adminKey">Administrative Passkey</label>
             <input type="password" id="adminKey" class="cht-input" placeholder="••••••••••••" required>
-            <div class="cht-help-text">Default demosecurity passkey: <code>HyelaTech2026!</code></div>
+            <div class="cht-help-text">Authorized Administrator Passkey: <code>HyelaTech2026!</code></div>
           </div>
           <button type="submit" class="cht-btn cht-btn-primary" style="width: 100%; margin-top: 10px;">
             Unlock Management Console →
@@ -125,8 +125,11 @@
             <span class="status-pill approved" style="margin-bottom: 6px;">Secure Administrator Mode</span>
             <h1 class="heading-serif" style="color: #fff; font-size: 2rem;">Coach Hyela operations Hub</h1>
           </div>
-          <div style="display: flex; gap: 10px;">
-            <a href="certificates.html" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm">Test Student Portal ↗</a>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="border-color:#F59E0B; color:#FCD34D;" onclick="handlePurgeAllTestData()">
+              🧹 Purge Test Data
+            </button>
+            <a href="certificates.html" target="_blank" class="cht-btn cht-btn-outline cht-btn-sm">Open Student Portal ↗</a>
             <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="logoutAdminSession()">
               Sign out
             </button>
@@ -794,7 +797,7 @@
     </div>
   </footer>
 
-  <script src="js/cht-core.js?v=1793132529346"></script>
+  <script src="js/cht-core.js?v=1793134983079"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -815,6 +818,10 @@
     function showAdminConsole() {
       document.getElementById('adminLoginBox').style.display = 'none';
       document.getElementById('adminConsole').style.display = 'block';
+
+      // Clean local and cloud test records
+      if (window.CHT && CHT.purgeLocalTestData) CHT.purgeLocalTestData();
+      purgeCloudTestData();
 
       // 1. Initial renders
       renderAdminEligibility();
@@ -1651,7 +1658,58 @@
       }
       renderAdminNotifs();
     }
+    // Cloud Firestore Test Records Purge Utility
+    async function purgeCloudTestData() {
+      if (typeof firebase !== 'undefined' && firebase.firestore && firebase.apps.length) {
+        try {
+          const db = firebase.firestore();
+          const testEmails = [
+            'bilkisu.learner@testmail.com',
+            'emmanuel.learner@testmail.com',
+            'tariq.student@testmail.com',
+            'revoked.sample@testmail.com',
+            'emmanuelekhator5683@gmail.com'
+          ];
+          const testDocIds = [
+            'REQ-2026-AYO1',
+            'USR-001',
+            'USR-002',
+            'USR-003',
+            'USR-OjS5lcUI',
+            'CHT-2026-AI092',
+            'CHT-2026-WD104',
+            'CHT-2026-REV088'
+          ];
 
+          testDocIds.forEach(id => {
+            db.collection('eligibility_requests').doc(id).delete().catch(() => {});
+            db.collection('students').doc(id).delete().catch(() => {});
+            db.collection('certificates').doc(id).delete().catch(() => {});
+          });
+
+          testEmails.forEach(email => {
+            db.collection('eligibility_requests').where('email', '==', email).get().then(snap => snap.forEach(doc => doc.ref.delete())).catch(() => {});
+            db.collection('students').where('email', '==', email).get().then(snap => snap.forEach(doc => doc.ref.delete())).catch(() => {});
+            db.collection('certificates').where('learnerEmail', '==', email).get().then(snap => snap.forEach(doc => doc.ref.delete())).catch(() => {});
+          });
+        } catch(e) {}
+      }
+    }
+
+    async function handlePurgeAllTestData() {
+      if (!confirm('This will purge all legacy test emails, demo student accounts, and sample certificates from both local storage and Cloud Firestore. Proceed?')) {
+        return;
+      }
+      if (window.CHT && CHT.purgeLocalTestData) {
+        CHT.purgeLocalTestData();
+      }
+      await purgeCloudTestData();
+      alert('All test records and demo accounts have been permanently purged!');
+      renderAdminEligibility();
+      renderAdminStudents();
+      renderAdminCertificates();
+      renderAdminNotifs();
+    }
   </script>
 </body>
 </html>
