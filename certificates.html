@@ -713,8 +713,8 @@
                     📁
                   </div>
                   <div>
-                    <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 2px;">Google Drive Course Vault</h4>
-                    <span style="font-size: 0.8rem; color: var(--cht-text-muted);">CapCut Templates, Prompts &amp; Workflows</span>
+                    <h4 style="color: #fff; font-size: 1.05rem; margin-bottom: 2px;">VIP Master Prompts &amp; Creative Suite</h4>
+                    <span style="font-size: 0.8rem; color: var(--cht-gold-light);">23 Production Master Prompts • Verified Student Access</span>
                   </div>
                 </div>
                 <div id="drivePermissionBadge">
@@ -723,7 +723,7 @@
               </div>
 
               <p style="color: var(--cht-text-secondary); font-size: 0.88rem; line-height: 1.6; margin-bottom: 16px;">
-                Includes photorealistic prompt packs, AI video workflow checklists, and official project starter kits. Access requires course verification approval from Coach Hyela.
+                Access the complete 23-prompt master production suite, 1-Year Canva Pro Team license, Muse AI (1 Billion Credits), and official verified certificate.
               </p>
 
               <div id="driveAccessContainer">
@@ -823,6 +823,57 @@
     </section>
 
   
+  
+  <!-- MODAL: VIP MASTER PROMPTS READER & COPY ENGINE -->
+  <div class="cht-modal-overlay" id="modalPromptReader" style="z-index: 9999;">
+    <div class="cht-modal-card" style="max-width: 860px; width: 95%; max-height: 92vh; display: flex; flex-direction: column;">
+      
+      <!-- Modal Header -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; border-bottom: 1px solid var(--cht-border-subtle); padding-bottom: 10px; gap: 12px;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px; flex-wrap: wrap;">
+            <span id="readerPromptBadge" class="status-pill approved" style="font-size: 0.72rem; font-weight: 700;">PROMPT 00</span>
+            <span id="readerPromptCategory" style="font-size: 0.75rem; color: var(--cht-gold-light); font-weight: 600;">Category</span>
+          </div>
+          <h3 class="heading-serif" id="readerPromptTitle" style="color: #fff; font-size: 1.25rem; margin: 0; line-height: 1.3;">Prompt Title</h3>
+          <div style="font-size: 0.78rem; color: var(--cht-text-muted); margin-top: 4px;">
+            Target Tools: <span id="readerPromptPlatforms" style="color: #86EFAC; font-weight: 600;">Flow, CapCut</span>
+          </div>
+        </div>
+        <button type="button" onclick="closePromptReaderModal()" style="background: none; border: none; color: #fff; font-size: 1.6rem; cursor: pointer; padding: 4px 8px; line-height: 1;" title="Close">✕</button>
+      </div>
+
+      <!-- Legal Watermark & Quick Copy Toolbar -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; background: rgba(212, 175, 55, 0.08); border: 1px solid rgba(212, 175, 55, 0.25); border-radius: 6px; padding: 8px 12px; margin-bottom: 12px;">
+        <div style="font-size: 0.78rem; color: var(--cht-text-secondary); display: flex; align-items: center; gap: 6px;">
+          <span>🔒</span>
+          <span id="readerWatermarkText" style="color: #fff; font-weight: 600;">Licensed to Verified Student</span>
+        </div>
+        <button type="button" id="btnCopyPromptTop" class="cht-btn cht-btn-primary cht-btn-sm" style="font-weight: 700; font-size: 0.8rem; padding: 4px 12px; gap: 6px;" onclick="copyCurrentOpenPrompt()">
+          📋 Copy Full Master Prompt
+        </button>
+      </div>
+
+      <!-- Scrollable Prompt Content -->
+      <div style="background: #020905; border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 16px; overflow-y: auto; flex: 1; font-family: 'Consolas', 'Monaco', 'Courier New', monospace; font-size: 0.84rem; line-height: 1.65; color: #E2E8F0; white-space: pre-wrap; user-select: text;" id="readerPromptContent">
+        <!-- Raw text inserted dynamically -->
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 10px;">
+        <div style="font-size: 0.75rem; color: var(--cht-text-muted);">
+          Paste as the <strong>very first message</strong> in a fresh ChatGPT, Claude, or Gemini chat.
+        </div>
+        <div style="display: flex; gap: 8px;">
+          <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" onclick="closePromptReaderModal()">Close Reader</button>
+          <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="font-weight: 700; gap: 6px;" onclick="copyCurrentOpenPrompt()">
+            📋 Copy Prompt
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Student Application Success & WhatsApp Reminder Modal -->
   <div id="modalAppSuccess" class="cht-modal-overlay">
     <div class="cht-modal-card" style="max-width: 520px; text-align: center;">
@@ -919,6 +970,7 @@
     </div>
   </footer>
 
+  <script src="js/master-prompts-data.js?v=20261030_01"></script>
   <script src="js/cht-core.js?v=20261026_02"></script>
   <script>
     // Pending email state for verification
@@ -1378,15 +1430,20 @@
       }).join('');
     }
 
-            // 7. RENDER RESTRICTED VIP GOOGLE DRIVE VAULT & MASTER PROMPTS
+            // 7. RENDER IN-PORTAL VIP MASTER PROMPTS VAULT (ALL 23 ENGINES)
+    let currentVaultCategory = 'ALL';
+    let currentVaultQuery = '';
+    let currentOpenPromptId = null;
+
     function renderDriveVault(user) {
       const users = CHT.getUsers();
-      const freshUser = users.find(u => (u.id === user.id || u.email.toLowerCase() === user.email.toLowerCase())) || user;
-      const isEligible = !!freshUser.driveAccess || !!user.driveAccess;
-      const driveUrl = (window.CHT && CHT.getMasterDriveUrl) ? CHT.getMasterDriveUrl() : "https://drive.google.com/drive/folders/1_0uldj8-IFcWQxRa4PuFRFVgCRDeSNDJ?usp=drive_link";
+      const freshUser = users.find(u => (u.id === user.id || (u.email && user.email && u.email.toLowerCase() === user.email.toLowerCase()))) || user;
+      const isEligible = !!freshUser.driveAccess || !!user.driveAccess || !!freshUser.vipAccess || !!user.vipAccess;
       const canvaStatus = freshUser.canvaStatus || user.canvaStatus || 'NOT_CLAIMED';
       const canvaEmail = freshUser.canvaEmail || user.canvaEmail || user.email;
       const museAiAccessed = !!freshUser.museAiAccessed || !!user.museAiAccessed || !!freshUser.googleAiProAccessed || !!user.googleAiProAccessed;
+      const studentName = freshUser.fullName || user.fullName || 'Verified VIP Candidate';
+      const studentEmail = freshUser.email || user.email || '';
 
       const badge = document.getElementById('drivePermissionBadge');
       const container = document.getElementById('driveAccessContainer');
@@ -1457,23 +1514,75 @@
 
         container.innerHTML = `
           <div style="background: rgba(34, 197, 94, 0.08); border: 1px solid rgba(34, 197, 94, 0.3); border-radius: var(--cht-radius-md); padding: 18px; margin-bottom: 16px;">
-            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 14px; color: #86EFAC; font-weight: 700; font-size: 0.92rem;">
-              <span>🌟 Exclusive VIP Candidate Access Granted for ${user.email}</span>
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 12px;">
+              <div style="color: #86EFAC; font-weight: 700; font-size: 0.92rem; display: flex; align-items: center; gap: 8px;">
+                <span>🌟 Exclusive VIP Access Active</span>
+                <span style="font-size: 0.8rem; color: #fff; font-weight: 600;">(${studentEmail})</span>
+              </div>
+              <div style="font-size: 0.78rem; color: var(--cht-gold-light); background: rgba(212,175,55,0.12); padding: 3px 10px; border-radius: 20px; border: 1px solid rgba(212,175,55,0.3);">
+                🔒 Licensed to: <strong>${studentName}</strong>
+              </div>
             </div>
             
-            <div style="display: flex; flex-direction: column; gap: 14px;">
-              <!-- 1. Master AI Prompts & E-Books Google Drive -->
-              <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 14px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 6px;">
-                  <strong style="color: #fff; font-size: 0.95rem;">📁 Master AI Prompts &amp; E-Books Library</strong>
-                  <span class="status-pill approved" style="font-size: 0.7rem;">Google Drive Live</span>
+            <div style="display: flex; flex-direction: column; gap: 16px;">
+              
+              <!-- 1. IN-PORTAL COMPLETE MASTER PROMPT SUITE (23 PRODUCTION ENGINES) -->
+              <div style="background: #05140B; border: 1px solid var(--cht-gold-500); border-radius: 10px; padding: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.4);">
+                
+                <!-- Vault Header -->
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+                  <div>
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                      <span style="font-size: 1.2rem;">💎</span>
+                      <strong style="color: #fff; font-size: 1.1rem; letter-spacing: 0.3px;">Complete Master Prompt Suite (23 Production Engines)</strong>
+                    </div>
+                    <p style="color: var(--cht-text-muted); font-size: 0.84rem; line-height: 1.5; margin: 0;">
+                      The official Coach Hyela production engines for Nigerian AI Drama, Talking Flyers, UGC Ads, Podcasts, 3D Cartoons, and Universal AI Directors.
+                    </p>
+                  </div>
+                  <span class="status-pill approved" style="font-size: 0.72rem; font-weight: 700; background: #22C55E; color: #000;">
+                    ✓ 23 Engines Unlocked
+                  </span>
                 </div>
-                <p style="color: var(--cht-text-muted); font-size: 0.82rem; line-height: 1.5; margin-bottom: 12px;">
-                  Includes commercial master prompts for ChatGPT, Midjourney, Claude, AI Avatar Lip-Sync workflows, CapCut post-production templates &amp; UGC advertising scripts.
-                </p>
-                <a href="${driveUrl}" target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-primary cht-btn-sm" style="font-weight: 700; display: inline-flex; align-items: center; gap: 6px;">
-                  Open Master Prompts Drive Folder ↗
-                </a>
+
+                <!-- Anti-Piracy Notice Banner -->
+                <div style="background: rgba(212, 175, 55, 0.08); border-left: 3px solid var(--cht-gold-500); padding: 8px 12px; margin-bottom: 14px; font-size: 0.76rem; color: var(--cht-text-secondary); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px;">
+                  <span>🛡️ <strong>Anti-Piracy Shield:</strong> All prompt copies are watermarked with your legal identity (${studentName}).</span>
+                  <span style="color: var(--cht-gold-light);">Zero in-chat image generation • Raw text only</span>
+                </div>
+
+                <!-- Vault Filter & Search Controls -->
+                <div style="display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px;">
+                  <!-- Search input -->
+                  <div style="position: relative;">
+                    <input type="text" id="inputSearchVaultPrompts" class="cht-input" placeholder="🔍 Search prompts by title, tool (CapCut, Flow, Runway), or keyword..." style="padding: 10px 14px; font-size: 0.88rem; background: #081B11; border-color: rgba(212,175,55,0.3);" oninput="handleVaultSearchInput(this.value)">
+                  </div>
+
+                  <!-- Category filter pills -->
+                  <div style="display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px;" id="vaultCategoryFilterPills">
+                    <button type="button" class="admin-tab-btn active" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; background: rgba(212,175,55,0.15); border: 1px solid var(--cht-gold-500); color: #fff;" onclick="setVaultCategory('ALL', this)">
+                      All Prompts (23)
+                    </button>
+                    <button type="button" class="admin-tab-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--cht-text-muted);" onclick="setVaultCategory('AI Video & UGC Production', this)">
+                      AI Video &amp; UGC (13)
+                    </button>
+                    <button type="button" class="admin-tab-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--cht-text-muted);" onclick="setVaultCategory('AI Graphics & Branding Studio', this)">
+                      AI Graphics &amp; Studio (5)
+                    </button>
+                    <button type="button" class="admin-tab-btn" style="padding: 6px 14px; font-size: 0.8rem; border-radius: 20px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); color: var(--cht-text-muted);" onclick="setVaultCategory('Core Master Director Engines', this)">
+                      Director Engines (5)
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Prompts List Container (Rendered dynamically) -->
+                <div id="vaultPromptsGridContainer" style="display: flex; flex-direction: column; gap: 10px; max-height: 480px; overflow-y: auto; padding-right: 4px;">
+                  <!-- Dynamically populated via renderVaultPromptsList -->
+                </div>
+
+                <div style="margin-top: 14px; text-align: center; font-size: 0.78rem; color: var(--cht-text-muted);">
+                  💡 Click <strong>"Open &amp; Read"</strong> to inspect full prompt instructions or <strong>"📋 Quick Copy"</strong> to paste directly into ChatGPT / Claude.
+                </div>
               </div>
 
               <!-- 2. Canva Pro 1-Year Access -->
@@ -1519,7 +1628,7 @@
                   </div>
                   <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 10px;">
                     <span style="font-size: 0.78rem; color: var(--cht-text-muted);">Official Dispatch WhatsApp: <strong>0915-963-7287</strong></span>
-                    <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20I%20am%20a%20verified%20VIP%20student%20(${encodeURIComponent(user.fullName)}%20-%20${encodeURIComponent(user.email)}).%20Please%20deliver%20my%20Muse%20AI%20(1%20Billion%20Credits)%20to%20my%20WhatsApp." target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-primary cht-btn-sm" style="font-size: 0.78rem; padding: 5px 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700;">
+                    <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20I%20am%20a%20verified%20VIP%20student%20(${encodeURIComponent(studentName)}%20-%20${encodeURIComponent(studentEmail)}).%20Please%20deliver%20my%20Muse%20AI%20(1%20Billion%20Credits)%20to%20my%20WhatsApp." target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-primary cht-btn-sm" style="font-size: 0.78rem; padding: 5px 12px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700;">
                       <span>📲 Receive / Claim Muse AI on WhatsApp →</span>
                     </a>
                   </div>
@@ -1539,28 +1648,230 @@
             </div>
           </div>
         `;
+
+        // Render the 23 prompts inside the grid
+        renderVaultPromptsList(studentName, studentEmail);
+
       } else {
         badge.innerHTML = `<span class="status-badge pending">🔒 VIP Verification Required</span>`;
         container.innerHTML = `
-          <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--cht-radius-md); padding: 16px;">
-            <div style="display: flex; align-items: center; gap: 8px; color: #FCD34D; font-weight: 700; font-size: 0.9rem; margin-bottom: 8px;">
-              <span>🔒 Restricted VIP Resource Suite</span>
+          <div style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--cht-radius-md); padding: 18px;">
+            <div style="display: flex; align-items: center; gap: 8px; color: #FCD34D; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px;">
+              <span>🔒 Restricted VIP Master Prompts Suite (23 Engines)</span>
             </div>
-            <p style="color: var(--cht-text-muted); font-size: 0.84rem; line-height: 1.6; margin-bottom: 12px;">
-              Your account (${user.email}) is currently pending VIP verification. Once Coach Hyela verifies your course enrollment or fee payment, this vault will unlock automatically with:
+            <p style="color: var(--cht-text-muted); font-size: 0.85rem; line-height: 1.6; margin-bottom: 12px;">
+              Your account (${user.email}) is currently awaiting VIP verification. Once Coach Hyela verifies your Complete VIP Access enrollment (₦2,500 package), this vault unlocks automatically with:
             </p>
             <ul style="color: var(--cht-text-secondary); font-size: 0.82rem; line-height: 1.8; margin-left: 20px; margin-bottom: 14px;">
-              <li>🎨 <strong>Canva Pro (1-Year Access)</strong></li>
-              <li>📁 <strong>Master AI Prompts &amp; E-Books Google Drive Vault</strong></li>
-              <li>✨ <strong>Muse AI (1 Billion Credits - Delivered via WhatsApp)</strong></li>
-              <li>🎓 <strong>Official Verified Coach Hyela Tech Certificate</strong></li>
+              <li>💎 <strong>Complete Master Prompt Suite (All 23 Production Engines)</strong> — Instant 1-click in-portal copy</li>
+              <li>🎨 <strong>Canva Pro (1-Year VIP Team Workspace Access)</strong></li>
+              <li>✨ <strong>Muse AI (1 Billion Generation Credits - WhatsApp Delivery)</strong></li>
+              <li>🎓 <strong>Official Verified Coach Hyela Tech Certificate with QR Code</strong></li>
             </ul>
-            <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20I%20have%20registered%20on%20your%20website%20with%20email%3A%20${encodeURIComponent(user.email)}.%20Please%20verify%20my%20VIP%20Student%20Access." target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-outline cht-btn-sm" style="display: inline-flex; align-items: center; gap: 6px;">
+            <a href="https://wa.me/2349159637287?text=Hello%20Coach%20Hyela%2C%20I%20have%20registered%20on%20your%20website%20with%20email%3A%20${encodeURIComponent(user.email)}.%20Please%20verify%20my%20VIP%20Student%20Access." target="_blank" rel="noopener noreferrer" class="cht-btn cht-btn-outline cht-btn-sm" style="display: inline-flex; align-items: center; gap: 6px; font-weight: 600;">
               Contact Coach Hyela to Confirm VIP Access 💬
             </a>
           </div>
         `;
       }
+    }
+
+    // VAULT FILTERING & RENDERING LOGIC
+    function setVaultCategory(cat, btn) {
+      currentVaultCategory = cat;
+      const pills = document.querySelectorAll('#vaultCategoryFilterPills button');
+      pills.forEach(p => {
+        p.style.background = 'rgba(0,0,0,0.3)';
+        p.style.borderColor = 'rgba(255,255,255,0.1)';
+        p.style.color = 'var(--cht-text-muted)';
+      });
+      if (btn) {
+        btn.style.background = 'rgba(212,175,55,0.15)';
+        btn.style.borderColor = 'var(--cht-gold-500)';
+        btn.style.color = '#fff';
+      }
+      const auth = CHT.getAuthLearner() || {};
+      renderVaultPromptsList(auth.fullName || 'VIP Candidate', auth.email || '');
+    }
+
+    function handleVaultSearchInput(query) {
+      currentVaultQuery = (query || '').trim().toLowerCase();
+      const auth = CHT.getAuthLearner() || {};
+      renderVaultPromptsList(auth.fullName || 'VIP Candidate', auth.email || '');
+    }
+
+    function renderVaultPromptsList(studentName, studentEmail) {
+      const container = document.getElementById('vaultPromptsGridContainer');
+      if (!container) return;
+
+      const allPrompts = window.CHT_MASTER_PROMPTS || [];
+      if (allPrompts.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 20px; color: var(--cht-text-muted); font-size: 0.85rem;">Master Prompts database loading...</div>`;
+        return;
+      }
+
+      const filtered = allPrompts.filter(p => {
+        const matchesCategory = (currentVaultCategory === 'ALL' || p.category === currentVaultCategory);
+        const matchesQuery = !currentVaultQuery || (
+          p.title.toLowerCase().includes(currentVaultQuery) ||
+          p.num.includes(currentVaultQuery) ||
+          p.summary.toLowerCase().includes(currentVaultQuery) ||
+          p.targetPlatforms.toLowerCase().includes(currentVaultQuery)
+        );
+        return matchesCategory && matchesQuery;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="text-align: center; padding: 24px; color: var(--cht-text-muted); font-size: 0.85rem;">No prompts found matching "${currentVaultQuery}". Try searching for "CapCut", "UGC", "Flyer", or "Drama".</div>`;
+        return;
+      }
+
+      container.innerHTML = filtered.map(p => `
+        <div style="background: rgba(0,0,0,0.35); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 12px 14px; transition: var(--cht-transition); display: flex; flex-direction: column; gap: 8px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 8px;">
+            <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <span style="background: rgba(212,175,55,0.2); color: var(--cht-gold-light); font-weight: 800; font-family: monospace; font-size: 0.72rem; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(212,175,55,0.3);">
+                PROMPT ${p.num}
+              </span>
+              <strong style="color: #fff; font-size: 0.92rem;">${p.title}</strong>
+            </div>
+            <span style="font-size: 0.72rem; color: #86EFAC; background: rgba(34,197,94,0.12); padding: 2px 8px; border-radius: 12px; font-weight: 600;">
+              ${p.targetPlatforms}
+            </span>
+          </div>
+
+          <p style="color: var(--cht-text-muted); font-size: 0.8rem; line-height: 1.45; margin: 0;">
+            ${p.summary}
+          </p>
+
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-top: 4px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+            <div style="font-size: 0.7rem; color: var(--cht-text-muted); opacity: 0.8;">
+              🔒 Licensed to: <span style="color: #fff;">${studentName}</span>
+            </div>
+            <div style="display: flex; gap: 8px;">
+              <button type="button" class="cht-btn cht-btn-outline cht-btn-sm" style="padding: 3px 10px; font-size: 0.75rem;" onclick="openPromptReader('${p.id}')">
+                👁️ Open &amp; Read
+              </button>
+              <button type="button" class="cht-btn cht-btn-primary cht-btn-sm" style="padding: 3px 12px; font-size: 0.75rem; font-weight: 700; gap: 4px;" onclick="copyPromptById('${p.id}', '${p.title}')">
+                📋 Quick Copy
+              </button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // PROMPT READER MODAL HANDLERS
+    function openPromptReader(promptId) {
+      const allPrompts = window.CHT_MASTER_PROMPTS || [];
+      const prompt = allPrompts.find(p => p.id === promptId);
+      if (!prompt) return;
+
+      currentOpenPromptId = promptId;
+      const auth = CHT.getAuthLearner() || {};
+      const studentName = auth.fullName || 'Verified VIP Candidate';
+      const studentEmail = auth.email || '';
+
+      document.getElementById('readerPromptBadge').textContent = `PROMPT ${prompt.num}`;
+      document.getElementById('readerPromptCategory').textContent = prompt.category;
+      document.getElementById('readerPromptTitle').textContent = prompt.title;
+      document.getElementById('readerPromptPlatforms').textContent = prompt.targetPlatforms;
+      document.getElementById('readerWatermarkText').textContent = `Licensed to: ${studentName} (${studentEmail})`;
+      document.getElementById('readerPromptContent').textContent = prompt.content;
+
+      document.getElementById('modalPromptReader').classList.add('active');
+    }
+
+    function closePromptReaderModal() {
+      const modal = document.getElementById('modalPromptReader');
+      if (modal) modal.classList.remove('active');
+      currentOpenPromptId = null;
+    }
+
+    function copyCurrentOpenPrompt() {
+      if (!currentOpenPromptId) return;
+      const allPrompts = window.CHT_MASTER_PROMPTS || [];
+      const prompt = allPrompts.find(p => p.id === currentOpenPromptId);
+      if (prompt) {
+        copyPromptById(prompt.id, prompt.title);
+      }
+    }
+
+    function copyPromptById(promptId, title) {
+      const allPrompts = window.CHT_MASTER_PROMPTS || [];
+      const prompt = allPrompts.find(p => p.id === promptId);
+      if (!prompt) return;
+
+      const auth = CHT.getAuthLearner() || {};
+      const watermarkHeader = `/* COACH HYELA TECH INDUSTRIES — MASTER PROMPT ${prompt.num}: ${prompt.title.toUpperCase()} */
+/* Licensed to: ${auth.fullName || 'Student'} (${auth.email || ''}) — Authorized for Flow AI, Runway, CapCut, Claude, ChatGPT & Gemini */
+
+`;
+      const fullTextToCopy = watermarkHeader + prompt.content;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(fullTextToCopy).then(() => {
+          showFloatingToast(`✓ Prompt ${prompt.num} (${prompt.title}) copied to clipboard! Ready to paste.`);
+        }).catch(() => {
+          fallbackCopyText(fullTextToCopy, prompt.num, prompt.title);
+        });
+      } else {
+        fallbackCopyText(fullTextToCopy, prompt.num, prompt.title);
+      }
+    }
+
+    function fallbackCopyText(text, num, title) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showFloatingToast(`✓ Prompt ${num} (${title}) copied to clipboard! Ready to paste.`);
+      } catch (e) {
+        alert('Prompt copied! You can now paste into ChatGPT/Claude.');
+      }
+      document.body.removeChild(ta);
+    }
+
+    function showFloatingToast(message) {
+      let toast = document.getElementById('chtFloatingToast');
+      if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'chtFloatingToast';
+        toast.style.position = 'fixed';
+        toast.style.bottom = '24px';
+        toast.style.right = '24px';
+        toast.style.zIndex = '10000';
+        toast.style.background = '#0F3822';
+        toast.style.color = '#86EFAC';
+        toast.style.border = '1px solid #22C55E';
+        toast.style.padding = '12px 20px';
+        toast.style.borderRadius = '8px';
+        toast.style.boxShadow = '0 10px 25px rgba(0,0,0,0.5)';
+        toast.style.fontSize = '0.88rem';
+        toast.style.fontWeight = '600';
+        toast.style.maxWidth = '90vw';
+        toast.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        toast.style.transform = 'translateY(20px)';
+        toast.style.opacity = '0';
+        document.body.appendChild(toast);
+      }
+      toast.textContent = message;
+      toast.style.display = 'block';
+      setTimeout(() => {
+        toast.style.opacity = '1';
+        toast.style.transform = 'translateY(0)';
+      }, 10);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(20px)';
+        setTimeout(() => { toast.style.display = 'none'; }, 300);
+      }, 3500);
     }
 
     function toggleCanvaInput(hasClaimed, userId) {
