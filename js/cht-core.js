@@ -1267,8 +1267,35 @@ const CHT = (function () {
     if (updatedData.fullName) user.fullName = updatedData.fullName.trim();
     if (updatedData.driveAccess !== undefined) user.driveAccess = !!updatedData.driveAccess;
     if (updatedData.assignedCourses) user.assignedCourses = updatedData.assignedCourses;
+    if (updatedData.flowAccessed !== undefined) {
+      user.flowAccessed = !!updatedData.flowAccessed;
+      user.googleAiProAccessed = !!updatedData.flowAccessed;
+    }
+    if (updatedData.museAiPaid !== undefined) {
+      user.museAiPaid = !!updatedData.museAiPaid;
+    }
 
     saveUsers(users);
+
+    const db = getFirestore();
+    if (db && userId) {
+      try {
+        const firestoreUpdate = {
+          fullName: user.fullName,
+          driveAccess: !!user.driveAccess
+        };
+        if (updatedData.flowAccessed !== undefined) {
+          firestoreUpdate.flowAccessed = !!updatedData.flowAccessed;
+          firestoreUpdate.googleAiProAccessed = !!updatedData.flowAccessed;
+        }
+        if (updatedData.museAiPaid !== undefined) {
+          firestoreUpdate.museAiPaid = !!updatedData.museAiPaid;
+        }
+        db.collection('students').doc(userId).set(firestoreUpdate, { merge: true });
+      } catch(e) {
+        console.error('Failed to sync student update to Firestore:', e);
+      }
+    }
 
     // Alsoupdate any pending eligibility requests
     const reqs = getEligibilityRequests();
@@ -1588,25 +1615,52 @@ const CHT = (function () {
     return { success: false, message: "Cloud connection unavailable." };
   }
 
-  async function setMuseAiStatus(userId, accessed, whatsappNum = '') {
+  async function setFlowStatus(userId, accessed) {
     const db = getFirestore();
+    const updateData = {
+      flowAccessed: !!accessed,
+      googleAiProAccessed: !!accessed
+    };
     if (db && userId) {
       try {
-        const updateData = {
-          museAiAccessed: !!accessed
-        };
-        if (whatsappNum) {
-          updateData.museAiWhatsApp = whatsappNum.trim();
-        }
         await db.collection('students').doc(userId).set(updateData, { merge: true });
-        return { success: true };
       } catch(e) {
-        return { success: false, message: e.message };
+        console.error('Error updating flow status in Firestore:', e);
       }
     }
-    return { success: false };
+    const users = getUsers();
+    const user = users.find(u => u.id === userId);
+    if (user) {
+      user.flowAccessed = !!accessed;
+      user.googleAiProAccessed = !!accessed;
+      saveUsers(users);
+    }
+    return { success: true };
   }
-  const setGoogleAiProStatus = setMuseAiStatus;
+
+  async function setMuseAiStatus(userId, accessed, isPaid = false) {
+    const db = getFirestore();
+    const updateData = {
+      museAiAccessed: !!accessed,
+      museAiPaid: !!isPaid
+    };
+    if (db && userId) {
+      try {
+        await db.collection('students').doc(userId).set(updateData, { merge: true });
+      } catch(e) {
+        console.error('Error updating museAi status in Firestore:', e);
+      }
+    }
+    const users = getUsers();
+    const user = users.find(u => u.id === userId);
+    if (user) {
+      user.museAiAccessed = !!accessed;
+      user.museAiPaid = !!isPaid;
+      saveUsers(users);
+    }
+    return { success: true };
+  }
+  const setGoogleAiProStatus = setFlowStatus;
 
   // Initial boot
   initStorage();
@@ -1665,6 +1719,7 @@ const CHT = (function () {
     submitCanvaClaim,
     confirmCanvaAccepted,
     dispatchCanvaInvite,
+    setFlowStatus,
     setMuseAiStatus,
     setGoogleAiProStatus,
     // CAC
