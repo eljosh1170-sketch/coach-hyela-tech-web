@@ -37,3 +37,10 @@
   2. If they have paid, they submit their eligibility request.
   3. If they have not paid, they can choose between ₦2,500 (Full VIP) or ₦500 (Certificate Only) via PalmPay (`EL JOSHUA HYELAKURI EMMANUEL`) and submit their receipt via WhatsApp (`+2349159637287`).
   4. Once approved in `admin.html`, the student instantly gets their certificate and (if VIP) their Canva Pro invite and Google Drive master prompts vault access.
+
+---
+
+## 5. Proactive Deadline & Automated Switch Protocol
+- **Standing Rule**: Whenever Coach Hyela specifies a promo deadline, timer, or temporary pricing/announcement on the website:
+  - The agent **MUST proactively ask**: *"Should I set an automated date-based timer in the code to switch to the official state/price automatically once this deadline passes?"*
+  - Obtain Coach Hyela's explicit permission, so the website automatically transitions without Coach Hyela needing to touch code or remember to request manual updates.
