@@ -12,15 +12,16 @@
 
 ---
 
-## 2. Pricing & Enrollment Down-Sell Structure (Promo valid till October 31st, 2026)
+## 2. Pricing & Enrollment Psychological Anchor Structure (Offer open while Muse AI stock lasts)
 - **Complete VIP Access Package**:
-  - **Promo Price**: `₦2,500` (Discounted from `₦4,000`)
-  - **Includes**: Official Certificate of Completion (with QR code) + 1-Year Canva Pro Team Access + Google Drive Master Prompts & E-Books Vault + Muse AI (1 Billion Credits - delivered to student's WhatsApp).
-- **Official Certificate Only (Strategic Down-Sell)**:
-  - **Promo Price**: `₦500` (Discounted from `₦5,000`)
-  - **Strategic Purpose**: First time ever offered separately. Serves as a low-barrier down-sell so students who cannot afford ₦2,500 still contribute revenue. Zero lost leads.
+  - **Current Price**: `₦5,000`
+  - **Strategic Role**: The irresistible no-brainer bundle. Costing half the price of the certificate alone, students naturally choose VIP.
+  - **Includes**: Official Certificate of Completion (with QR code) + 1-Year Canva Pro Team Access + Complete 23 Master Prompts Suite & Google Drive Vault + Muse AI (1 Billion Credits - delivered to student's WhatsApp while stock lasts).
+- **Official Certificate Only (High Anchor Bait)**:
+  - **Price**: `₦10,000`
+  - **Strategic Purpose**: Acts as the anchor price so students recognize that getting the Complete VIP Package at ₦5,000 is an immense bargain.
   - **Includes**: Official Certificate of Completion (with QR code). Canva Pro, Master Prompts, and Muse AI remain locked until upgraded.
-- **Promo Expiry**: **31st of October 2026**.
+- **Offer Condition**: **Open while Muse AI stock lasts**.
 
 ---
 
@@ -35,7 +36,7 @@
 - When onboarding or assisting students:
   1. Student registers on `https://coachhyelatech.com.ng/certificates.html`.
   2. If they have paid, they submit their eligibility request.
-  3. If they have not paid, they can choose between ₦2,500 (Full VIP) or ₦500 (Certificate Only) via PalmPay (`EL JOSHUA HYELAKURI EMMANUEL`) and submit their receipt via WhatsApp (`+2349159637287`).
+  3. If they have not paid, they can choose between ₦5,000 (Full VIP) or ₦10,000 (Certificate Only) via PalmPay (`EL JOSHUA HYELAKURI EMMANUEL`) and submit their receipt via WhatsApp (`+2349159637287`).
   4. Once approved in `admin.html`, the student instantly gets their certificate and (if VIP) their Canva Pro invite and Google Drive master prompts vault access.
 
 ---

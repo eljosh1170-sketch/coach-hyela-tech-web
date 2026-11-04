@@ -660,7 +660,7 @@
         </div>
         <div style="display:flex; justify-content:space-between; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06);">
           <span style="color:var(--cht-text-muted);">Enrolled Tier:</span>
-          <span id="reviewPackageTierBadge" style="font-weight:700;">VIP Package (₦2,500)</span>
+          <span id="reviewPackageTierBadge" style="font-weight:700;">VIP Package (₦5,000)</span>
         </div>
       </div>
 
@@ -686,7 +686,7 @@
             <span>Grant Google Drive Vault &amp; VIP Access to this student</span>
           </label>
           <div style="font-size:0.75rem; color:var(--cht-text-muted); margin-left:24px; margin-top:3px;">
-            Uncheck if student only paid ₦500 for Certificate Only (keeps Drive &amp; Canva vault locked).
+            Uncheck if student only paid ₦10,000 for Certificate Only solo (keeps Drive &amp; Canva vault locked).
           </div>
         </div>
 
@@ -812,7 +812,7 @@
   </footer>
 
   <script src="js/master-prompts-data.js?v=20261030_01"></script>
-  <script src="js/cht-core.js?v=20261102_01"></script>
+  <script src="js/cht-core.js?v=20261104_01"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       if (CHT.isAdminLoggedIn()) {
@@ -1168,8 +1168,8 @@
               <div style="font-weight:600; color:#fff;">${r.courseTitle || r.courseId || '-'}</div>
               <div style="margin-top:4px;">
                 ${r.packageTier === 'CERT_ONLY'
-                  ? '<span style="background:rgba(255,255,255,0.1); color:#fff; padding:2px 8px; border-radius:4px; font-size:0.75rem;">🎓 Cert Only (₦500)</span>'
-                  : '<span style="background:rgba(212,175,55,0.2); color:var(--cht-gold-light); padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">⭐ VIP (₦2,500)</span>'}
+                  ? '<span style="background:rgba(255,255,255,0.1); color:#fff; padding:2px 8px; border-radius:4px; font-size:0.75rem;">🎓 Cert Only (₦10,000)</span>'
+                  : '<span style="background:rgba(212,175,55,0.2); color:var(--cht-gold-light); padding:2px 8px; border-radius:4px; font-size:0.75rem; font-weight:700;">⭐ VIP (₦5,000)</span>'}
               </div>
             </td>
             <td style="font-size:0.8rem;">${r.submissionDate ? new Date(r.submissionDate).toLocaleDateString() : 'Recent'}</td>
@@ -1214,8 +1214,8 @@
       const tierBadge = document.getElementById('reviewPackageTierBadge');
       if (tierBadge) {
         tierBadge.innerHTML = isCertOnly
-          ? '<span style="background:rgba(255,255,255,0.1); color:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem;">🎓 Certificate Only (₦500 Tier)</span>'
-          : '<span style="background:rgba(212,175,55,0.2); color:var(--cht-gold-light); padding:2px 8px; border-radius:4px; font-size:0.8rem; font-weight:700;">⭐ Complete VIP Package (₦2,500 Tier)</span>';
+          ? '<span style="background:rgba(255,255,255,0.1); color:#fff; padding:2px 8px; border-radius:4px; font-size:0.8rem;">🎓 Certificate Only (₦10,000 Solo Tier)</span>'
+          : '<span style="background:rgba(212,175,55,0.2); color:var(--cht-gold-light); padding:2px 8px; border-radius:4px; font-size:0.8rem; font-weight:700;">⭐ Complete VIP Package (₦5,000 Tier)</span>';
       }
       const chk = document.getElementById('reviewGrantDriveAccess');
       if (chk) {
